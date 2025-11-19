@@ -1,0 +1,26 @@
+# Build folders
+Debug/
+Release/
+x64/
+
+# Compiled object files
+*.obj
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.log
+
+# VS temporary files
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+
+# Other files
+*.idb
+*.ipch
+*.aps
+*.ncb
+*.sbr
+*.tlb
