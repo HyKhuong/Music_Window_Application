@@ -30,6 +30,25 @@ void UI_Init(HWND hWnd)
 		20, 70, 740, 360,
 		hWnd, (HMENU)10, NULL, NULL);
 
+	LVCOLUMN lvc = { 0 };
+	lvc.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
+
+	// Column 0 = ID
+	lvc.pszText = (LPWSTR)L"ID";
+	lvc.cx = 50;
+	ListView_InsertColumn(listSongs, 0, &lvc);
+
+	// Column 1 = Title
+	lvc.pszText = (LPWSTR)L"Title";
+	lvc.cx = 300;
+	ListView_InsertColumn(listSongs, 1, &lvc);
+
+	// Column 2 = Path
+	lvc.pszText = (LPWSTR)L"Path";
+	lvc.cx = 400;
+	ListView_InsertColumn(listSongs, 2, &lvc);
+
+
 	Database_LoadSongs(listSongs);
 }
 
