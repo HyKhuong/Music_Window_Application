@@ -48,7 +48,6 @@ void UI_Init(HWND hWnd)
 	lvc.cx = 400;
 	ListView_InsertColumn(listSongs, 2, &lvc);
 
-
 	Database_LoadSongs(listSongs);
 }
 

@@ -1,4 +1,5 @@
 #include <windows.h>
+#include "Player.h"
 #include "ui.h"
 #include "Database.h"
 
@@ -43,6 +44,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_CREATE:
         Database_Init();
         UI_Init(hWnd);
+
+        Player_Init();
         break;
 
     case WM_COMMAND:

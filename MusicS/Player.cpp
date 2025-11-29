@@ -1,25 +1,64 @@
-#include "player.h"
-#define MINIAUDIO_IMPLEMENTATION
-#include "miniaudio.h"
-#include <io.h>
+#include "Player.h"
+#include "bass.h"
 #include <stdio.h>
 
-static ma_engine engine;
+#pragma comment(lib, "bass.lib")
+
+const char* filePath = "D:\\Music\\Chainsaw Man the Movie Reze Arc - JANE DOE [FLAC]\\01. JANE DOE.flac";
+static HSTREAM g_stream = 0;
+static int isPaused = 0;  // Track pause state
 
 void Player_Init()
 {
-    ma_engine_init(NULL, &engine);
+    if (!BASS_Init(-1, 44100, 0, 0, NULL)) {
+        printf("Can't initialize audio device. Error: %d\n", BASS_ErrorGetCode());
+    }
 }
 
 void Player_Play()
 {
-    if (_access("D:\\Music\\Call of the Night Season 2  FLAC 48kHz24bit\\01. Mirage.flac", 0) != 0) {
-        MessageBox(NULL, L"File not found", L"Error", MB_OK);
+    if (!filePath) return;
+
+    // Free previous stream if any
+    if (g_stream) {
+        BASS_StreamFree(g_stream);
+        g_stream = 0;
+    }
+
+    // Load the file
+    g_stream = BASS_StreamCreateFile(FALSE, filePath, 0, 0, 0);
+    if (!g_stream) {
+        printf("Can't load file: %d\n", BASS_ErrorGetCode());
         return;
     }
 
-    ma_engine_play_sound(&engine, "D:\\Music\\Call of the Night Season 2  FLAC 48kHz24bit\\01. Mirage.flac", NULL);
+    // Start playing
+    if (!BASS_ChannelPlay(g_stream, FALSE)) {
+        printf("Can't play file: %d\n", BASS_ErrorGetCode());
+        return;
+    }
+
+    isPaused = 0; // reset pause flag
 }
 
-void Player_Pause() {}
-void Player_Stop() {}
+void Player_Pause()
+{
+    if (!g_stream) return;
+
+    if (!isPaused) {
+        BASS_ChannelPause(g_stream);
+        isPaused = 1;
+    }
+    else {
+        BASS_ChannelPlay(g_stream, FALSE); // resume
+        isPaused = 0;
+    }
+}
+
+void Player_Stop()
+{
+    if (g_stream) {
+        BASS_StreamFree(g_stream);
+        g_stream = 0;
+    }
+}
