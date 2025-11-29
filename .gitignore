@@ -3,6 +3,10 @@ Debug/
 Release/
 x64/
 
+# Other folders
+bass/
+bassFlac/
+
 # Compiled object files
 *.obj
 *.exe
