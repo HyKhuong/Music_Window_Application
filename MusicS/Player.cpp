@@ -15,7 +15,7 @@ void Player_Init()
     }
 }
 
-void Player_Play()
+void Player_Play(const char* filePath)
 {
     if (!filePath) return;
 

@@ -57,7 +57,7 @@ void UI_HandleCommand(WPARAM wParam)
 	switch (LOWORD(wParam))
 	{
 	case 1:
-		Player_Play();
+		//Player_Play();
 		break;
 
 	case 2:

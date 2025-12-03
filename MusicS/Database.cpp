@@ -74,3 +74,31 @@ void Database_LoadSongs(HWND listView)
     sqlite3_finalize(stmt);
 }
 
+int GetSongById(int id, char* outPath, int maxLen)
+{
+    sqlite3_stmt* stmt;
+
+    const char* sql = "SELECT * FROM songs WHERE id = ?";
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK)
+    {
+        //sqlite3_close(db);
+        return 0;
+    }
+
+    sqlite3_bind_int(stmt, 1, id);
+
+    int success = 0;
+    if(sqlite3_step(stmt) == SQLITE_OK) 
+    {
+        const unsigned char* path = sqlite3_column_text(stmt, 0);
+        strncpy_s(outPath,maxLen, (const char*)path, _TRUNCATE);
+
+        success = 1;    
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    return success;
+}

@@ -1,7 +1,10 @@
 #include <windows.h>
 #include "Player.h"
-#include "ui.h"
 #include "Database.h"
+#include <CommCtrl.h>
+#include "Ui.h"
+
+HWND listSong = NULL;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -47,7 +50,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
         Player_Init();
         break;
+    case WM_NOTIFY:
+    {
+        LPNMHDR hdr = (LPNMHDR)lParam;
+        if (hdr->idFrom == 10 && hdr->code == NM_CLICK)
+        {
+            int index = ListView_GetNextItem(listSong, -1, LVNI_SELECTED);
 
+            LVITEM item = { 0 };
+            item.mask = LVIF_PARAM;
+            item.iItem = index;
+
+            ListView_GetItem(listSong, &item);
+            int id = item.lParam;
+            char path[521];
+
+            if (GetSongById(id, path, sizeof(path)))
+            {
+                Player_Play(path);
+            }
+            else
+            {
+                MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
+            }
+
+        }
+    }
     case WM_COMMAND:
         UI_HandleCommand(wParam);
         break;
