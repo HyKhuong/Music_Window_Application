@@ -48,6 +48,8 @@ void UI_Init(HWND hWnd)
 	lvc.cx = 400;
 	ListView_InsertColumn(listSongs, 2, &lvc);
 
+	ListView_DeleteAllItems(listSongs);
+
 	Database_LoadSongs(listSongs);
 }
 
@@ -57,7 +59,12 @@ void UI_HandleCommand(WPARAM wParam)
 	switch (LOWORD(wParam))
 	{
 	case 1:
-		//Player_Play();
+		char path[256];
+
+		if (GetSongById(1, path, sizeof(path)))
+		{
+			Player_Play(path);
+		}
 		break;
 
 	case 2:

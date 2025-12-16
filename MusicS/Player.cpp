@@ -4,9 +4,8 @@
 
 #pragma comment(lib, "bass.lib")
 
-const char* filePath = "D:\\Music\\Chainsaw Man the Movie Reze Arc - JANE DOE [FLAC]\\01. JANE DOE.flac";
 static HSTREAM g_stream = 0;
-static int isPaused = 0;  // Track pause state
+static int isPaused = 0;  
 
 void Player_Init()
 {

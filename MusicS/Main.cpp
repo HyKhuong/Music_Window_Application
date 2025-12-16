@@ -3,8 +3,7 @@
 #include "Database.h"
 #include <CommCtrl.h>
 #include "Ui.h"
-
-HWND listSong = NULL;
+#include <stdio.h>
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -53,15 +52,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_NOTIFY:
     {
         LPNMHDR hdr = (LPNMHDR)lParam;
-        if (hdr->idFrom == 10 && hdr->code == NM_CLICK)
+        if (hdr->idFrom == 10 && hdr->code == LVN_ITEMACTIVATE)
         {
-            int index = ListView_GetNextItem(listSong, -1, LVNI_SELECTED);
+            LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
+
+            int index = p->iItem;
 
             LVITEM item = { 0 };
             item.mask = LVIF_PARAM;
             item.iItem = index;
 
-            ListView_GetItem(listSong, &item);
+            ListView_GetItem(listSongs, &item);
             int id = item.lParam;
             char path[521];
 
