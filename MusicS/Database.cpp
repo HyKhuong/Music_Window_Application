@@ -4,6 +4,7 @@
 #include <CommCtrl.h>
 
 sqlite3* db;
+sqlite3_stmt* stmt;
 
 void Database_Init()
 {
@@ -32,7 +33,6 @@ void Database_Init()
 void Database_LoadSongs(HWND listView)
 {
     const char* sql = "SELECT * FROM songs";
-    sqlite3_stmt* stmt;
 
     sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
 
@@ -60,9 +60,10 @@ void Database_LoadSongs(HWND listView)
         MultiByteToWideChar(CP_UTF8, 0, path, -1, pathW, 512);;
 
         LVITEM lvi = { 0 };
-        lvi.mask = LVIF_TEXT;
+        lvi.mask = LVIF_TEXT | LVIF_PARAM;
         lvi.iItem = index;
         lvi.pszText = idW;
+        lvi.lParam = (LPARAM)id;
         ListView_InsertItem(listView, &lvi);
 
         ListView_SetItemText(listView, index, 1, titleW);
@@ -74,3 +75,27 @@ void Database_LoadSongs(HWND listView)
     sqlite3_finalize(stmt);
 }
 
+int GetSongById(int id, char* outPath, int maxLen)
+{
+    const char* sql = "SELECT * FROM songs WHERE id = ?";
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK)
+    {
+        return 0;
+    }
+
+    sqlite3_bind_int(stmt, 1, id);
+
+    int success = 0;
+    if(sqlite3_step(stmt) == SQLITE_ROW) 
+    {
+        const unsigned char* path = sqlite3_column_text(stmt, 2);
+        strncpy_s(outPath,maxLen, (const char*)path, _TRUNCATE);
+        printf("Run complete");
+        success = 1;
+    }
+
+    sqlite3_finalize(stmt);
+
+    return success;
+}
