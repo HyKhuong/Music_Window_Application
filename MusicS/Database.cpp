@@ -4,7 +4,6 @@
 #include <CommCtrl.h>
 
 sqlite3* db;
-sqlite3_stmt* stmt;
 
 void Database_Init()
 {
@@ -32,6 +31,7 @@ void Database_Init()
 
 void Database_LoadSongs(HWND listView)
 {
+    sqlite3_stmt* stmt;
     const char* sql = "SELECT * FROM songs";
 
     sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
@@ -77,6 +77,7 @@ void Database_LoadSongs(HWND listView)
 
 int GetSongById(int id, char* outPath, int maxLen)
 {
+    sqlite3_stmt* stmt;
     const char* sql = "SELECT * FROM songs WHERE id = ?";
 
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK)
@@ -98,4 +99,23 @@ int GetSongById(int id, char* outPath, int maxLen)
     sqlite3_finalize(stmt);
 
     return success;
+}
+
+int SongCount()
+{
+    sqlite3_stmt* stmt;
+    const char* sql = "SELECT COUNT(*) FROM songs";
+
+    int count = 0;
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK)
+        return 0;
+
+    if(sqlite3_step(stmt) == SQLITE_ROW) 
+    {
+        count = sqlite3_column_int(stmt, 0);
+    }
+    sqlite3_finalize(stmt);
+
+    return count;
 }

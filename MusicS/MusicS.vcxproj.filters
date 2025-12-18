@@ -56,6 +56,9 @@
     <ClInclude Include="..\bassFlac\c\bassflac.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\bass\c\bass.lib">

@@ -4,8 +4,12 @@
 #include <CommCtrl.h>
 #include "Ui.h"
 #include <stdio.h>
+#include "global.h"
+
+HWND g_hWnd = NULL;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 {
@@ -44,6 +48,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     switch (msg)
     {
     case WM_CREATE:
+        g_hWnd = hWnd;
+
         Database_Init();
         UI_Init(hWnd);
 
@@ -77,6 +83,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
         }
     }
+    case WM_PLAY_NEXT_SONG:
+        Player_Next_Song(g_currentId);
+        break;
     case WM_COMMAND:
         UI_HandleCommand(wParam);
         break;

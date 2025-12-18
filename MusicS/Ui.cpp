@@ -60,11 +60,7 @@ void UI_HandleCommand(WPARAM wParam)
 	{
 	case 1:
 		char path[256];
-
-		if (GetSongById(1, path, sizeof(path)))
-		{
 			Player_Play(path);
-		}
 		break;
 
 	case 2:

@@ -134,6 +134,7 @@
     <ClInclude Include="..\bassFlac\c\bassflac.h" />
     <ClInclude Include="..\bass\c\bass.h" />
     <ClInclude Include="Database.h" />
+    <ClInclude Include="global.h" />
     <ClInclude Include="miniaudio.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Ui.h" />
