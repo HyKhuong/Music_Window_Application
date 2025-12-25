@@ -4,28 +4,32 @@
 #include "Database.h"
 
 HWND btnPlay, btnPause, btnStop;
-HWND listSongs;
+HWND listSongs, hTimeText, hTrack;
 
 
 //Create the ui 
 void UI_Init(HWND hWnd)
 {
-	btnPlay = CreateWindow(TEXT("BUTTON"), TEXT("Play"),
+	//Play button
+	btnPlay = CreateWindowA("BUTTON", "Play",
 		WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
 		20, 20, 80, 30,
 		hWnd, (HMENU)1, NULL, NULL);
 
-	btnPause = CreateWindow(TEXT("BUTTON"), TEXT("Pause"),
+	//Pause button
+	btnPause = CreateWindow(L"BUTTON", L"Pause",
 		WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
 		110, 20, 80, 30,
 		hWnd, (HMENU)2, NULL, NULL);
 
-	btnStop = CreateWindow(TEXT("BUTTON"), TEXT("Stop"),
+	//Stop button
+	btnStop = CreateWindow(L"BUTTON", L"Stop",
 		WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
 		200, 20, 80, 30,
 		hWnd, (HMENU)3, NULL, NULL);
 
-	listSongs = CreateWindow(WC_LISTVIEW, TEXT(""),
+	//List of all songs
+	listSongs = CreateWindow(WC_LISTVIEW, L"",
 		WS_VISIBLE | WS_CHILD | LVS_REPORT,
 		20, 70, 740, 360,
 		hWnd, (HMENU)10, NULL, NULL);
@@ -51,6 +55,26 @@ void UI_Init(HWND hWnd)
 	ListView_DeleteAllItems(listSongs);
 
 	Database_LoadSongs(listSongs);
+
+	hTimeText = CreateWindow(
+		L"STATIC",
+		L"00:00 / 00:00",
+		WS_CHILD | WS_VISIBLE,
+		20, 300, 120, 20,
+		hWnd,
+		(HMENU)10,
+		NULL,
+		NULL
+	);
+
+	hTrack = CreateWindowEx(
+		0, TRACKBAR_CLASS, NULL,
+		WS_CHILD | WS_VISIBLE | TBS_HORZ,
+		150, 300, 400, 30,
+		hWnd, (HMENU)101,
+		NULL,
+		NULL
+	);
 }
 
 //Handle system
@@ -59,8 +83,9 @@ void UI_HandleCommand(WPARAM wParam)
 	switch (LOWORD(wParam))
 	{
 	case 1:
-		char path[256];
-			Player_Play(path);
+		//char path[256];
+		//int id = 0;
+			//Player_Play(id, path);
 		break;
 
 	case 2:

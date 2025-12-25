@@ -8,3 +8,5 @@ void Database_AddSong(const char* path);
 
 int GetSongById(int id, char* outPath, int maxLen);
 int SongCount();
+void InserSongDurationDB(int id, const char* path);
+int CheckSongDurationStatus(int id);

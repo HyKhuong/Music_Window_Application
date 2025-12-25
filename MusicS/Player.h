@@ -12,7 +12,8 @@ void CALLBACK OnSongEnd(
 );
 
 void Player_Init();
-void Player_Play(const char* filePath);
+void Player_Play(int id, const char* filePath);
 void Player_Next_Song(int id);
 void Player_Pause();
 void Player_Stop();
+int GetSongLength(const char* filePath);

@@ -7,7 +7,7 @@
 #pragma comment(lib, "bass.lib")
 
 static HSTREAM g_stream = 0;
-int g_currentId = -1;
+int g_currentId = 0;
 static int isPaused = 0;  
 int totalSong = SongCount();
 
@@ -23,9 +23,26 @@ void Player_Init()
     }
 }
 
-void Player_Play(const char* filePath)
+int GetSongLength(const char* filePath) 
+{
+    g_stream = BASS_StreamCreateFile(FALSE, filePath, 0, 0, BASS_STREAM_DECODE | BASS_SAMPLE_FLOAT);
+
+    QWORD lengthBytes = BASS_ChannelGetLength(g_stream, BASS_POS_BYTE);
+    double length = BASS_ChannelBytes2Seconds(g_stream, lengthBytes);
+
+    BASS_StreamFree(g_stream);
+
+    return (int)(length + 0.5);
+}
+
+void Player_Play(int id, const char* filePath)
 {
     if (!filePath) return;
+
+    if(!CheckSongDurationStatus(id)) 
+    {
+        InserSongDurationDB(id, filePath);
+    }
 
     // Free previous stream if any
     if (g_stream) {
@@ -59,18 +76,13 @@ void Player_Play(const char* filePath)
 
 void Player_Next_Song(int g_currentId)
 {
-    if(g_currentId < 0) 
-    {
-        return;
-    }
-
     int id = g_currentId + 2;
 
     char path[256];
     
     if(GetSongById(g_currentId, path, sizeof(path))) 
     {
-        Player_Play(path);
+        Player_Play(id, path);
     }
 }
 

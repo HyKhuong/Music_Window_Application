@@ -74,7 +74,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
             if (GetSongById(id, path, sizeof(path)))
             {
-                Player_Play(path);
+                Player_Play(id, path);
             }
             else
             {
@@ -83,6 +83,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
         }
     }
+    break;
     case WM_PLAY_NEXT_SONG:
         Player_Next_Song(g_currentId);
         break;
