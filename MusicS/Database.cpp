@@ -59,17 +59,12 @@ void Database_LoadSongs(HWND listView)
         wchar_t pathW[256];
         MultiByteToWideChar(CP_UTF8, 0, path, -1, pathW, 256);
 
-        char durationBuffer[32];
-
         // ---- Format duration mm:ss ----
         int min = duration / 60;
         int sec = duration % 60;
 
         wchar_t durationW[256];
         swprintf_s(durationW, 32, L"%02d:%02d", min, sec);
-
-
-        MultiByteToWideChar(CP_UTF8, 0, durationBuffer, -1, durationW, 256);
 
         LVITEM lvi = { 0 };
         lvi.mask = LVIF_TEXT | LVIF_PARAM;
@@ -169,5 +164,28 @@ int CheckSongDurationStatus(int id)
     sqlite3_finalize(stmt);
 
     return exist;
+}
+
+void InserSongIntoDB(const char* title,const char* path, int duration)
+{
+    sqlite3_stmt* stmt;
+    const char* sql = "INSERT INTO songs (title, path, duration) VALUES (?,?,?)";
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
+        printf("Prepare failed: %s\n", sqlite3_errmsg(db));
+        return;
+    }
+
+    sqlite3_bind_text(stmt, 1, title, -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, path, -1, SQLITE_TRANSIENT);
+    sqlite3_bind_int(stmt, 3, duration);
+
+    int rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE) {
+        printf("Insert failed: %s\n", sqlite3_errmsg(db));
+    }
+
+
+    sqlite3_finalize(stmt);
 }
 

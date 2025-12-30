@@ -58,7 +58,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_NOTIFY:
     {
         LPNMHDR hdr = (LPNMHDR)lParam;
-        if (hdr->idFrom == 10 && hdr->code == LVN_ITEMACTIVATE)
+        if (hdr->idFrom == 4 && hdr->code == LVN_ITEMACTIVATE)
         {
             LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
 
