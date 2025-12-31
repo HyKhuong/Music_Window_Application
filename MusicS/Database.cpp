@@ -43,7 +43,7 @@ void Database_LoadSongs(HWND listView)
     {
         int id = sqlite3_column_int(stmt, 0);
         const char* title = (const char*)sqlite3_column_text(stmt, 1);
-        const char* path = (const char*)sqlite3_column_text(stmt, 2);
+        //const char* path = (const char*)sqlite3_column_text(stmt, 2);
         int duration = sqlite3_column_int(stmt, 3);
 
         // ---- Convert ID to wchar ----
@@ -56,8 +56,8 @@ void Database_LoadSongs(HWND listView)
         wchar_t titleW[256];
         MultiByteToWideChar(CP_UTF8, 0, title, -1, titleW, 256);
 
-        wchar_t pathW[256];
-        MultiByteToWideChar(CP_UTF8, 0, path, -1, pathW, 256);
+        //wchar_t pathW[256];
+        //MultiByteToWideChar(CP_UTF8, 0, path, -1, pathW, 256);
 
         // ---- Format duration mm:ss ----
         int min = duration / 60;
@@ -75,8 +75,8 @@ void Database_LoadSongs(HWND listView)
         ListView_InsertItem(listView, &lvi);
 
         ListView_SetItemText(listView, index, 1, titleW);
-        ListView_SetItemText(listView, index, 2, pathW);
-        ListView_SetItemText(listView, index, 3, durationW);
+        //ListView_SetItemText(listView, index, 2, pathW);
+        ListView_SetItemText(listView, index, 2, durationW);
 
         index++;
     }

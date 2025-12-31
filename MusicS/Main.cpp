@@ -80,12 +80,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
             {
                 MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
             }
-
         }
     }
     break;
+    case WM_HSCROLL:
+        GetScrollPosition(lParam, wParam);
+        break;
+    case WM_TIMER:
+        UpdateTimer();
+        break;
     case WM_PLAY_NEXT_SONG:
-        Player_Next_Song(g_currentId);
+        Player_Next_Song();
         break;
     case WM_COMMAND:
         UI_HandleCommand(wParam);

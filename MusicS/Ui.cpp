@@ -3,10 +3,15 @@
 #include "Player.h"
 #include "Database.h"
 #include <cstdio>
-
+#include "global.h"
 
 HWND btnPlay, btnPause, btnStop;
-HWND listSongs, hTimeText, hTrack, filePicker;
+HWND listSongs, filePicker;
+
+HWND hTimeText = NULL;
+HWND hTrack = NULL;
+
+int g_totalTime = 0;
 
 HWND hWnd;
 
@@ -35,7 +40,7 @@ void UI_Init(HWND hWnd)
 	//List of all songs
 	listSongs = CreateWindow(WC_LISTVIEW, L"",
 		WS_VISIBLE | WS_CHILD | LVS_REPORT,
-		20, 70, 740, 360,
+		20, 70, 600, 300,
 		hWnd, (HMENU)4, NULL, NULL);
 
 	LVCOLUMN lvc = { 0 };
@@ -43,7 +48,7 @@ void UI_Init(HWND hWnd)
 
 	// Column 0 = ID
 	lvc.pszText = (LPWSTR)L"ID";
-	lvc.cx = 50;
+	lvc.cx = 100;
 	ListView_InsertColumn(listSongs, 0, &lvc);
 
 	// Column 1 = Title
@@ -52,14 +57,14 @@ void UI_Init(HWND hWnd)
 	ListView_InsertColumn(listSongs, 1, &lvc);
 
 	// Column 2 = Path
-	lvc.pszText = (LPWSTR)L"Path";
-	lvc.cx = 400;
-	ListView_InsertColumn(listSongs, 2, &lvc);
+	//lvc.pszText = (LPWSTR)L"Path";
+	//lvc.cx = 400;
+	//ListView_InsertColumn(listSongs, 2, &lvc);
 
 	// Column 3 = Duration
 	lvc.pszText = (LPWSTR)L"Duration";
-	lvc.cx = 100;
-	ListView_InsertColumn(listSongs, 3, &lvc);
+	lvc.cx = 200;
+	ListView_InsertColumn(listSongs, 2, &lvc);
 
 	ListView_DeleteAllItems(listSongs);
 
@@ -69,7 +74,7 @@ void UI_Init(HWND hWnd)
 		L"STATIC",
 		L"00:00 / 00:00",
 		WS_CHILD | WS_VISIBLE,
-		20, 300, 120, 20,
+		20, 395, 120, 30,
 		hWnd,
 		(HMENU)5,
 		NULL,
@@ -79,7 +84,7 @@ void UI_Init(HWND hWnd)
 	hTrack = CreateWindowEx(
 		0, TRACKBAR_CLASS, NULL,
 		WS_CHILD | WS_VISIBLE | TBS_HORZ,
-		150, 300, 400, 30,
+		150, 395, 620, 30,
 		hWnd, (HMENU)6,
 		NULL,
 		NULL
@@ -155,8 +160,7 @@ void UI_HandleCommand(WPARAM wParam)
 	{
 	case 1:
 		//char path[256];
-		//int id = 0;
-			//Player_Play(id, path);
+		//	Player_Play(0, path);
 		break;
 
 	case 2:

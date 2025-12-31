@@ -3,16 +3,19 @@
 #include <stdio.h>
 #include "global.h"
 #include "Database.h"
+#include <CommCtrl.h>
 
 #pragma comment(lib, "bass.lib")
 
 static HSTREAM g_stream = 0;
-int g_currentId = 0;
+int g_currentId = -1;
 static int isPaused = 0;  
+int g_isSeeking = 0;
 int totalSong = SongCount();
 
 void CALLBACK OnSongEnd(HSYNC handle, DWORD channel, DWORD data, void* user)
 {
+    KillTimer(g_hWnd, 1);
     PostMessage(g_hWnd, WM_PLAY_NEXT_SONG, 0, 0);
 }
 
@@ -38,6 +41,8 @@ int GetSongLength(const char* filePath)
 void Player_Play(int id, const char* filePath)
 {
     if (!filePath) return;
+
+    g_currentId = id;
 
     if(!CheckSongDurationStatus(id)) 
     {
@@ -72,15 +77,89 @@ void Player_Play(int id, const char* filePath)
     }
 
     isPaused = 0; 
+
+    // ---- SET DURATION + TRACKBAR ----
+    double totalTime = BASS_ChannelBytes2Seconds(
+        g_stream,
+        BASS_ChannelGetLength(g_stream, BASS_POS_BYTE)
+    );
+
+    g_totalTime = (int)totalTime;
+
+    SendMessage(hTrack, TBM_SETRANGE, TRUE, MAKELPARAM(0, g_totalTime));
+
+    SendMessage(hTrack, TBM_SETPOS, TRUE, 0);
+
+    wchar_t buf[32];
+    swprintf_s(buf, 32, L"00:00 / %02d:%02d",
+        g_totalTime / 60,
+        g_totalTime % 60);
+
+    SetWindowTextW(hTimeText, buf);
+
+    // ---- START TIMER ----
+    SetTimer(g_hWnd, 1, 500, NULL);
 }
 
-void Player_Next_Song(int g_currentId)
+void UpdateTimer()
 {
-    int id = g_currentId + 2;
+    if (!g_stream || g_isSeeking) return;
+
+    double cur = BASS_ChannelBytes2Seconds(
+        g_stream,
+        BASS_ChannelGetPosition(g_stream, BASS_POS_BYTE)
+    );
+
+    int curSec = (int)cur;
+
+    SendMessage(hTrack, TBM_SETPOS, TRUE, curSec);
+
+    wchar_t buf[32];
+    swprintf_s(buf, 32, L"%02d:%02d / %02d:%02d",
+        curSec / 60, curSec % 60,
+        g_totalTime / 60, g_totalTime % 60);
+
+    SetWindowTextW(hTimeText, buf);
+}
+
+void GetScrollPosition(LPARAM lParam ,WPARAM wParam)
+{
+    if((HWND)lParam == hTrack && g_stream)
+    {
+        int code = LOWORD(wParam);
+
+        if(code == TB_THUMBTRACK || code == TB_THUMBPOSITION)
+        {
+            g_isSeeking = 1;
+            int pos = (int)SendMessage(hTrack, TBM_GETPOS, 0, 0);
+
+            // Convert seconds Å® bytes
+            QWORD bytePos = BASS_ChannelSeconds2Bytes(g_stream, (double)pos);
+
+            // Seek
+            BASS_ChannelSetPosition(g_stream, bytePos, BASS_POS_BYTE);
+
+            // Update time text immediately
+            wchar_t buf[32];
+            swprintf_s(buf, 32, L"%02d:%02d / %02d:%02d",
+                pos / 60, pos % 60,
+                g_totalTime / 60, g_totalTime % 60);
+
+            SetWindowTextW(hTimeText, buf);
+        }else if(code == TB_ENDTRACK)
+        {
+            g_isSeeking = 0;
+        }
+    }
+}
+
+void Player_Next_Song()
+{
+    int id = g_currentId + 1;
 
     char path[256];
     
-    if(GetSongById(g_currentId, path, sizeof(path))) 
+    if(GetSongById(id, path, sizeof(path))) 
     {
         Player_Play(id, path);
     }
