@@ -7,6 +7,33 @@
 
 #pragma comment(lib, "bass.lib")
 
+// -- Wave Form config --
+#define WAVE_SAMPLES 512
+#define WAVE_X 20
+#define WAVE_Y 500
+#define WAVE_WIDTH 500
+#define WAVE_HEIGHT 40
+
+RECT g_waveRect = {
+    WAVE_X,
+    WAVE_Y,
+    WAVE_X + WAVE_WIDTH,
+    WAVE_Y + WAVE_HEIGHT
+};
+// -- Spectrum config --
+#define SPEC_BARS     64
+#define SPEC_X        20
+#define SPEC_Y        600
+#define SPEC_WIDTH    500
+#define SPEC_HEIGHT   70
+
+RECT g_barRect = {
+    SPEC_X,
+    SPEC_Y,
+    SPEC_X + SPEC_WIDTH,
+    SPEC_Y + SPEC_HEIGHT
+};
+
 static HSTREAM g_stream = 0;
 int g_currentId = -1;
 static int isPaused = 0;  
@@ -15,7 +42,6 @@ int totalSong = SongCount();
 
 void CALLBACK OnSongEnd(HSYNC handle, DWORD channel, DWORD data, void* user)
 {
-    KillTimer(g_hWnd, 1);
     PostMessage(g_hWnd, WM_PLAY_NEXT_SONG, 0, 0);
 }
 
@@ -150,6 +176,75 @@ void GetScrollPosition(LPARAM lParam ,WPARAM wParam)
         {
             g_isSeeking = 0;
         }
+    }
+}
+
+void DrawWaveForm(HDC hdc) 
+{
+    if (!g_stream) return;
+
+    float wave[WAVE_SAMPLES];
+
+    BASS_ChannelGetData(g_stream, wave, WAVE_SAMPLES | BASS_DATA_FLOAT);
+
+    HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 200, 255));
+    HPEN oldPen = (HPEN)SelectObject(hdc, hPen);
+
+    int midY = WAVE_Y + WAVE_HEIGHT / 2;
+
+    MoveToEx(hdc, WAVE_X, midY, NULL);
+
+    for(int i = 0; i < WAVE_SAMPLES; i++)
+    {
+        int x = WAVE_X + (i * WAVE_WIDTH) / WAVE_SAMPLES;
+        int y = midY - (int)(wave[i] * (WAVE_HEIGHT / 2));
+
+        LineTo(hdc, x, y);
+    }
+
+    SelectObject(hdc, oldPen);
+    DeleteObject(hPen); 
+}
+
+void DrawSpecTrum(HDC hdc)
+{
+    if (!g_stream) return;
+
+    float FFT[1024];
+
+    BASS_ChannelGetData(g_stream, FFT, BASS_DATA_FFT2048);
+
+    int barWidth = SPEC_WIDTH / SPEC_BARS;
+
+    HBRUSH hBrush = CreateSolidBrush(RGB(0, 200, 255));
+    HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+
+    for(int i = 0; i < SPEC_BARS; i++)
+    {
+        // FFT index mapping (log-style)
+        int fftIndex = i * 1024 / SPEC_BARS;
+
+        float magnitude = FFT[fftIndex];
+
+        // Boost visibility
+        int barHeight = (int)(magnitude * SPEC_HEIGHT * 4);
+
+        if (barHeight > SPEC_HEIGHT)
+            barHeight = SPEC_HEIGHT;
+
+        int x = SPEC_X + i * barWidth;
+        int y = SPEC_Y + (SPEC_HEIGHT - barHeight);
+
+        Rectangle(
+            hdc,
+            x,
+            y,
+            x + barWidth - 2,
+            SPEC_Y + SPEC_HEIGHT
+        );
+
+        SelectObject(hdc, oldBrush);
+        DeleteObject(hBrush);
     }
 }
 

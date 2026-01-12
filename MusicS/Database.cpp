@@ -8,19 +8,21 @@ sqlite3* db;
 
 void Database_Init()
 {
-    int rc = sqlite3_open("D:\\MusicS\\MusicS\\songs.db", &db);
+    int rc = sqlite3_open("D:\\Work\\MusicS\\MusicS\\songs.db", &db);
 
     if (rc != SQLITE_OK) {
         MessageBox(NULL, TEXT("Cannot open database"), TEXT("Error"), MB_OK);
+        sqlite3_close(db);
+        db = NULL;
+        return;
     }
 
     const char* createTable =
         "CREATE TABLE IF NOT EXISTS songs ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT,"
         "title TEXT,"
-        "path TEXT,"
+        "path TEXT,"    
         "duration INTEGER)";
-        
 
     char* errMsg = 0;
     rc = sqlite3_exec(db, createTable, 0, 0, &errMsg);
@@ -101,7 +103,7 @@ int GetSongById(int id, char* outPath, int maxLen)
     {
         const unsigned char* path = sqlite3_column_text(stmt, 2);
         strncpy_s(outPath,maxLen, (const char*)path, _TRUNCATE);
-        printf("Run complete");
+        
         success = 1;
     }
 

@@ -6,27 +6,35 @@
 #include <stdio.h>
 #include "global.h"
 
+#pragma comment(lib, "comctl32.lib")
+
 HWND g_hWnd = NULL;
+HINSTANCE g_hInst = NULL;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
-
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 {
+    g_hInst = hInst;
     WNDCLASS wc = { 0 };
     wc.lpfnWndProc = WndProc;
     wc.hInstance = hInst;
     wc.lpszClassName = TEXT("MusicPlayerClass");
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 
+    //INITCOMMONCONTROLSEX icex = { sizeof(icex), ICC_TAB_CLASSES };
+    //InitCommonControlsEx(&icex);
+
     RegisterClass(&wc);
+
+    RegisterPopupClass(hInst);
 
     HWND hWnd = CreateWindow(
         wc.lpszClassName,
         TEXT("Hi-Res Music Player"),
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT,
-        800, 500,
+        800, 800,
         NULL, NULL, hInst, NULL
     );
 
@@ -48,12 +56,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     switch (msg)
     {
     case WM_CREATE:
+    {
         g_hWnd = hWnd;
 
         Database_Init();
         UI_Init(hWnd);
 
         Player_Init();
+        //SetTimer(hWnd, 1, 16, NULL);
+    }
         break;
     case WM_NOTIFY:
     {
@@ -81,6 +92,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
             }
         }
+
+        //CallTab(lParam);
     }
     break;
     case WM_HSCROLL:
@@ -88,14 +101,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
     case WM_TIMER:
         UpdateTimer();
+
+        //InvalidateRect(hWnd, &g_waveRect, FALSE);
+        //InvalidateRect(hWnd, &g_barRect, FALSE);
         break;
     case WM_PLAY_NEXT_SONG:
+        KillTimer(hWnd, 1);
         Player_Next_Song();
         break;
     case WM_COMMAND:
-        UI_HandleCommand(wParam);
+        UI_HandleCommand(wParam, g_hInst);
         break;
-
+    /*case WM_PAINT:
+    {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hWnd, &ps);
+        DrawWaveForm(hdc);
+        DrawSpecTrum(hdc);
+        EndPaint(hWnd, &ps);
+    }*/
+    case WM_ERASEBKGND:
+        return 1; // prevent flicker
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
