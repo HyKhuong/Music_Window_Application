@@ -3,7 +3,6 @@
 #include "bass.h"
 
 // -- Variable -- 
-extern int g_currentId;
 
 void CALLBACK OnSongEnd(
     HSYNC handle,
@@ -11,9 +10,6 @@ void CALLBACK OnSongEnd(
     DWORD data,
     void* user
 );
-
-extern RECT g_waveRect;
-extern RECT g_barRect;
 
 // -- Function --
 void Player_Init();

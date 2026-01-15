@@ -123,9 +123,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Button_Type.h" />
+    <ClCompile Include="customUi.cpp" />
     <ClCompile Include="Database.cpp" />
+    <ClCompile Include="DurationTrackBar.cpp" />
+    <ClCompile Include="DurationTrackBar_Type.h" />
+    <ClCompile Include="global.cpp" />
+    <ClCompile Include="ListSong.cpp" />
+    <ClCompile Include="ListSongs_Type.h" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PopUp.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="Ui.cpp" />
   </ItemGroup>
@@ -133,8 +142,12 @@
     <ClInclude Include="..\..\sqlite-amalgamation-3510000\sqlite3.h" />
     <ClInclude Include="..\bassFlac\c\bassflac.h" />
     <ClInclude Include="..\bass\c\bass.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="customUi.h" />
     <ClInclude Include="Database.h" />
+    <ClInclude Include="DurationTrackBar.h" />
     <ClInclude Include="global.h" />
+    <ClInclude Include="ListSongs.h" />
     <ClInclude Include="miniaudio.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Ui.h" />

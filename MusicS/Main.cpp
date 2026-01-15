@@ -5,11 +5,9 @@
 #include "Ui.h"
 #include <stdio.h>
 #include "global.h"
+#include "ListSongs.h"
 
 #pragma comment(lib, "comctl32.lib")
-
-HWND g_hWnd = NULL;
-HINSTANCE g_hInst = NULL;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 

@@ -1,43 +1,16 @@
 #include "Player.h"
 #include "bass.h"
+#include "customUi.h"
 #include <stdio.h>
 #include "global.h"
 #include "Database.h"
 #include <CommCtrl.h>
+#include "Ui.h"
 
 #pragma comment(lib, "bass.lib")
 
-// -- Wave Form config --
-#define WAVE_SAMPLES 512
-#define WAVE_X 20
-#define WAVE_Y 500
-#define WAVE_WIDTH 500
-#define WAVE_HEIGHT 40
-
-RECT g_waveRect = {
-    WAVE_X,
-    WAVE_Y,
-    WAVE_X + WAVE_WIDTH,
-    WAVE_Y + WAVE_HEIGHT
-};
-// -- Spectrum config --
-#define SPEC_BARS     64
-#define SPEC_X        20
-#define SPEC_Y        600
-#define SPEC_WIDTH    500
-#define SPEC_HEIGHT   70
-
-RECT g_barRect = {
-    SPEC_X,
-    SPEC_Y,
-    SPEC_X + SPEC_WIDTH,
-    SPEC_Y + SPEC_HEIGHT
-};
-
 static HSTREAM g_stream = 0;
-int g_currentId = -1;
-static int isPaused = 0;  
-int g_isSeeking = 0;
+static int isPaused = 0;
 int totalSong = SongCount();
 
 void CALLBACK OnSongEnd(HSYNC handle, DWORD channel, DWORD data, void* user)
@@ -112,16 +85,16 @@ void Player_Play(int id, const char* filePath)
 
     g_totalTime = (int)totalTime;
 
-    SendMessage(hTrack, TBM_SETRANGE, TRUE, MAKELPARAM(0, g_totalTime));
+    SendMessage(g_ui.hTrack, TBM_SETRANGE, TRUE, MAKELPARAM(0, g_totalTime));
 
-    SendMessage(hTrack, TBM_SETPOS, TRUE, 0);
+    SendMessage(g_ui.hTrack, TBM_SETPOS, TRUE, 0);
 
     wchar_t buf[32];
     swprintf_s(buf, 32, L"00:00 / %02d:%02d",
         g_totalTime / 60,
         g_totalTime % 60);
 
-    SetWindowTextW(hTimeText, buf);
+    SetWindowTextW(g_ui.hTimeText, buf);
 
     // ---- START TIMER ----
     SetTimer(g_hWnd, 1, 500, NULL);
@@ -138,26 +111,26 @@ void UpdateTimer()
 
     int curSec = (int)cur;
 
-    SendMessage(hTrack, TBM_SETPOS, TRUE, curSec);
+    SendMessage(g_ui.hTrack, TBM_SETPOS, TRUE, curSec);
 
     wchar_t buf[32];
     swprintf_s(buf, 32, L"%02d:%02d / %02d:%02d",
         curSec / 60, curSec % 60,
         g_totalTime / 60, g_totalTime % 60);
 
-    SetWindowTextW(hTimeText, buf);
+    SetWindowTextW(g_ui.hTimeText, buf);
 }
 
 void GetScrollPosition(LPARAM lParam ,WPARAM wParam)
 {
-    if((HWND)lParam == hTrack && g_stream)
+    if((HWND)lParam == g_ui.hTrack && g_stream)
     {
         int code = LOWORD(wParam);
 
         if(code == TB_THUMBTRACK || code == TB_THUMBPOSITION)
         {
             g_isSeeking = 1;
-            int pos = (int)SendMessage(hTrack, TBM_GETPOS, 0, 0);
+            int pos = (int)SendMessage(g_ui.hTrack, TBM_GETPOS, 0, 0);
 
             // Convert seconds Å® bytes
             QWORD bytePos = BASS_ChannelSeconds2Bytes(g_stream, (double)pos);
@@ -171,7 +144,7 @@ void GetScrollPosition(LPARAM lParam ,WPARAM wParam)
                 pos / 60, pos % 60,
                 g_totalTime / 60, g_totalTime % 60);
 
-            SetWindowTextW(hTimeText, buf);
+            SetWindowTextW(g_ui.hTimeText, buf);
         }else if(code == TB_ENDTRACK)
         {
             g_isSeeking = 0;
