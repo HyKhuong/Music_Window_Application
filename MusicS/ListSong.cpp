@@ -1,12 +1,14 @@
 #include "ListSongs.h"
+#include "ListSongs_Type.h"
 
+HWND listSongs;
 //20, 70, 600, 300,
 HWND Create_ListSongs(HWND hParent, int x, int y, int w, int h, int id)
 {
 	return listSongs = CreateWindow(
 		WC_LISTVIEW, 
 		L"",
-		WS_CHILD | WS_VISIBLE | LVS_REPORT | LVS_SINGLESEL | TVS_FULLROWSELECT,
+		WS_CHILD | WS_VISIBLE | LVS_REPORT,
 		x, y, w, h,
 		hParent, 
 		(HMENU)id, 

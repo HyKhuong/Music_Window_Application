@@ -7,3 +7,5 @@ typedef struct {
 	HWND hTrack;
 
 } TrackBar;
+
+extern TrackBar track;

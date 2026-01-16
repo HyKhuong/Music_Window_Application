@@ -3,15 +3,16 @@
 #include "Player.h"
 #include "Database.h"
 #include <cstdio>
-#include "ListSongs.h"
+
 #include "Button.h"
 #include "Button_Type.h"
 #include "DurationTrackBar.h"
 #include "DurationTrackBar_Type.h"
+#include "PopUp.h"
+#include "ListSongs_Type.h"
 
 UIContext g_ui = { 0 };
 Button btn;
-TrackBar track;
 
 void UI_Init(HWND hWnd)
 {	
@@ -22,9 +23,8 @@ void UI_Init(HWND hWnd)
 	btn.filePicker = Create_Button(hWnd, 4, L"Add Song", 300, 20, 80, 30);
 
 	// -- Track Duration Bar --
-	track.hTimeText = Create_TrackBar(hWnd);
-	track.hTrack = Create_TrackBar(hWnd);
-
+	Create_TrackBar(hWnd);
+	
 	// -- List Songs --
 	
 	// -- Add Custom List Songs --
@@ -111,166 +111,6 @@ void PickSongToDB(HWND hWnd)
 	InserSongIntoDB(title, pathC, duration);
 
 	Database_LoadSongs(listSongs);
-}
-
-// -- Create A New Window --
-LRESULT CALLBACK PopupProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) 
-{
-	switch(msg) 
-	{
-	case WM_CREATE:
-	{
-		g_ui.hTextBox = CreateWindowW(
-			L"EDIT",
-			L"",
-			WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
-			20, 20, 200, 25,
-			hWnd, NULL, GetModuleHandle(NULL), NULL
-		);
-
-		g_ui.hAddText = CreateWindow(
-			L"BUTTON",
-			L"ADD",
-			WS_CHILD | WS_VISIBLE,
-			20, 60, 80, 30,
-			hWnd, (HMENU)2, NULL, NULL
-		);
-
-		// -- Create Tab --
-		g_ui.hTab = CreateWindow(
-			WC_TABCONTROL,
-			NULL,
-			WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS,
-			20, 300, 500, 300,
-			hWnd, (HMENU)100, NULL, NULL
-		);
-
-		// -- Add Tab --
-		TCITEM tie;
-		tie.mask = TCIF_TEXT;
-
-		tie.pszText = (LPWSTR)L"Home";
-		TabCtrl_InsertItem(g_ui.hTab, 0, &tie);
-
-		tie.pszText = (LPWSTR)L"Player";
-		TabCtrl_InsertItem(g_ui.hTab, 1, &tie);
-
-		tie.pszText = (LPWSTR)L"Setting";
-		TabCtrl_InsertItem(g_ui.hTab, 2, &tie);
-
-		// -- Create Pages --
-		g_ui.hPages[0] = CreateWindow(
-			L"STATIC",
-			NULL,
-			WS_CHILD | WS_VISIBLE,
-			30, 400, 450, 200,
-			hWnd, NULL, NULL, NULL
-		);
-
-		g_ui.hPages[1] = CreateWindow(
-			L"STATIC",
-			L"PLAYER PAGE",
-			WS_CHILD,
-			30, 400, 450, 300,
-			hWnd, NULL, NULL, NULL
-		);
-
-		g_ui.hPages[2] = CreateWindow(
-			L"STATIC",
-			L"SETTINGS PAGE",
-			WS_CHILD,
-			30, 400, 450, 300,
-			hWnd, NULL, NULL, NULL
-		);
-		
-		listSongs = CreateWindow(WC_LISTVIEW, L"",
-			WS_VISIBLE | WS_CHILD | LVS_REPORT,
-			35, 70, 300, 200,
-			g_ui.hPages[0], (HMENU)4, NULL, NULL);
-
-		LVCOLUMN lvc = { 0 };
-		lvc.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
-
-		// Column 0 = ID
-		lvc.pszText = (LPWSTR)L"ID";
-		lvc.cx = 100;
-		ListView_InsertColumn(listSongs, 0, &lvc);
-
-		// Column 1 = Title
-		lvc.pszText = (LPWSTR)L"Title";
-		lvc.cx = 300;
-		ListView_InsertColumn(listSongs, 1, &lvc);
-
-		// Column 2 = Path
-		//lvc.pszText = (LPWSTR)L"Path";
-		//lvc.cx = 400;
-		//ListView_InsertColumn(listSongs, 2, &lvc);
-
-		// Column 3 = Duration
-		lvc.pszText = (LPWSTR)L"Duration";
-		lvc.cx = 200;
-		ListView_InsertColumn(listSongs, 2, &lvc);
-
-		ListView_DeleteAllItems(listSongs);
-
-		// -- Load All Songs From DB To List View --
-		Database_LoadSongs(listSongs);
-	}
-	break;
-	case WM_NOTIFY:
-		CallTab(lParam);
-		break;
-	case WM_COMMAND:
-		if(LOWORD(wParam) == 2) 
-		{
-			wchar_t buf[256];
-			GetWindowTextW(g_ui.hTextBox, buf, 256);
-			MessageBoxW(hWnd, buf, L"Add Your List Song Success", MB_OK);
-		}
-		break;
-	case WM_CLOSE:
-		DestroyWindow(hWnd);
-		return 0;
-
-	case WM_DESTROY:
-		g_ui.hPopUp = NULL;
-		return 0;
-	}
-
-	return DefWindowProc(hWnd, msg, wParam, lParam);
-}
-
-void RegisterPopupClass(HINSTANCE hInst)
-{
-	WNDCLASSW wc = { 0 };
-	wc.lpfnWndProc = PopupProc;
-	wc.hInstance = hInst;
-	wc.lpszClassName = L"PopupClass";
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-
-	INITCOMMONCONTROLSEX icex = { sizeof(icex), ICC_TAB_CLASSES };
-	InitCommonControlsEx(&icex);
-
-	RegisterClassW(&wc);
-}
-
-// -- Pop up -- 
-void ShowPopUp(HWND parent, HINSTANCE hInst)
-{
-	if (g_ui.hPopUp) return;
-
-	g_ui.hPopUp = CreateWindowExW(
-		WS_EX_DLGMODALFRAME,
-		L"PopupClass",
-		L"My PopUp Form",
-		WS_POPUP | WS_CAPTION | WS_SYSMENU,
-		400, 300, 800, 850,
-		parent, NULL, hInst, NULL
-	);
-
-	ShowWindow(g_ui.hPopUp, SW_SHOW);
-	UpdateWindow(g_ui.hPopUp);
 }
 
 // -- Handle system --

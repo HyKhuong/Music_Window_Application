@@ -7,6 +7,9 @@
 #include <CommCtrl.h>
 #include "Ui.h"
 
+#include "DurationTrackBar.h"
+#include "DurationTrackBar_Type.h"
+
 #pragma comment(lib, "bass.lib")
 
 static HSTREAM g_stream = 0;
@@ -85,16 +88,16 @@ void Player_Play(int id, const char* filePath)
 
     g_totalTime = (int)totalTime;
 
-    SendMessage(g_ui.hTrack, TBM_SETRANGE, TRUE, MAKELPARAM(0, g_totalTime));
+    SendMessage(track.hTrack, TBM_SETRANGE, TRUE, MAKELPARAM(0, g_totalTime));
 
-    SendMessage(g_ui.hTrack, TBM_SETPOS, TRUE, 0);
+    SendMessage(track.hTrack, TBM_SETPOS, TRUE, 0);
 
     wchar_t buf[32];
     swprintf_s(buf, 32, L"00:00 / %02d:%02d",
         g_totalTime / 60,
         g_totalTime % 60);
 
-    SetWindowTextW(g_ui.hTimeText, buf);
+    SetWindowTextW(track.hTimeText, buf);
 
     // ---- START TIMER ----
     SetTimer(g_hWnd, 1, 500, NULL);
@@ -111,26 +114,26 @@ void UpdateTimer()
 
     int curSec = (int)cur;
 
-    SendMessage(g_ui.hTrack, TBM_SETPOS, TRUE, curSec);
+    SendMessage(track.hTrack, TBM_SETPOS, TRUE, curSec);
 
     wchar_t buf[32];
     swprintf_s(buf, 32, L"%02d:%02d / %02d:%02d",
         curSec / 60, curSec % 60,
         g_totalTime / 60, g_totalTime % 60);
 
-    SetWindowTextW(g_ui.hTimeText, buf);
+    SetWindowTextW(track.hTimeText, buf);
 }
 
 void GetScrollPosition(LPARAM lParam ,WPARAM wParam)
 {
-    if((HWND)lParam == g_ui.hTrack && g_stream)
+    if((HWND)lParam == track.hTrack && g_stream)
     {
         int code = LOWORD(wParam);
 
         if(code == TB_THUMBTRACK || code == TB_THUMBPOSITION)
         {
             g_isSeeking = 1;
-            int pos = (int)SendMessage(g_ui.hTrack, TBM_GETPOS, 0, 0);
+            int pos = (int)SendMessage(track.hTrack, TBM_GETPOS, 0, 0);
 
             // Convert seconds Å® bytes
             QWORD bytePos = BASS_ChannelSeconds2Bytes(g_stream, (double)pos);
@@ -144,7 +147,7 @@ void GetScrollPosition(LPARAM lParam ,WPARAM wParam)
                 pos / 60, pos % 60,
                 g_totalTime / 60, g_totalTime % 60);
 
-            SetWindowTextW(g_ui.hTimeText, buf);
+            SetWindowTextW(track.hTimeText, buf);
         }else if(code == TB_ENDTRACK)
         {
             g_isSeeking = 0;

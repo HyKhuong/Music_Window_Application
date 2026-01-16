@@ -5,7 +5,8 @@
 #include "Ui.h"
 #include <stdio.h>
 #include "global.h"
-#include "ListSongs.h"
+#include "ListSongs_Type.h"
+#include "PopUp.h"
 
 #pragma comment(lib, "comctl32.lib")
 

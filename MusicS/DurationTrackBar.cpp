@@ -4,7 +4,7 @@
 
 TrackBar track;
 
-HWND Create_TrackBar(HWND hParent)
+void Create_TrackBar(HWND hParent)
 {
 	// -- Show Duration Bar --
 	track.hTimeText = CreateWindow(

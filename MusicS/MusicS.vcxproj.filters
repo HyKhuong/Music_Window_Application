@@ -128,6 +128,9 @@
     <ClInclude Include="Button.h">
       <Filter>Header Files\Ui</Filter>
     </ClInclude>
+    <ClInclude Include="PopUp.h">
+      <Filter>Header Files\Ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\bass\c\bass.lib">

@@ -150,6 +150,7 @@
     <ClInclude Include="ListSongs.h" />
     <ClInclude Include="miniaudio.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PopUp.h" />
     <ClInclude Include="Ui.h" />
   </ItemGroup>
   <ItemGroup>

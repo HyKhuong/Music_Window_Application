@@ -8,4 +8,4 @@ typedef enum
 	COL_DURATION
 } SongColumn;
 
-HWND listSongs = NULL;
+extern HWND listSongs;
