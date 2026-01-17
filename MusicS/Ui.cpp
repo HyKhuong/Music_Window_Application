@@ -1,5 +1,5 @@
 #include "Ui.h"
-#include <commctrl.h>
+
 #include "Player.h"
 #include "Database.h"
 #include <cstdio>
@@ -10,6 +10,12 @@
 #include "DurationTrackBar_Type.h"
 #include "PopUp.h"
 #include "ListSongs_Type.h"
+#include "Tab_Type.h"
+
+#include "ListSongs.h"
+#include "Tab.h"
+
+#include <commctrl.h>
 
 UIContext g_ui = { 0 };
 Button btn;
@@ -25,8 +31,6 @@ void UI_Init(HWND hWnd)
 	// -- Track Duration Bar --
 	Create_TrackBar(hWnd);
 	
-	// -- List Songs --
-	
 	// -- Add Custom List Songs --
 	g_ui.hCustomListSongs = CreateWindow(
 		L"Button",
@@ -38,8 +42,44 @@ void UI_Init(HWND hWnd)
 		NULL
 	);
 
+	// -- Create Tab --
+	Create_Tab(hWnd, 100);
+
+	// -- Add Tab --
+	Add_ChildTab(L"HOME", Home);
+	Add_ChildTab(L"PLAYER LIST", PlayerList);
+
+	// -- Create Tabs --
+	Create_ChildTab(hWnd);
+
+	// -- Create Home List Song --
+	Create_ListSongs(hPages[0], 30, 70, 450, 200, 4);
+
+	Add_ColumnListView(listSongs, COL_ID, (LPWSTR)L"ID", 50);
+	Add_ColumnListView(listSongs, COL_TITLE, (LPWSTR)L"TITLE", 300);
+	Add_ColumnListView(listSongs, COL_DURATION, (LPWSTR)L"DURATION", 100);
+
+	Clear_ListSongs();
 	// -- Load All Songs From DB To List View --
 	Database_LoadSongs(listSongs);
+
+	// -- Create Player List Song --
+	Create_ListSongs(hPages[1], 30, 70, 450, 200, 4);
+
+	Add_ColumnListView(listSongs, COL_ID, (LPWSTR)L"ID", 50);
+	Add_ColumnListView(listSongs, COL_TITLE, (LPWSTR)L"TITLE", 300);
+
+	//Database_LoadSongs(listSongs);
+
+	g_ui.hTextBox = CreateWindowW(
+		L"EDIT",
+		L"",
+		WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
+		190, 20, 200, 25,
+		hPages[1], NULL, GetModuleHandle(NULL), NULL
+	);
+
+	btn.AddText = Create_Button(hPages[1], 5, L"ADD", 400, 20, 80, 25);
 }
 
 // -- Show Tab Logic --
@@ -47,7 +87,7 @@ void ShowTabPage(int index)
 {
 	for(int i = 0; i < 3; i++) 
 	{
-		ShowWindow(g_ui.hPages[i], i == index ? SW_SHOW : SW_HIDE);
+		ShowWindow(hPages[i], i == index ? SW_SHOW : SW_HIDE);
 	}
 }
 
@@ -55,9 +95,9 @@ void CallTab(LPARAM lParam)
 {
 	LPNMHDR hdr = (LPNMHDR)lParam;
 
-	if(hdr->hwndFrom == g_ui.hTab && hdr->code == TCN_SELCHANGE)
+	if(hdr->hwndFrom == hTab && hdr->code == TCN_SELCHANGE)
 	{
-		int sel = TabCtrl_GetCurSel(g_ui.hTab);
+		int sel = TabCtrl_GetCurSel(hTab);
 		ShowTabPage(sel);
 	}
 }
@@ -108,7 +148,7 @@ void PickSongToDB(HWND hWnd)
 
 	int duration = GetSongLength(pathC);
 
-	InserSongIntoDB(title, pathC, duration);
+	InsertSongIntoDB(title, pathC, duration);
 
 	Database_LoadSongs(listSongs);
 }
@@ -119,11 +159,13 @@ void UI_HandleCommand(WPARAM wParam, HINSTANCE hInst)
 	switch (LOWORD(wParam))
 	{
 	case 1:
+	{
 		char path[256];
-		if(GetSongById(1, path, sizeof(path)))
+		if (GetSongById(1, path, sizeof(path)))
 		{
 			Player_Play(1, path);
 		}
+	}
 		break;
 
 	case 2:
@@ -136,9 +178,6 @@ void UI_HandleCommand(WPARAM wParam, HINSTANCE hInst)
 
 	case 4:
 		PickSongToDB(g_ui.hWnd);
-		break;
-	case 5:
-		ShowPopUp(g_ui.hWnd, hInst);
 		break;
 	}
 }

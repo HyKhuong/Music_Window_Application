@@ -1,4 +1,5 @@
 #pragma once
+
 #include <windows.h>
 
 typedef struct UIContext {
@@ -9,12 +10,8 @@ typedef struct UIContext {
 	HWND hPopUp;
 	HWND hCustomListSongs;
 	HWND hTextBox;
-	HWND hAddText;
 
-	// Tabs
-	HWND hTab;
-	HWND hPages[3];
-};
+} UIContext;
 
 extern UIContext g_ui;
 

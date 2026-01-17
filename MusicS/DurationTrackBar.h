@@ -1,4 +1,4 @@
 #pragma once
-#include <wtypes.h>
+#include <windows.h>
 
 void Create_TrackBar(HWND hParent);

@@ -1,42 +1,11 @@
 #include <wtypes.h>
 #include "Ui.h"
-#include <CommCtrl.h>
+#include <commctrl.h>
 #include "ListSongs.h"
 #include "Database.h"
 #include "ListSongs_Type.h"
-
-void RegisterPopupClass(HINSTANCE hInst)
-{
-	WNDCLASSW wc = { 0 };
-	wc.lpfnWndProc = PopupProc;
-	wc.hInstance = hInst;
-	wc.lpszClassName = L"PopupClass";
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-
-	INITCOMMONCONTROLSEX icex = { sizeof(icex), ICC_TAB_CLASSES };
-	InitCommonControlsEx(&icex);
-
-	RegisterClassW(&wc);
-}
-
-// -- Pop up -- 
-void ShowPopUp(HWND parent, HINSTANCE hInst)
-{
-	if (g_ui.hPopUp) return;
-
-	g_ui.hPopUp = CreateWindowExW(
-		WS_EX_DLGMODALFRAME,
-		L"PopupClass",
-		L"My PopUp Form",
-		WS_POPUP | WS_CAPTION | WS_SYSMENU,
-		400, 200, 800, 600,
-		parent, NULL, hInst, NULL
-	);
-
-	ShowWindow(g_ui.hPopUp, SW_SHOW);
-	UpdateWindow(g_ui.hPopUp);
-}
+#include "Tab_Type.h"
+#include "Tab.h"
 
 // -- Create A New Window --
 LRESULT CALLBACK PopupProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -53,51 +22,26 @@ LRESULT CALLBACK PopupProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			hWnd, NULL, GetModuleHandle(NULL), NULL
 		);
 
-		g_ui.hAddText = CreateWindow(
+		/*g_ui.hAddText = CreateWindow(
 			L"BUTTON",
 			L"ADD",
 			WS_CHILD | WS_VISIBLE,
 			20, 60, 80, 30,
 			hWnd, (HMENU)2, NULL, NULL
-		);
+		);*/
 
 		// -- Create Tab --
-		g_ui.hTab = CreateWindow(
-			WC_TABCONTROL,
-			NULL,
-			WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS,
-			20, 100, 600, 450,
-			hWnd, (HMENU)100, NULL, NULL
-		);
+		Create_Tab(hWnd, 100);
 
 		// -- Add Tab --
-		TCITEM tie;
-		tie.mask = TCIF_TEXT;
+		Add_ChildTab(L"HOME", Home);
+		Add_ChildTab(L"PLAYER ", PlayerList);
 
-		tie.pszText = (LPWSTR)L"Home";
-		TabCtrl_InsertItem(g_ui.hTab, 0, &tie);
+		// -- Create Tabs --
+		Create_ChildTab(hWnd);
 
-		tie.pszText = (LPWSTR)L"Player";
-		TabCtrl_InsertItem(g_ui.hTab, 1, &tie);
-
-		// -- Create Pages --
-		g_ui.hPages[0] = CreateWindow(
-			L"STATIC",
-			NULL,
-			WS_CHILD | WS_VISIBLE,
-			35, 150, 550, 390,
-			hWnd, NULL, NULL, NULL
-		);
-
-		g_ui.hPages[1] = CreateWindow(
-			L"STATIC",
-			L"PLAYER PAGE",
-			WS_CHILD,
-			35, 150, 550, 390,
-			hWnd, NULL, NULL, NULL
-		);
-
-		Create_ListSongs(g_ui.hPages[1], 30, 70, 450, 200, 4);
+		// -- Create Home List Song --
+		Create_ListSongs(hPages[0], 30, 70, 450, 200, 4);
 
 		Add_ColumnListView(listSongs, COL_ID, (LPWSTR)L"ID", 50);
 		Add_ColumnListView(listSongs, COL_TITLE, (LPWSTR)L"TITLE", 300);
@@ -130,4 +74,37 @@ LRESULT CALLBACK PopupProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+void RegisterPopupClass(HINSTANCE hInst)
+{
+	WNDCLASSW wc = { 0 };
+	wc.lpfnWndProc = PopupProc;
+	wc.hInstance = hInst;
+	wc.lpszClassName = L"PopupClass";
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+
+	INITCOMMONCONTROLSEX icex = { sizeof(icex), ICC_TAB_CLASSES };
+	InitCommonControlsEx(&icex);
+
+	RegisterClassW(&wc);
+}
+
+// -- Pop up -- 
+void ShowPopUp(HWND parent, HINSTANCE hInst)
+{
+	if (g_ui.hPopUp) return;
+
+	g_ui.hPopUp = CreateWindowExW(
+		WS_EX_DLGMODALFRAME,
+		L"PopupClass",
+		L"My PopUp Form",
+		WS_POPUP | WS_CAPTION | WS_SYSMENU,
+		400, 200, 800, 600,
+		parent, NULL, hInst, NULL
+	);
+
+	ShowWindow(g_ui.hPopUp, SW_SHOW);
+	UpdateWindow(g_ui.hPopUp);
 }

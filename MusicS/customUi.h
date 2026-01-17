@@ -1,5 +1,5 @@
 #pragma once
-#include <wtypes.h>
+#include <windows.h>
 
 extern RECT g_waveRect;
 extern RECT g_barRect;

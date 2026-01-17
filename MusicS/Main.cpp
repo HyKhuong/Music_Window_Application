@@ -7,6 +7,7 @@
 #include "global.h"
 #include "ListSongs_Type.h"
 #include "PopUp.h"
+#include "Tab.h"
 
 #pragma comment(lib, "comctl32.lib")
 
@@ -27,6 +28,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
     RegisterClass(&wc);
 
     RegisterPopupClass(hInst);
+    RegisterPageClass(hInst);
 
     HWND hWnd = CreateWindow(
         wc.lpszClassName,
@@ -59,6 +61,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         g_hWnd = hWnd;
 
         Database_Init();
+        DB_Schema();
+
         UI_Init(hWnd);
 
         Player_Init();
@@ -67,7 +71,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
     case WM_NOTIFY:
     {
+        
         LPNMHDR hdr = (LPNMHDR)lParam;
+
+        // -- Click For Song In List Song -- 
         if (hdr->idFrom == 4 && hdr->code == LVN_ITEMACTIVATE)
         {
             LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
@@ -92,7 +99,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
             }
         }
 
-        //CallTab(lParam);
+        // -- Tab Switch Control
+        CallTab(lParam);
     }
     break;
     case WM_HSCROLL:

@@ -90,6 +90,12 @@
     <ClCompile Include="ListSongs_Type.h">
       <Filter>Header Files\Types</Filter>
     </ClCompile>
+    <ClCompile Include="Tab.cpp">
+      <Filter>Source Files\Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="db_schema.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Database.h">
@@ -129,6 +135,12 @@
       <Filter>Header Files\Ui</Filter>
     </ClInclude>
     <ClInclude Include="PopUp.h">
+      <Filter>Header Files\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Tab_Type.h">
+      <Filter>Header Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Tab.h">
       <Filter>Header Files\Ui</Filter>
     </ClInclude>
   </ItemGroup>

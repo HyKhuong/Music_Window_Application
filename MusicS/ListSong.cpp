@@ -1,8 +1,10 @@
 #include "ListSongs.h"
 #include "ListSongs_Type.h"
+#include <commctrl.h>
+
 
 HWND listSongs;
-//20, 70, 600, 300,
+
 HWND Create_ListSongs(HWND hParent, int x, int y, int w, int h, int id)
 {
 	return listSongs = CreateWindow(

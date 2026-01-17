@@ -127,12 +127,14 @@
     <ClCompile Include="Button_Type.h" />
     <ClCompile Include="customUi.cpp" />
     <ClCompile Include="Database.cpp" />
+    <ClCompile Include="db_schema.cpp" />
     <ClCompile Include="DurationTrackBar.cpp" />
     <ClCompile Include="DurationTrackBar_Type.h" />
     <ClCompile Include="global.cpp" />
     <ClCompile Include="ListSong.cpp" />
     <ClCompile Include="ListSongs_Type.h" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Tab.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PopUp.cpp" />
     <ClCompile Include="sqlite3.c" />
@@ -149,6 +151,8 @@
     <ClInclude Include="global.h" />
     <ClInclude Include="ListSongs.h" />
     <ClInclude Include="miniaudio.h" />
+    <ClInclude Include="Tab.h" />
+    <ClInclude Include="Tab_Type.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PopUp.h" />
     <ClInclude Include="Ui.h" />

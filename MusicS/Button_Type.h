@@ -1,5 +1,5 @@
 #pragma once
-#include <wtypes.h>
+#include <windows.h>
 
 typedef struct {
 	
@@ -7,7 +7,7 @@ typedef struct {
 	HWND btnPause;
 	HWND btnStop;
 	HWND filePicker;
-
+	HWND AddText;
 } Button;
 
 

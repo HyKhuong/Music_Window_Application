@@ -16,18 +16,14 @@ void Database_Init()
         db = NULL;
         return;
     }
+} 
 
-    const char* createTable =
-        "CREATE TABLE IF NOT EXISTS songs ("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-        "title TEXT,"
-        "path TEXT,"    
-        "duration INTEGER)";
-
+void Create_TableForDB(const char* sql)
+{
     char* errMsg = 0;
-    rc = sqlite3_exec(db, createTable, 0, 0, &errMsg);
-    if (rc != SQLITE_OK) {
-        MessageBoxA(NULL, errMsg, "SQL Error", MB_OK);
+    if (sqlite3_exec(db, sql, 0, 0, &errMsg) != SQLITE_OK)
+    {
+        MessageBoxA(NULL, errMsg, "Create Table Error", MB_OK);
         sqlite3_free(errMsg);
     }
 }
@@ -80,6 +76,45 @@ void Database_LoadSongs(HWND listView)
         //ListView_SetItemText(listView, index, 2, pathW);
         ListView_SetItemText(listView, index, 2, durationW);
 
+        index++;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void Database_LoadPlayList(HWND listView)
+{
+    sqlite3_stmt* stmt;
+    const char* sql = "SELECT * FROM playlist";
+
+    sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+
+    int index = 0;
+
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        int id = sqlite3_column_int(stmt, 0);
+        const char* title = (const char*)sqlite3_column_text(stmt, 1);
+
+        // ---- Convert ID to wchar ----
+        char idBuffer[32];
+        sprintf_s(idBuffer, "%d", id);
+
+        wchar_t idW[32];
+        MultiByteToWideChar(CP_UTF8, 0, idBuffer, -1, idW, 32);
+
+        wchar_t titleW[256];
+        MultiByteToWideChar(CP_UTF8, 0, title, -1, titleW, 256);
+
+        LVITEM lvi = { 0 };
+        lvi.mask = LVIF_TEXT | LVIF_PARAM;
+        lvi.iItem = index;
+        lvi.pszText = idW;
+        lvi.lParam = (LPARAM)id;
+
+        ListView_InsertItem(listView, &lvi);
+
+        ListView_SetItemText(listView, index, 1, titleW);
         index++;
     }
 
@@ -168,7 +203,7 @@ int CheckSongDurationStatus(int id)
     return exist;
 }
 
-void InserSongIntoDB(const char* title,const char* path, int duration)
+void InsertSongIntoDB(const char* title,const char* path, int duration)
 {
     sqlite3_stmt* stmt;
     const char* sql = "INSERT INTO songs (title, path, duration) VALUES (?,?,?)";
@@ -186,8 +221,18 @@ void InserSongIntoDB(const char* title,const char* path, int duration)
     if (rc != SQLITE_DONE) {
         printf("Insert failed: %s\n", sqlite3_errmsg(db));
     }
-
-
     sqlite3_finalize(stmt);
 }
 
+void InserIntoPlayerList(const char* title) 
+{
+    sqlite3_stmt* stmt;
+    const char* sql = "INSERT INTO playerlist (title) VALUES (?)";
+
+    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+    sqlite3_bind_text(stmt, 1, title, -1, SQLITE_TRANSIENT);
+    sqlite3_step(stmt);
+
+    sqlite3_finalize(stmt);
+}
