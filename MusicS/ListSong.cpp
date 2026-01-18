@@ -2,12 +2,13 @@
 #include "ListSongs_Type.h"
 #include <commctrl.h>
 
-
-HWND listSongs;
+HWND HomeSongs_List;
+HWND PlayListSongs_List;
 
 HWND Create_ListSongs(HWND hParent, int x, int y, int w, int h, int id)
 {
-	return listSongs = CreateWindow(
+
+	return CreateWindow(
 		WC_LISTVIEW, 
 		L"",
 		WS_CHILD | WS_VISIBLE | LVS_REPORT,
@@ -17,10 +18,6 @@ HWND Create_ListSongs(HWND hParent, int x, int y, int w, int h, int id)
 		NULL, 
 		NULL
 	);
-}
-
-void Clear_ListSongs(void) {
-	ListView_DeleteAllItems(listSongs);
 }
 
 void Add_ColumnListView(HWND listSongs,int index, LPWSTR text, int width)

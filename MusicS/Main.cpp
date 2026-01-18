@@ -28,14 +28,15 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
     RegisterClass(&wc);
 
     RegisterPopupClass(hInst);
-    RegisterPageClass(hInst);
+    RegisterHomePageClass(hInst);
+    RegisterPlayListPageClass(hInst);
 
     HWND hWnd = CreateWindow(
         wc.lpszClassName,
         TEXT("Hi-Res Music Player"),
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT,
-        800, 800,
+        560, 540,
         NULL, NULL, hInst, NULL
     );
 
@@ -71,34 +72,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
     case WM_NOTIFY:
     {
-        
-        LPNMHDR hdr = (LPNMHDR)lParam;
-
-        // -- Click For Song In List Song -- 
-        if (hdr->idFrom == 4 && hdr->code == LVN_ITEMACTIVATE)
-        {
-            LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
-
-            int index = p->iItem;
-
-            LVITEM item = { 0 };
-            item.mask = LVIF_PARAM;
-            item.iItem = index;
-
-            ListView_GetItem(listSongs, &item);
-            int id = item.lParam;
-            char path[521];
-
-            if (GetSongById(id, path, sizeof(path)))
-            {
-                Player_Play(id, path);
-            }
-            else
-            {
-                MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
-            }
-        }
-
         // -- Tab Switch Control
         CallTab(lParam);
     }

@@ -53,53 +53,36 @@ void UI_Init(HWND hWnd)
 	Create_ChildTab(hWnd);
 
 	// -- Create Home List Song --
-	Create_ListSongs(hPages[0], 30, 70, 450, 200, 4);
+	HomeSongs_List = Create_ListSongs(hPages[0], 25, 70, 460, 200, 4);
 
-	Add_ColumnListView(listSongs, COL_ID, (LPWSTR)L"ID", 50);
-	Add_ColumnListView(listSongs, COL_TITLE, (LPWSTR)L"TITLE", 300);
-	Add_ColumnListView(listSongs, COL_DURATION, (LPWSTR)L"DURATION", 100);
+	Add_ColumnListView(HomeSongs_List, COL_ID, (LPWSTR)L"ID", 50);
+	Add_ColumnListView(HomeSongs_List, COL_TITLE, (LPWSTR)L"TITLE", 300);
+	Add_ColumnListView(HomeSongs_List, COL_DURATION, (LPWSTR)L"DURATION", 100);
 
-	Clear_ListSongs();
+	ListView_DeleteAllItems(HomeSongs_List);
 	// -- Load All Songs From DB To List View --
-	Database_LoadSongs(listSongs);
+	Database_LoadSongs(HomeSongs_List);
+
 
 	// -- Create Player List Song --
-	Create_ListSongs(hPages[1], 30, 70, 450, 200, 4);
+	PlayListSongs_List = Create_ListSongs(hPages[1], 25, 70, 460, 200, 5);
 
-	Add_ColumnListView(listSongs, COL_ID, (LPWSTR)L"ID", 50);
-	Add_ColumnListView(listSongs, COL_TITLE, (LPWSTR)L"TITLE", 300);
+	Add_ColumnListView(PlayListSongs_List, COL_ID, (LPWSTR)L"ID", 50);
+	Add_ColumnListView(PlayListSongs_List, COL_TITLE, (LPWSTR)L"TITLE", 300);
 
-	//Database_LoadSongs(listSongs);
+	ListView_DeleteAllItems(PlayListSongs_List);
 
-	g_ui.hTextBox = CreateWindowW(
+	Database_LoadPlayList(PlayListSongs_List);
+
+	hTextBox = CreateWindowW(
 		L"EDIT",
 		L"",
 		WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
-		190, 20, 200, 25,
+		160, 20, 200, 25,
 		hPages[1], NULL, GetModuleHandle(NULL), NULL
 	);
 
-	btn.AddText = Create_Button(hPages[1], 5, L"ADD", 400, 20, 80, 25);
-}
-
-// -- Show Tab Logic --
-void ShowTabPage(int index) 
-{
-	for(int i = 0; i < 3; i++) 
-	{
-		ShowWindow(hPages[i], i == index ? SW_SHOW : SW_HIDE);
-	}
-}
-
-void CallTab(LPARAM lParam)
-{
-	LPNMHDR hdr = (LPNMHDR)lParam;
-
-	if(hdr->hwndFrom == hTab && hdr->code == TCN_SELCHANGE)
-	{
-		int sel = TabCtrl_GetCurSel(hTab);
-		ShowTabPage(sel);
-	}
+	btn.AddText = Create_Button(hPages[1], 5, L"ADD", 370, 20, 80, 25);
 }
 
 // -- Get Add File to DB logic -- 
@@ -150,7 +133,37 @@ void PickSongToDB(HWND hWnd)
 
 	InsertSongIntoDB(title, pathC, duration);
 
-	Database_LoadSongs(listSongs);
+	Database_LoadSongs(HomeSongs_List);
+}
+
+// -- Click Songs --
+void ClickSongs(LPARAM lParam)
+{
+	LPNMHDR hdr = (LPNMHDR)lParam;
+	
+	if (hdr->idFrom == 4 && hdr->code == LVN_ITEMACTIVATE)
+	{
+		LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
+
+		int index = p->iItem;
+
+		LVITEM item = { 0 };
+		item.mask = LVIF_PARAM;
+		item.iItem = index;
+
+		ListView_GetItem(HomeSongs_List, &item);
+		int id = item.lParam;
+		char path[521];
+
+		if (GetSongById(id, path, sizeof(path)))
+		{
+			Player_Play(id, path);
+		}
+		else
+		{
+			MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
+		}
+	}
 }
 
 // -- Handle system --

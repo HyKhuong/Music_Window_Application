@@ -22,7 +22,7 @@ void Create_TrackBar(HWND hParent)
 	track.hTrack = CreateWindowEx(
 		0, TRACKBAR_CLASS, NULL,
 		WS_CHILD | WS_VISIBLE | TBS_HORZ,
-		150, 420, 620, 30,
+		150, 420, 370, 30,
 		hParent, (HMENU)9,
 		NULL,
 		NULL

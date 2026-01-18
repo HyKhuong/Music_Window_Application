@@ -14,13 +14,13 @@ LRESULT CALLBACK PopupProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 	{
-		g_ui.hTextBox = CreateWindowW(
+		/*hTextBox = CreateWindowW(
 			L"EDIT",
 			L"",
 			WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
 			20, 20, 200, 25,
 			hWnd, NULL, GetModuleHandle(NULL), NULL
-		);
+		);*/
 
 		/*g_ui.hAddText = CreateWindow(
 			L"BUTTON",
@@ -30,27 +30,6 @@ LRESULT CALLBACK PopupProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			hWnd, (HMENU)2, NULL, NULL
 		);*/
 
-		// -- Create Tab --
-		Create_Tab(hWnd, 100);
-
-		// -- Add Tab --
-		Add_ChildTab(L"HOME", Home);
-		Add_ChildTab(L"PLAYER ", PlayerList);
-
-		// -- Create Tabs --
-		Create_ChildTab(hWnd);
-
-		// -- Create Home List Song --
-		Create_ListSongs(hPages[0], 30, 70, 450, 200, 4);
-
-		Add_ColumnListView(listSongs, COL_ID, (LPWSTR)L"ID", 50);
-		Add_ColumnListView(listSongs, COL_TITLE, (LPWSTR)L"TITLE", 300);
-		Add_ColumnListView(listSongs, COL_DURATION, (LPWSTR)L"DURATION", 100);
-
-		Clear_ListSongs();
-
-		// -- Load All Songs From DB To List View --
-		Database_LoadSongs(listSongs);
 	}
 	break;
 	case WM_NOTIFY:
@@ -59,9 +38,9 @@ LRESULT CALLBACK PopupProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_COMMAND:
 		if (LOWORD(wParam) == 2)
 		{
-			wchar_t buf[256];
+			/*wchar_t buf[256];
 			GetWindowTextW(g_ui.hTextBox, buf, 256);
-			MessageBoxW(hWnd, buf, L"Add Your List Song Success", MB_OK);
+			MessageBoxW(hWnd, buf, L"Add Your List Song Success", MB_OK);*/
 		}
 		break;
 	case WM_CLOSE:

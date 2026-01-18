@@ -8,4 +8,5 @@ typedef enum
 	COL_DURATION
 } SongColumn;
 
-extern HWND listSongs;
+extern HWND HomeSongs_List;
+extern HWND PlayListSongs_List;

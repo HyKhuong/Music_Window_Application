@@ -227,7 +227,7 @@ void InsertSongIntoDB(const char* title,const char* path, int duration)
 void InserIntoPlayerList(const char* title) 
 {
     sqlite3_stmt* stmt;
-    const char* sql = "INSERT INTO playerlist (title) VALUES (?)";
+    const char* sql = "INSERT INTO playlist (title) VALUES (?)";
 
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
 
