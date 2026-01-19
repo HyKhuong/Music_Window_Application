@@ -87,3 +87,24 @@ void ShowPopUp(HWND parent, HINSTANCE hInst)
 	ShowWindow(g_ui.hPopUp, SW_SHOW);
 	UpdateWindow(g_ui.hPopUp);
 }
+
+// -- Pop Menu --
+void Create_MenuPopUp(LPNMITEMACTIVATE p, HWND ListView)
+{
+	HMENU menu = CreatePopupMenu();
+	AppendMenuW(menu, MF_STRING, 1, L"LALA");
+
+	POINT pt = p->ptAction;
+	ClientToScreen(ListView, &pt);
+
+	int cmd = TrackPopupMenu(
+		menu,
+		TPM_RETURNCMD | TPM_RIGHTBUTTON,
+		pt.x, pt.y,
+		0,
+		GetParent(HomeSongs_List),
+		NULL
+	);
+
+	DestroyMenu(menu);
+}

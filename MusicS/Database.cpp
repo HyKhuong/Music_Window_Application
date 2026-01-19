@@ -67,14 +67,17 @@ void Database_LoadSongs(HWND listView)
         LVITEM lvi = { 0 };
         lvi.mask = LVIF_TEXT | LVIF_PARAM;
         lvi.iItem = index;
-        lvi.pszText = idW;
+        lvi.pszText = (LPTSTR)L">";
         lvi.lParam = (LPARAM)id;
 
         ListView_InsertItem(listView, &lvi);
 
-        ListView_SetItemText(listView, index, 1, titleW);
+        ListView_SetItemText(listView, index, 1, idW);
+        ListView_SetItemText(listView, index, 2, titleW);
         //ListView_SetItemText(listView, index, 2, pathW);
-        ListView_SetItemText(listView, index, 2, durationW);
+        ListView_SetItemText(listView, index, 3, durationW);
+
+        
 
         index++;
     }

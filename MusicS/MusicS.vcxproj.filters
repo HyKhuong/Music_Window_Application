@@ -152,6 +152,9 @@
     <ClInclude Include="Tab.h">
       <Filter>Header Files\Ui</Filter>
     </ClInclude>
+    <ClInclude Include="PopUp_Type.h">
+      <Filter>Header Files\Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\bass\c\bass.lib">

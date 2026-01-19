@@ -19,4 +19,4 @@ void UI_Init(HWND hWnd);
 void UI_HandleCommand(WPARAM wParam, HINSTANCE hInst);
 BOOL PickAFile(HWND hWnd, wchar_t* outPath, DWORD outSize);
 void PickSongToDB(HWND hWnd);
-void ClickSongs(LPARAM LParam);
+void ClickSongs(LPARAM LParam, HWND ListView);

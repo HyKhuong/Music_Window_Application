@@ -153,6 +153,7 @@
     <ClInclude Include="global.h" />
     <ClInclude Include="ListSongs.h" />
     <ClInclude Include="miniaudio.h" />
+    <ClInclude Include="PopUp_Type.h" />
     <ClInclude Include="Tab.h" />
     <ClInclude Include="Tab_Type.h" />
     <ClInclude Include="Player.h" />

@@ -55,14 +55,15 @@ void UI_Init(HWND hWnd)
 	// -- Create Home List Song --
 	HomeSongs_List = Create_ListSongs(hPages[0], 25, 70, 460, 200, 4);
 
-	Add_ColumnListView(HomeSongs_List, COL_ID, (LPWSTR)L"ID", 50);
-	Add_ColumnListView(HomeSongs_List, COL_TITLE, (LPWSTR)L"TITLE", 300);
-	Add_ColumnListView(HomeSongs_List, COL_DURATION, (LPWSTR)L"DURATION", 100);
+	Add_ColumnListView(HomeSongs_List, COL_PLAY, L"@", 30);
+	Add_ColumnListView(HomeSongs_List, COL_ID, L"ID", 50);
+	Add_ColumnListView(HomeSongs_List, COL_TITLE, L"TITLE", 300);
+	Add_ColumnListView(HomeSongs_List, COL_DURATION, L"DURATION", 100);
 
 	ListView_DeleteAllItems(HomeSongs_List);
 	// -- Load All Songs From DB To List View --
 	Database_LoadSongs(HomeSongs_List);
-
+	
 
 	// -- Create Player List Song --
 	PlayListSongs_List = Create_ListSongs(hPages[1], 25, 70, 460, 200, 5);
@@ -137,31 +138,63 @@ void PickSongToDB(HWND hWnd)
 }
 
 // -- Click Songs --
-void ClickSongs(LPARAM lParam)
+void ClickSongs(LPARAM lParam, HWND ListView)
 {
 	LPNMHDR hdr = (LPNMHDR)lParam;
 	
-	if (hdr->idFrom == 4 && hdr->code == LVN_ITEMACTIVATE)
+	if (hdr->idFrom == 4)
 	{
-		LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
-
-		int index = p->iItem;
-
-		LVITEM item = { 0 };
-		item.mask = LVIF_PARAM;
-		item.iItem = index;
-
-		ListView_GetItem(HomeSongs_List, &item);
-		int id = item.lParam;
-		char path[521];
-
-		if (GetSongById(id, path, sizeof(path)))
+		switch (hdr->code) 
 		{
-			Player_Play(id, path);
-		}
-		else
-		{
-			MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
+			case NM_CLICK:
+			{
+				LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
+
+				int row = p->iItem;
+				int col = p->iSubItem;
+
+				if (col == 0 && row != -1)
+				{
+					LVITEM item = { 0 };
+					item.mask = LVIF_PARAM;
+					item.iItem = row;
+
+					ListView_GetItem(HomeSongs_List, &item);
+					int id = item.lParam;
+					char path[521];
+
+					if (GetSongById(id, path, sizeof(path)))
+					{
+						Player_Play(id, path);
+					}
+					else
+					{
+						MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
+					}
+				}
+			}
+			break;
+
+			case NM_RCLICK:
+			{
+				LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
+
+				LVHITTESTINFO hit = { 0 };
+				hit.pt = p->ptAction;
+
+				int row = ListView_SubItemHitTest(ListView, &hit);
+
+				if (row == -1) break;
+
+				ListView_SetItemState(
+					HomeSongs_List,
+					row,
+					LVIS_SELECTED | LVIS_FOCUSED,
+					LVIS_SELECTED | LVIS_FOCUSED
+				);
+				Create_MenuPopUp(p, ListView);
+			}
+			break;
 		}
 	}
 }

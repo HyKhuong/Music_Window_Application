@@ -3,9 +3,11 @@
 
 typedef enum
 {
+	COL_PLAY,
 	COL_ID,
 	COL_TITLE,
 	COL_DURATION
+
 } SongColumn;
 
 extern HWND HomeSongs_List;

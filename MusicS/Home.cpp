@@ -26,7 +26,7 @@ LRESULT CALLBACK HomePageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_NOTIFY:
 		// -- Play songs from click --
-		ClickSongs(lParam);
+		ClickSongs(lParam, HomeSongs_List);
 		break;
 
 	default:
