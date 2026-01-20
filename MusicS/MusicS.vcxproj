@@ -138,6 +138,7 @@
     <ClCompile Include="PlayList.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PopUp.cpp" />
+    <ClCompile Include="SongDetail.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="Tab.cpp" />
     <ClCompile Include="Ui.cpp" />

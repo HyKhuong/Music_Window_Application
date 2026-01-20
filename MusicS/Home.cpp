@@ -6,6 +6,7 @@
 #include "ListSongs.h"
 #include "Tab_Type.h"
 #include "Ui.h"
+#include "PopUp.h"
 
 LRESULT CALLBACK HomePageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -28,7 +29,8 @@ LRESULT CALLBACK HomePageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		// -- Play songs from click --
 		ClickSongs(lParam, HomeSongs_List);
 		break;
-
+	case WM_COMMAND:
+		MenuPopUp_HandleCommand(wParam, hWnd);
 	default:
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}

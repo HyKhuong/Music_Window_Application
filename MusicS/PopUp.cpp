@@ -7,6 +7,7 @@
 #include "Tab_Type.h"
 #include "Tab.h"
 
+LRESULT CALLBACK PopupProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 // -- Create A New Window --
 LRESULT CALLBACK PopupProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -92,14 +93,14 @@ void ShowPopUp(HWND parent, HINSTANCE hInst)
 void Create_MenuPopUp(LPNMITEMACTIVATE p, HWND ListView)
 {
 	HMENU menu = CreatePopupMenu();
-	AppendMenuW(menu, MF_STRING, 1, L"LALA");
+	AppendMenuW(menu, MF_STRING, 1, L"Open Song Detail");
 
 	POINT pt = p->ptAction;
 	ClientToScreen(ListView, &pt);
 
-	int cmd = TrackPopupMenu(
+	TrackPopupMenu(
 		menu,
-		TPM_RETURNCMD | TPM_RIGHTBUTTON,
+		TPM_RIGHTBUTTON,
 		pt.x, pt.y,
 		0,
 		GetParent(HomeSongs_List),
@@ -108,3 +109,14 @@ void Create_MenuPopUp(LPNMITEMACTIVATE p, HWND ListView)
 
 	DestroyMenu(menu);
 }
+
+void MenuPopUp_HandleCommand(WPARAM wParam, HWND hWnd)
+{
+	switch (LOWORD(wParam)) 
+	{
+		case 1:
+			Create_SongDetailPage(hWnd);
+			break;
+	}
+}
+

@@ -105,6 +105,9 @@
     <ClCompile Include="Tab.cpp">
       <Filter>Source Files\Ui\Tabs</Filter>
     </ClCompile>
+    <ClCompile Include="SongDetail.cpp">
+      <Filter>Source Files\Ui\Tabs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Database.h">

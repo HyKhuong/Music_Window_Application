@@ -8,4 +8,7 @@ void ShowTabPage(int index);
 void CallTab(LPARAM lParam);
 
 void RegisterHomePageClass(HINSTANCE hInst);
-void RegisterPlayListPageClass(HINSTANCE hInst);
+void RegisterPlayListPageClass(HINSTANCE hInst); 
+void RegisterSongDetail(HINSTANCE hInst);
+
+HWND Create_SongDetailPage(HWND hParent);

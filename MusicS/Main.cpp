@@ -28,6 +28,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
     RegisterClass(&wc);
 
     RegisterPopupClass(hInst);
+    RegisterSongDetail(hInst);
     RegisterHomePageClass(hInst);
     RegisterPlayListPageClass(hInst);
 
