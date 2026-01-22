@@ -17,3 +17,5 @@ void DB_Schema();
 
 void InserIntoPlayerList(const char* title);
 void Database_LoadPlayList(HWND listView);
+
+void LoadPlayList_Combobox(HWND hComboBox);
