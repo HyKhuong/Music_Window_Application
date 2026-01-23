@@ -3,6 +3,7 @@
 #include <commctrl.h>
 #include "global.h"
 #include "Database.h"
+#include "Button.h"
 
 HWND SongDetail;
 HWND hComboBox;
@@ -50,19 +51,19 @@ void ComboBox(HWND hParent) {
 		CBS_DROPDOWNLIST | WS_CHILD | WS_VISIBLE | WS_VSCROLL,
 		20, 20, 200, 200,
 		hParent,
-		(HMENU)10,
+		(HMENU)1,
 		NULL,
 		NULL
 	);
 }
 
-void ComboboxSelect(HWND ComboBox)
+int GetComBoBox_ID(HWND ComboBox)
 {
 	int index = SendMessage(hComboBox, CB_GETCURSEL, 0, 0);
 	if (index == CB_ERR)
-		return;
+		return -1;
 
-	(int)SendMessage(hComboBox, CB_GETITEMDATA, index, 0);
+	return (int)SendMessage(hComboBox, CB_GETITEMDATA, index, 0);
 }
 
 LRESULT CALLBACK SongDetailProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -70,15 +71,65 @@ LRESULT CALLBACK SongDetailProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 	switch (msg)
 	{
 		case WM_CREATE:
+		{
 			ComboBox(hWnd);
-			//SendMessage(hComboBox, CB_RESETCONTENT, 0, 0);
 			LoadPlayList_Combobox(hComboBox);
-			break;
+			if (SendMessage(hComboBox, CB_GETCOUNT, 0, 0) > 0)
+			{
+				g_PlayListId = GetComBoBox_ID(hComboBox);
+			}
+			
+			Create_Button(hWnd, 2, L"Add", 230, 20, 60, 30);
+		}
+		
 		case WM_COMMAND:
 		{
-			if (LOWORD(wParam) == 10 && HIWORD(wParam) == CBN_SELCHANGE)
+			switch(LOWORD(wParam))
 			{
-				ComboboxSelect(hComboBox);
+				case 1:
+				{
+					if(HIWORD(wParam) ==  CBN_SELCHANGE)
+					{
+						g_PlayListId = GetComBoBox_ID(hComboBox);
+						wchar_t buf[64];
+						wsprintfW(buf, L"Playlist ID = %d", g_PlayListId);
+
+						MessageBoxW(hWnd, buf, L"Debug", MB_OK);
+					}
+				}	
+				break;
+				case 2:
+				{
+					if (g_SongId == -1 || g_PlayListId == -1) 
+					{
+						MessageBox(hWnd, L"Some thing went wrong", L"Bug", MB_OK);
+						break;
+					}
+					
+					int rc = Insert_SongIntoPlayList(g_SongId, g_PlayListId);
+					if (rc == SQLITE_DONE)
+					{
+						MessageBoxW(hWnd,
+							L"Song added to playlist successfully!",
+							L"Success",
+							MB_OK | MB_ICONINFORMATION);
+					}
+					else if (rc == SQLITE_CONSTRAINT)
+					{
+						MessageBoxW(hWnd,
+							L"This song already exists in the playlist.",
+							L"Duplicate song",
+							MB_OK | MB_ICONWARNING);
+					}
+					else
+					{
+						MessageBoxW(hWnd,
+							L"Failed to add song to playlist.",
+							L"Error",
+							MB_OK | MB_ICONERROR);
+					}
+				}
+				break;
 			}
 		}
 	}

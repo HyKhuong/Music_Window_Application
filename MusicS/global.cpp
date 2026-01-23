@@ -1,5 +1,4 @@
-#include <cstddef>
-#include <wtypes.h>
+#include "global.h"
 #include "bass.h"
 
 // -- Track Song Duration --
@@ -14,3 +13,6 @@ int g_totalTime = 0;
 int g_currentId = -1;
 int isPaused = 0;
 int g_isSeeking = 0;
+
+int g_SongId = -1;
+int g_PlayListId = -1;

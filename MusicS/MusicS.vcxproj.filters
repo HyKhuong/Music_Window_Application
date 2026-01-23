@@ -108,6 +108,12 @@
     <ClCompile Include="SongDetail.cpp">
       <Filter>Source Files\Ui\Tabs</Filter>
     </ClCompile>
+    <ClCompile Include="SongsDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayListDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Database.h">

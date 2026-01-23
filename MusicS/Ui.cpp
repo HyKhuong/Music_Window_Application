@@ -16,6 +16,7 @@
 #include "Tab.h"
 
 #include <commctrl.h>
+#include "global.h"
 
 UIContext g_ui = { 0 };
 Button btn;
@@ -183,6 +184,13 @@ void ClickSongs(LPARAM lParam, HWND ListView)
 				hit.pt = p->ptAction;
 
 				int row = ListView_SubItemHitTest(ListView, &hit);
+
+				LVITEM item = { 0 };
+				item.mask = LVIF_PARAM;
+				item.iItem = row;
+
+				ListView_GetItem(HomeSongs_List, &item);
+				g_SongId = item.lParam;
 
 				if (row == -1) break;
 

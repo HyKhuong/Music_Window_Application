@@ -18,6 +18,7 @@ static const char* createTable_PlayerListSongs =
 "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 "playlist_id INTEGER NOT NULL,"
 "song_id INTEGER NOT NULL,"
+"UNIQUE (playlist_id, song_id),"
 "FOREIGN KEY (playlist_id) REFERENCES playerlist(id),"
 "FOREIGN KEY (song_id) REFERENCES songs(id));";
 

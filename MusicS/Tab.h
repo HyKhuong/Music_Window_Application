@@ -13,4 +13,4 @@ void RegisterSongDetail(HINSTANCE hInst);
 
 HWND Create_SongDetailPage(HWND hParent);
 void ComboBox(HWND hParent);
-void ComboboxSelect(HWND ComboBox);
+int  GetComBoBox_ID(HWND ComboBox);
