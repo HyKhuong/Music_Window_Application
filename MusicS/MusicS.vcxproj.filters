@@ -114,6 +114,9 @@
     <ClCompile Include="PlayListDB.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
+    <ClCompile Include="PlayListSongs.cpp">
+      <Filter>Source Files\Ui\Tabs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Database.h">

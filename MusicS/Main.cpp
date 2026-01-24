@@ -31,6 +31,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
     RegisterSongDetail(hInst);
     RegisterHomePageClass(hInst);
     RegisterPlayListPageClass(hInst);
+    RegisterPlayListSongs(hInst);
 
     HWND hWnd = CreateWindow(
         wc.lpszClassName,

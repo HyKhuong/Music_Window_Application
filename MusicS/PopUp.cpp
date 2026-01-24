@@ -90,10 +90,10 @@ void ShowPopUp(HWND parent, HINSTANCE hInst)
 }
 
 // -- Pop Menu --
-void Create_MenuPopUp(LPNMITEMACTIVATE p, HWND ListView)
+void Create_MenuPopUp(LPNMITEMACTIVATE p, HWND ListView , int id, const wchar_t* text)
 {
 	HMENU menu = CreatePopupMenu();
-	AppendMenuW(menu, MF_STRING, 1, L"Open Song Detail");
+	AppendMenuW(menu, MF_STRING, id, text);
 
 	POINT pt = p->ptAction;
 	ClientToScreen(ListView, &pt);
@@ -103,7 +103,7 @@ void Create_MenuPopUp(LPNMITEMACTIVATE p, HWND ListView)
 		TPM_RIGHTBUTTON,
 		pt.x, pt.y,
 		0,
-		GetParent(HomeSongs_List),
+		GetParent(ListView),
 		NULL
 	);
 
@@ -116,6 +116,9 @@ void MenuPopUp_HandleCommand(WPARAM wParam, HWND hWnd)
 	{
 		case 1:
 			Create_SongDetailPage(hWnd);
+			break;
+		case 2:
+			Create_PlayListSongs(hWnd);
 			break;
 	}
 }

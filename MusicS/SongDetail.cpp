@@ -26,7 +26,7 @@ void RegisterSongDetail(HINSTANCE hInst)
 
 HWND Create_SongDetailPage(HWND hParent)
 {
-	 SongDetail = CreateWindowExW(
+	 SongDetail = CreateWindowEx(
 		WS_EX_TOOLWINDOW | WS_EX_DLGMODALFRAME,
 		L"SongDetailClass",
 		L"Song Info",

@@ -132,6 +132,7 @@
     <ClCompile Include="DurationTrackBar_Type.h" />
     <ClCompile Include="global.cpp" />
     <ClCompile Include="Home.cpp" />
+    <ClCompile Include="PlayListSongs.cpp" />
     <ClCompile Include="SongsDB.cpp" />
     <ClCompile Include="ListSong.cpp" />
     <ClCompile Include="ListSongs_Type.h" />

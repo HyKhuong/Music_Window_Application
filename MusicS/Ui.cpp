@@ -67,7 +67,7 @@ void UI_Init(HWND hWnd)
 	
 
 	// -- Create Player List Song --
-	PlayListSongs_List = Create_ListSongs(hPages[1], 25, 70, 460, 200, 5);
+	PlayListSongs_List = Create_ListSongs(hPages[1], 25, 70, 460, 200, 10);
 
 	Add_ColumnListView(PlayListSongs_List, COL_ID, (LPWSTR)L"ID", 50);
 	Add_ColumnListView(PlayListSongs_List, COL_TITLE, (LPWSTR)L"TITLE", 300);
@@ -136,75 +136,6 @@ void PickSongToDB(HWND hWnd)
 	InsertSongIntoDB(title, pathC, duration);
 
 	Database_LoadSongs(HomeSongs_List);
-}
-
-// -- Click Songs --
-void ClickSongs(LPARAM lParam, HWND ListView)
-{
-	LPNMHDR hdr = (LPNMHDR)lParam;
-	
-	if (hdr->idFrom == 4)
-	{
-		switch (hdr->code) 
-		{
-			case NM_CLICK:
-			{
-				LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
-
-				int row = p->iItem;
-				int col = p->iSubItem;
-
-				if (col == 0 && row != -1)
-				{
-					LVITEM item = { 0 };
-					item.mask = LVIF_PARAM;
-					item.iItem = row;
-
-					ListView_GetItem(HomeSongs_List, &item);
-					int id = item.lParam;
-					char path[521];
-
-					if (GetSongById(id, path, sizeof(path)))
-					{
-						Player_Play(id, path);
-					}
-					else
-					{
-						MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
-					}
-				}
-			}
-			break;
-
-			case NM_RCLICK:
-			{
-				LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
-
-				LVHITTESTINFO hit = { 0 };
-				hit.pt = p->ptAction;
-
-				int row = ListView_SubItemHitTest(ListView, &hit);
-
-				LVITEM item = { 0 };
-				item.mask = LVIF_PARAM;
-				item.iItem = row;
-
-				ListView_GetItem(HomeSongs_List, &item);
-				g_SongId = item.lParam;
-
-				if (row == -1) break;
-
-				ListView_SetItemState(
-					HomeSongs_List,
-					row,
-					LVIS_SELECTED | LVIS_FOCUSED,
-					LVIS_SELECTED | LVIS_FOCUSED
-				);
-				Create_MenuPopUp(p, ListView);
-			}
-			break;
-		}
-	}
 }
 
 // -- Handle system --
