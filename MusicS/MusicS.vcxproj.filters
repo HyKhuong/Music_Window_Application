@@ -46,6 +46,9 @@
     <Filter Include="Header Files\Types">
       <UniqueIdentifier>{639ffb71-cded-44e6-a898-2734e701d660}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Ui\Tabs">
+      <UniqueIdentifier>{c33359c9-3132-45da-88a2-cf5db899923f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -90,11 +93,29 @@
     <ClCompile Include="ListSongs_Type.h">
       <Filter>Header Files\Types</Filter>
     </ClCompile>
-    <ClCompile Include="Tab.cpp">
-      <Filter>Source Files\Ui</Filter>
-    </ClCompile>
     <ClCompile Include="db_schema.cpp">
       <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayList.cpp">
+      <Filter>Source Files\Ui\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Home.cpp">
+      <Filter>Source Files\Ui\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Tab.cpp">
+      <Filter>Source Files\Ui\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="SongDetail.cpp">
+      <Filter>Source Files\Ui\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="SongsDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayListDB.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayListSongs.cpp">
+      <Filter>Source Files\Ui\Tabs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="Tab.h">
       <Filter>Header Files\Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUp_Type.h">
+      <Filter>Header Files\Types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

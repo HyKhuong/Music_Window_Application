@@ -10,6 +10,11 @@ extern int g_totalTime;
 extern int g_isSeeking;
 extern int g_currentId;
 
+extern int g_SongId;
+extern int g_PlayListId;
+
+extern const char* sql;
+
 // -- Wave Form config --
 #define WAVE_SAMPLES 512
 #define WAVE_X 20

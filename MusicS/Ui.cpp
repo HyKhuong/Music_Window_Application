@@ -16,6 +16,7 @@
 #include "Tab.h"
 
 #include <commctrl.h>
+#include "global.h"
 
 UIContext g_ui = { 0 };
 Button btn;
@@ -52,54 +53,11 @@ void UI_Init(HWND hWnd)
 	// -- Create Tabs --
 	Create_ChildTab(hWnd);
 
-	// -- Create Home List Song --
-	Create_ListSongs(hPages[0], 30, 70, 450, 200, 4);
+	// -- Create Home  List Song --
+	HomePage_Init();
 
-	Add_ColumnListView(listSongs, COL_ID, (LPWSTR)L"ID", 50);
-	Add_ColumnListView(listSongs, COL_TITLE, (LPWSTR)L"TITLE", 300);
-	Add_ColumnListView(listSongs, COL_DURATION, (LPWSTR)L"DURATION", 100);
-
-	Clear_ListSongs();
-	// -- Load All Songs From DB To List View --
-	Database_LoadSongs(listSongs);
-
-	// -- Create Player List Song --
-	Create_ListSongs(hPages[1], 30, 70, 450, 200, 4);
-
-	Add_ColumnListView(listSongs, COL_ID, (LPWSTR)L"ID", 50);
-	Add_ColumnListView(listSongs, COL_TITLE, (LPWSTR)L"TITLE", 300);
-
-	//Database_LoadSongs(listSongs);
-
-	g_ui.hTextBox = CreateWindowW(
-		L"EDIT",
-		L"",
-		WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
-		190, 20, 200, 25,
-		hPages[1], NULL, GetModuleHandle(NULL), NULL
-	);
-
-	btn.AddText = Create_Button(hPages[1], 5, L"ADD", 400, 20, 80, 25);
-}
-
-// -- Show Tab Logic --
-void ShowTabPage(int index) 
-{
-	for(int i = 0; i < 3; i++) 
-	{
-		ShowWindow(hPages[i], i == index ? SW_SHOW : SW_HIDE);
-	}
-}
-
-void CallTab(LPARAM lParam)
-{
-	LPNMHDR hdr = (LPNMHDR)lParam;
-
-	if(hdr->hwndFrom == hTab && hdr->code == TCN_SELCHANGE)
-	{
-		int sel = TabCtrl_GetCurSel(hTab);
-		ShowTabPage(sel);
-	}
+	// -- Create PlayList --
+	PlayList_Init(btn);
 }
 
 // -- Get Add File to DB logic -- 
@@ -150,7 +108,7 @@ void PickSongToDB(HWND hWnd)
 
 	InsertSongIntoDB(title, pathC, duration);
 
-	Database_LoadSongs(listSongs);
+	LoadList_Songs(HomeSongs_List, sql);
 }
 
 // -- Handle system --

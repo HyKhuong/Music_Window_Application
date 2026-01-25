@@ -10,5 +10,6 @@ typedef struct {
 	HWND AddText;
 } Button;
 
+extern HWND hTextBox;
 
 	

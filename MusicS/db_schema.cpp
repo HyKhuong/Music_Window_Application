@@ -10,7 +10,7 @@ static const char* createTableSongs =
 static const char* createTablePlayList =
 "CREATE TABLE IF NOT EXISTS playlist ("
 "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-"title TEXT NOT NULL,"
+"title TEXT NOT NULL UNIQUE,"
 "total INTEGER);";
 
 static const char* createTable_PlayerListSongs =
@@ -18,6 +18,7 @@ static const char* createTable_PlayerListSongs =
 "id INTEGER PRIMARY KEY AUTOINCREMENT,"
 "playlist_id INTEGER NOT NULL,"
 "song_id INTEGER NOT NULL,"
+"UNIQUE (playlist_id, song_id),"
 "FOREIGN KEY (playlist_id) REFERENCES playerlist(id),"
 "FOREIGN KEY (song_id) REFERENCES songs(id));";
 
