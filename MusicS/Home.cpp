@@ -5,7 +5,6 @@
 #include "listSongs_Type.h"
 #include "ListSongs.h"
 #include "Tab_Type.h"
-#include "Ui.h"
 #include "PopUp.h"
 #include "global.h"
 #include "Player.h"
@@ -23,12 +22,30 @@ void RegisterHomePageClass(HINSTANCE hInst)
 	RegisterClass(&wc);
 }
 
+void HomePage_Init()
+{
+	// -- Create Home List Song --
+	HomeSongs_List = Create_ListSongs(hPages[0], 25, 70, 460, 200, 4);
+
+	Add_ColumnListView(HomeSongs_List, COL_PLAY, L"@", 30);
+	Add_ColumnListView(HomeSongs_List, COL_ID, L"ID", 50);
+	Add_ColumnListView(HomeSongs_List, COL_TITLE, L"TITLE", 300);
+	Add_ColumnListView(HomeSongs_List, COL_DURATION, L"DURATION", 100);
+
+	ListView_DeleteAllItems(HomeSongs_List);
+
+	// -- Load All Songs From DB To List View --
+	sql = "SELECT id, title, duration FROM songs";
+
+	LoadList_Songs(HomeSongs_List, sql);
+}
+
 // -- Click Songs --
-void ClickSongs(LPARAM lParam)
+void ClickSongs(LPARAM lParam, int id)
 {
 	LPNMHDR hdr = (LPNMHDR)lParam;
 
-	if (hdr->idFrom == 4)
+	if (hdr->idFrom == id)
 	{
 		switch (hdr->code)
 		{
@@ -98,7 +115,7 @@ LRESULT CALLBACK HomePageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_NOTIFY:
 		// -- Play songs from click --
-		ClickSongs(lParam);
+		ClickSongs(lParam, 4);
 		break;
 	case WM_COMMAND:
 		MenuPopUp_HandleCommand(wParam, hWnd);

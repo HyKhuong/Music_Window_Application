@@ -7,6 +7,7 @@
 #include "Tab_Type.h"
 #include "global.h"
 #include "PopUp.h"
+#include "Button.h"
 
 LRESULT CALLBACK PlayListPageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -19,6 +20,29 @@ void RegisterPlayListPageClass(HINSTANCE hInst)
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 
 	RegisterClass(&wc);
+}
+
+void PlayList_Init(Button btn)
+{
+	// -- Create Player List Song --
+	PlayListSongs_List = Create_ListSongs(hPages[1], 25, 70, 460, 200, 10);
+
+	Add_ColumnListView(PlayListSongs_List, COL_ID, L"ID", 50);
+	Add_ColumnListView(PlayListSongs_List, COL_TITLE, L"TITLE", 300);
+
+	ListView_DeleteAllItems(PlayListSongs_List);
+
+	Database_LoadPlayList(PlayListSongs_List);
+
+	hTextBox = CreateWindowW(
+		L"EDIT",
+		L"",
+		WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
+		160, 20, 200, 25,
+		hPages[1], NULL, GetModuleHandle(NULL), NULL
+	);
+
+	btn.AddText = Create_Button(hPages[1], 5, L"ADD", 370, 20, 80, 25);
 }
 
 void OpenPlayList_Songs(LPARAM lParam)

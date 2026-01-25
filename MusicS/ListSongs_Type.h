@@ -12,3 +12,4 @@ typedef enum
 
 extern HWND HomeSongs_List;
 extern HWND PlayListSongs_List;
+extern HWND PlayListSongsDetail_List;

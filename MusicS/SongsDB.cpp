@@ -3,21 +3,17 @@
 #include <stdio.h>
 #include <commctrl.h>
 #include "Player.h"
+#include "global.h"
 
-void Database_LoadSongs(HWND listView)
+void LoadSongs_Data(HWND listView, sqlite3_stmt* stmt)
 {
-    sqlite3_stmt* stmt;
-    const char* sql = "SELECT * FROM songs";
-
-    sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
-
     int index = 0;
 
     while (sqlite3_step(stmt) == SQLITE_ROW)
     {
         int id = sqlite3_column_int(stmt, 0);
         const char* title = (const char*)sqlite3_column_text(stmt, 1);
-        int duration = sqlite3_column_int(stmt, 3);
+        int duration = sqlite3_column_int(stmt, 2);
 
         // ---- Convert ID to wchar ----
         char idBuffer[32];
@@ -50,9 +46,38 @@ void Database_LoadSongs(HWND listView)
 
         index++;
     }
+}
 
+void LoadList_Songs(HWND listView, const char* sql)
+{
+    sqlite3_stmt* stmt;
+
+    sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+
+    if (g_PlayListId != -1) {
+        int id = g_PlayListId;
+        sqlite3_bind_int(stmt, 1, id);
+    }
+
+    LoadSongs_Data(listView, stmt);
     sqlite3_finalize(stmt);
 }
+
+void LoadPlayList_Songs(HWND listView, const char* sql)
+{
+    sqlite3_stmt* stmt;
+
+    sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+
+    if (sqlite3_bind_parameter_count(stmt) > 0) {
+        int id = g_PlayListId;
+        sqlite3_bind_int(stmt, 1, id);
+    }
+
+    LoadSongs_Data(listView, stmt);
+    sqlite3_finalize(stmt);
+}
+
 
 int GetSongById(int id, char* outPath, int maxLen)
 {

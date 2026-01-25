@@ -53,38 +53,11 @@ void UI_Init(HWND hWnd)
 	// -- Create Tabs --
 	Create_ChildTab(hWnd);
 
-	// -- Create Home List Song --
-	HomeSongs_List = Create_ListSongs(hPages[0], 25, 70, 460, 200, 4);
+	// -- Create Home  List Song --
+	HomePage_Init();
 
-	Add_ColumnListView(HomeSongs_List, COL_PLAY, L"@", 30);
-	Add_ColumnListView(HomeSongs_List, COL_ID, L"ID", 50);
-	Add_ColumnListView(HomeSongs_List, COL_TITLE, L"TITLE", 300);
-	Add_ColumnListView(HomeSongs_List, COL_DURATION, L"DURATION", 100);
-
-	ListView_DeleteAllItems(HomeSongs_List);
-	// -- Load All Songs From DB To List View --
-	Database_LoadSongs(HomeSongs_List);
-	
-
-	// -- Create Player List Song --
-	PlayListSongs_List = Create_ListSongs(hPages[1], 25, 70, 460, 200, 10);
-
-	Add_ColumnListView(PlayListSongs_List, COL_ID, (LPWSTR)L"ID", 50);
-	Add_ColumnListView(PlayListSongs_List, COL_TITLE, (LPWSTR)L"TITLE", 300);
-
-	ListView_DeleteAllItems(PlayListSongs_List);
-
-	Database_LoadPlayList(PlayListSongs_List);
-
-	hTextBox = CreateWindowW(
-		L"EDIT",
-		L"",
-		WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
-		160, 20, 200, 25,
-		hPages[1], NULL, GetModuleHandle(NULL), NULL
-	);
-
-	btn.AddText = Create_Button(hPages[1], 5, L"ADD", 370, 20, 80, 25);
+	// -- Create PlayList --
+	PlayList_Init(btn);
 }
 
 // -- Get Add File to DB logic -- 
@@ -135,7 +108,7 @@ void PickSongToDB(HWND hWnd)
 
 	InsertSongIntoDB(title, pathC, duration);
 
-	Database_LoadSongs(HomeSongs_List);
+	LoadList_Songs(HomeSongs_List, sql);
 }
 
 // -- Handle system --

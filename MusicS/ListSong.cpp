@@ -4,10 +4,10 @@
 
 HWND HomeSongs_List;
 HWND PlayListSongs_List;
+HWND PlayListSongsDetail_List;
 
 HWND Create_ListSongs(HWND hParent, int x, int y, int w, int h, int id)
 {
-
 	return CreateWindow(
 		WC_LISTVIEW, 
 		L"",

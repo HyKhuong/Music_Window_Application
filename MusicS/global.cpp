@@ -16,3 +16,5 @@ int g_isSeeking = 0;
 
 int g_SongId = -1;
 int g_PlayListId = -1;
+
+const char* sql = "";
