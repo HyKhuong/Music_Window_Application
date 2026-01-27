@@ -25,11 +25,11 @@ void RegisterPlayListSongs(HINSTANCE hInst)
 HWND Create_PlayListSongs(HWND hParent)
 {
 	PlayList_Songs = CreateWindowEx(
-		WS_EX_TOOLWINDOW | WS_EX_DLGMODALFRAME,
+		WS_EX_DLGMODALFRAME,
 		L"PlayListSongsClass",
-		L"",
+		L"Play List Detail",
 		WS_POPUP | WS_CAPTION | WS_SYSMENU,
-		CW_USEDEFAULT, CW_USEDEFAULT, 530, 500,
+		600, 40, 530, 500,
 		hParent,
 		NULL,
 		g_hInst,
@@ -69,7 +69,7 @@ LRESULT CALLBACK PlayList_SongsProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM l
 		}
 		case WM_NOTIFY:
 		{
-			ClickSongs(lParam, 7);
+			ClickSongs(PlayListSongsDetail_List, lParam, 7);
 			break;
 		}
 	}

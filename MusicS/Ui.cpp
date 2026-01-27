@@ -21,19 +21,48 @@
 UIContext g_ui = { 0 };
 Button btn;
 
+void UI_FONT() 
+{
+	g_WinFont = CreateFontW(
+		-14,                    
+		0, 0, 0,
+		FW_NORMAL,
+		FALSE, FALSE, FALSE,
+		ANSI_CHARSET,
+		OUT_DEFAULT_PRECIS,
+		CLIP_DEFAULT_PRECIS,
+		CLEARTYPE_QUALITY,        
+		FF_DONTCARE,
+		L"Segoe UI"        
+	);
+}
+
+void SetUIFont(HWND hCtrl)
+{
+	SendMessageW(hCtrl, WM_SETFONT, (WPARAM)g_WinFont, TRUE);
+}
+
 void UI_Init(HWND hWnd)
 {	
 	// -- Button --
 	btn.btnPlay = Create_Button(hWnd, 1, L"Play", 20, 20, 80, 30);
+	SetUIFont(btn.btnPlay);
+
 	btn.btnPause = Create_Button(hWnd, 2, L"Pause", 110, 20, 80, 30);
+	SetUIFont(btn.btnPause);
+
 	btn.btnStop = Create_Button(hWnd, 3, L"Stop", 200, 20, 80, 30);
+	SetUIFont(btn.btnStop);
+
 	btn.filePicker = Create_Button(hWnd, 4, L"Add Song", 300, 20, 80, 30);
+	SetUIFont(btn.filePicker);
+
 
 	// -- Track Duration Bar --
 	Create_TrackBar(hWnd);
 	
 	// -- Add Custom List Songs --
-	g_ui.hCustomListSongs = CreateWindow(
+	/*g_ui.hCustomListSongs = CreateWindow(
 		L"Button",
 		L"Create Your List Songs",
 		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -41,7 +70,7 @@ void UI_Init(HWND hWnd)
 		hWnd, (HMENU)5,
 		NULL,
 		NULL
-	);
+	);*/
 
 	// -- Create Tab --
 	Create_Tab(hWnd, 100);
@@ -100,14 +129,22 @@ void PickSongToDB(HWND hWnd)
 	char* name = strrchr(pathC, '\\');
 	name = name ? name + 1 : pathC;
 
+	while (*name >= '0' && *name <= '9')
+		name++;
+
+	if (*name == '.')
+		name++;
+
 	strncpy_s(title, sizeof(title), name, _TRUNCATE);
 	char* dot = strrchr(title, '.');
 	if (dot) *dot = '\0';
 
-	int duration = GetSongLength(pathC);
+	MultiByteToWideChar(CP_UTF8, 0, pathC, -1, path, sizeof(path));
+	int duration = GetSongLength(path);
 
 	InsertSongIntoDB(title, pathC, duration);
 
+	ListView_DeleteAllItems(HomeSongs_List);
 	LoadList_Songs(HomeSongs_List, sql);
 }
 
@@ -118,7 +155,7 @@ void UI_HandleCommand(WPARAM wParam, HINSTANCE hInst)
 	{
 	case 1:
 	{
-		char path[256];
+		wchar_t path[256];
 		if (GetSongById(1, path, sizeof(path)))
 		{
 			Player_Play(1, path);
@@ -137,5 +174,7 @@ void UI_HandleCommand(WPARAM wParam, HINSTANCE hInst)
 	case 4:
 		PickSongToDB(g_ui.hWnd);
 		break;
+	case 5:
+		ShowPopUp(g_hWnd, hInst);
 	}
 }

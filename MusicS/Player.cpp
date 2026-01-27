@@ -7,6 +7,8 @@
 #include <CommCtrl.h>
 #include "Ui.h"
 
+#include "ListSongs_Type.h"
+
 #include "DurationTrackBar.h"
 #include "DurationTrackBar_Type.h"
 
@@ -28,7 +30,7 @@ void Player_Init()
     }
 }
 
-int GetSongLength(const char* filePath) 
+int GetSongLength(const wchar_t* filePath) 
 {
     g_stream = BASS_StreamCreateFile(FALSE, filePath, 0, 0, BASS_STREAM_DECODE | BASS_SAMPLE_FLOAT);
 
@@ -40,11 +42,9 @@ int GetSongLength(const char* filePath)
     return (int)(length + 0.5);
 }
 
-void Player_Play(int id, const char* filePath)
+void Player_Play(int id, const wchar_t* filePath)
 {
     if (!filePath) return;
-
-    g_currentId = id;
 
     if(!CheckSongDurationStatus(id)) 
     {
@@ -226,9 +226,15 @@ void DrawSpecTrum(HDC hdc)
 
 void Player_Next_Song()
 {
-    int id = g_currentId + 1;
+    //int id = ++g_currentIndex;
+    LVITEM item = { 0 };
+    item.mask = LVIF_PARAM;
+    item.iItem = ++g_currentIndex;
 
-    char path[256];
+    ListView_GetItem(g_listView, &item);
+    int id = item.lParam;
+
+    wchar_t path[256];
     
     if(GetSongById(id, path, sizeof(path))) 
     {

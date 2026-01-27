@@ -10,11 +10,14 @@ HINSTANCE g_hInst = NULL;
 
 int g_totalTime = 0;
 
-int g_currentId = -1;
+int g_currentIndex = -1;
 int isPaused = 0;
 int g_isSeeking = 0;
 
 int g_SongId = -1;
 int g_PlayListId = -1;
 
+HWND g_listView = NULL;
 const char* sql = "";
+
+HFONT g_WinFont = NULL;

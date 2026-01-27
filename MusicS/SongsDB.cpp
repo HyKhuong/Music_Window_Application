@@ -79,7 +79,7 @@ void LoadPlayList_Songs(HWND listView, const char* sql)
 }
 
 
-int GetSongById(int id, char* outPath, int maxLen)
+int GetSongById(int id, wchar_t* outPath, int maxLen)
 {
     sqlite3_stmt* stmt;
     const char* sql = "SELECT * FROM songs WHERE id = ?";
@@ -95,7 +95,8 @@ int GetSongById(int id, char* outPath, int maxLen)
     if (sqlite3_step(stmt) == SQLITE_ROW)
     {
         const unsigned char* path = sqlite3_column_text(stmt, 2);
-        strncpy_s(outPath, maxLen, (const char*)path, _TRUNCATE);
+
+        MultiByteToWideChar(CP_UTF8, 0, (const char*)path, -1, outPath, maxLen);
 
         success = 1;
     }
@@ -124,7 +125,7 @@ int SongCount()
     return count;
 }
 
-void InserSongDurationDB(int id, const char* path)
+void InserSongDurationDB(int id, const wchar_t* path)
 {
     int duration = GetSongLength(path);
 

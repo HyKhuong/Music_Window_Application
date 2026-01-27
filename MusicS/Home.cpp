@@ -41,7 +41,7 @@ void HomePage_Init()
 }
 
 // -- Click Songs --
-void ClickSongs(LPARAM lParam, int id)
+void ClickSongs(HWND ListView, LPARAM lParam, int id)
 {
 	LPNMHDR hdr = (LPNMHDR)lParam;
 
@@ -62,9 +62,12 @@ void ClickSongs(LPARAM lParam, int id)
 				item.mask = LVIF_PARAM;
 				item.iItem = row;
 
-				ListView_GetItem(HomeSongs_List, &item);
+				g_currentIndex = row;
+				g_listView = ListView;
+
+				ListView_GetItem(ListView, &item);
 				int id = item.lParam;
-				char path[521];
+				wchar_t path[521];
 
 				if (GetSongById(id, path, sizeof(path)))
 				{
@@ -85,24 +88,24 @@ void ClickSongs(LPARAM lParam, int id)
 			LVHITTESTINFO hit = { 0 };
 			hit.pt = p->ptAction;
 
-			int row = ListView_SubItemHitTest(HomeSongs_List, &hit);
+			int row = ListView_SubItemHitTest(ListView, &hit);
 
 			LVITEM item = { 0 };
 			item.mask = LVIF_PARAM;
 			item.iItem = row;
 
-			ListView_GetItem(HomeSongs_List, &item);
+			ListView_GetItem(ListView, &item);
 			g_SongId = item.lParam;
 
 			if (row == -1) break;
 
 			ListView_SetItemState(
-				HomeSongs_List,
+				ListView,
 				row,
 				LVIS_SELECTED | LVIS_FOCUSED,
 				LVIS_SELECTED | LVIS_FOCUSED
 			);
-			Create_MenuPopUp(p, HomeSongs_List, 1, L"Open Songs Detail");
+			Create_MenuPopUp(p, ListView, 1, L"Open Songs Detail");
 		}
 		break;
 		}
@@ -115,7 +118,7 @@ LRESULT CALLBACK HomePageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_NOTIFY:
 		// -- Play songs from click --
-		ClickSongs(lParam, 4);
+		ClickSongs(HomeSongs_List, lParam, 4);
 		break;
 	case WM_COMMAND:
 		MenuPopUp_HandleCommand(wParam, hWnd);

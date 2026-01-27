@@ -66,6 +66,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         Database_Init();
         DB_Schema();
 
+        UI_FONT();
         UI_Init(hWnd);
 
         Player_Init();
