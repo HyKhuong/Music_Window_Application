@@ -29,6 +29,7 @@ void PlayList_Init(Button btn)
 
 	Add_ColumnListView(PlayListSongs_List, COL_ID, L"ID", 50);
 	Add_ColumnListView(PlayListSongs_List, COL_TITLE, L"TITLE", 300);
+	Add_ColumnListView(PlayListSongs_List, 2, L"Total", 50);
 
 	ListView_DeleteAllItems(PlayListSongs_List);
 

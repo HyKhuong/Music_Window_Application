@@ -27,3 +27,4 @@ void RegisterPlayListSongs(HINSTANCE hInst);
 HWND Create_PlayListSongs(HWND hParent);
 void OpenPlayList_Songs(LPARAM lParam);
 void PlayListSongsDetail_Init(HWND hParent);
+int CountSongsInPlayList(int id);

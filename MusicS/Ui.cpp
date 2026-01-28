@@ -129,9 +129,15 @@ void PickSongToDB(HWND hWnd)
 	char* name = strrchr(pathC, '\\');
 	name = name ? name + 1 : pathC;
 
-	while (*name >= '0' && *name <= '9')
+	while (*name >= '0' && *name <= '9') 
+	{
 		name++;
-
+		if (*name == '-')
+		{
+			name++;
+		}		
+	}
+		
 	if (*name == '.')
 		name++;
 
@@ -139,7 +145,7 @@ void PickSongToDB(HWND hWnd)
 	char* dot = strrchr(title, '.');
 	if (dot) *dot = '\0';
 
-	MultiByteToWideChar(CP_UTF8, 0, pathC, -1, path, sizeof(path));
+	MultiByteToWideChar(CP_UTF8, 0, pathC, -1, path, 256);
 	int duration = GetSongLength(path);
 
 	InsertSongIntoDB(title, pathC, duration);

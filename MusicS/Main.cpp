@@ -8,6 +8,7 @@
 #include "ListSongs_Type.h"
 #include "PopUp.h"
 #include "Tab.h"
+#include "resource.h"
 
 #pragma comment(lib, "comctl32.lib")
 
@@ -19,6 +20,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
     WNDCLASS wc = { 0 };
     wc.lpfnWndProc = WndProc;
     wc.hInstance = hInst;
+
+    wc.hIcon = LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1));
     wc.lpszClassName = TEXT("MusicPlayerClass");
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 
