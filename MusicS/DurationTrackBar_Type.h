@@ -5,6 +5,7 @@ typedef struct {
 
 	HWND hTimeText;
 	HWND hTrack;
+	HWND tSongPlay;
 
 } TrackBar;
 

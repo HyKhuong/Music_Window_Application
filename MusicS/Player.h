@@ -13,11 +13,11 @@ void CALLBACK OnSongEnd(
 
 // -- Function --
 void Player_Init();
-void Player_Play(int id, const char* filePath);
+void Player_Play(int id, const wchar_t* filePath);
 void Player_Next_Song();
 void Player_Pause();
 void Player_Stop();
-int GetSongLength(const char* filePath);
+int GetSongLength(const wchar_t* filePath);
 void UpdateTimer();
 void GetScrollPosition(LPARAM lParam, WPARAM WParam);
 

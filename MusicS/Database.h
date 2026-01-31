@@ -8,13 +8,13 @@ extern sqlite3* db;
 
 // -- Database --
 void Database_Init();
-int GetSongById(int id, char* outPath, int maxLen);
+int GetSongById(int id, wchar_t* outPath, int maxLen);
 void Create_TableForDB(const char* sql);
 void DB_Schema();
 int Insert_SongIntoPlayList(int SongId, int PlayListId);
 
 // -- Songs Table -- 
-void InserSongDurationDB(int id, const char* path);
+void InserSongDurationDB(int id, const wchar_t* path);
 int CheckSongDurationStatus(int id);
 int SongCount();
 void InsertSongIntoDB(const char* title, const char* path, int duration);

@@ -158,6 +158,7 @@
     <ClInclude Include="ListSongs.h" />
     <ClInclude Include="miniaudio.h" />
     <ClInclude Include="PopUp_Type.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Tab.h" />
     <ClInclude Include="Tab_Type.h" />
     <ClInclude Include="Player.h" />
@@ -167,6 +168,12 @@
   <ItemGroup>
     <Library Include="..\bassFlac\c\bassflac.lib" />
     <Library Include="..\bass\c\bass.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MusicS.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="C:\Users\hvsom\Downloads\favicon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -27,4 +27,15 @@ void Create_TrackBar(HWND hParent)
 		NULL,
 		NULL
 	);
+
+	track.tSongPlay = CreateWindow(
+		L"STATIC",
+		L"NOW PLAYING:",
+		WS_CHILD | WS_VISIBLE,
+		20, 460, 200, 30,
+		hParent, 
+		(HMENU)10,
+		NULL,
+		NULL
+	);
 }

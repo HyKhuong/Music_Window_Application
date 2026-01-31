@@ -27,11 +27,11 @@ void RegisterSongDetail(HINSTANCE hInst)
 HWND Create_SongDetailPage(HWND hParent)
 {
 	 SongDetail = CreateWindowEx(
-		WS_EX_TOOLWINDOW | WS_EX_DLGMODALFRAME,
+		WS_EX_DLGMODALFRAME,
 		L"SongDetailClass",
 		L"Song Info",
 		WS_POPUP | WS_CAPTION | WS_SYSMENU,
-		CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
+		600, 40, 400, 300,
 		hParent,
 		NULL,
 		g_hInst,

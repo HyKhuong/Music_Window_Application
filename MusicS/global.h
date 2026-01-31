@@ -8,10 +8,12 @@ extern HINSTANCE g_hInst;
 
 extern int g_totalTime;
 extern int g_isSeeking;
-extern int g_currentId;
+extern int g_currentIndex;
 
 extern int g_SongId;
 extern int g_PlayListId;
+
+extern HWND g_listView;
 
 extern const char* sql;
 
@@ -28,3 +30,5 @@ extern const char* sql;
 #define SPEC_Y        600
 #define SPEC_WIDTH    500
 #define SPEC_HEIGHT   70
+
+extern HFONT g_WinFont;
