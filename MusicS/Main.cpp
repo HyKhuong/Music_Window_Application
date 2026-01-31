@@ -45,7 +45,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
         NULL, NULL, hInst, NULL
     );
 
-    ShowWindow(hWnd, nCmdShow);
+    ShowWindow(hWnd, SW_SHOW);
     UpdateWindow(hWnd);
 
     MSG msg;
@@ -98,16 +98,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_COMMAND:
         UI_HandleCommand(wParam, g_hInst);
         break;
-    /*case WM_PAINT:
+    case WM_PAINT:
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
-        DrawWaveForm(hdc);
-        DrawSpecTrum(hdc);
+
+        FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+        //DrawWaveForm(hdc);
+        //DrawSpecTrum(hdc);
         EndPaint(hWnd, &ps);
-    }*/
+    }
     case WM_ERASEBKGND:
         return 1; // prevent flicker
+
+    case WM_CLOSE:
+        DestroyWindow(hWnd);
+        return 0;
+
     case WM_DESTROY:
         PostQuitMessage(0);
         break;

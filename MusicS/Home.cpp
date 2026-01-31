@@ -8,6 +8,8 @@
 #include "PopUp.h"
 #include "global.h"
 #include "Player.h"
+#include "DurationTrackBar_Type.h"
+#include "stdio.h"
 
 LRESULT CALLBACK HomePageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -66,6 +68,15 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 				g_listView = ListView;
 
 				ListView_GetItem(ListView, &item);
+
+				wchar_t songName[256];
+				ListView_GetItemText(ListView, row, 2, songName, 256);
+				
+				wchar_t title[256];
+				swprintf_s(title, 256, L"Now Playing: %s", songName);
+
+				SetWindowText(track.tSongPlay, title);
+
 				int id = item.lParam;
 				wchar_t path[521];
 

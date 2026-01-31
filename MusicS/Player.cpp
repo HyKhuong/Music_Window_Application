@@ -234,6 +234,14 @@ void Player_Next_Song()
     ListView_GetItem(g_listView, &item);
     int id = item.lParam;
 
+    wchar_t songName[256];
+    ListView_GetItemText(g_listView, item.iItem , 2, songName, 256);
+
+    wchar_t title[256];
+    swprintf_s(title, 256, L"Now Playing: %s", songName);
+
+    SetWindowText(track.tSongPlay, title);
+
     wchar_t path[256];
     
     if(GetSongById(id, path, sizeof(path))) 

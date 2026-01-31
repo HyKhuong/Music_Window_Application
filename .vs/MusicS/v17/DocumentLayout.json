@@ -3,6 +3,30 @@
   "WorkspaceRootPath": "D:\\Work\\MusicS\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Home.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Home.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\DurationTrackBar.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\DurationTrackBar.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Ui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Ui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\DurationTrackBar_Type.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\DurationTrackBar_Type.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Database.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Database.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -11,10 +35,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|C:\\PROGRAM FILES (X86)\\WINDOWS KITS\\10\\INCLUDE\\10.0.26100.0\\UM\\AUDIOCLIENT.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\DurationTrackBar.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -49,10 +69,6 @@
       "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\SongDetail.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Home.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Home.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Tab.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Tab.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -65,24 +81,12 @@
       "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Database.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\customUi.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\customUi.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\DurationTrackBar.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\DurationTrackBar.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Ui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\Ui.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\Ui.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -137,10 +141,6 @@
       "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\PopUp_Type.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|D:\\Work\\MusicS\\MusicS\\DurationTrackBar_Type.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|solutionrelative:MusicS\\DurationTrackBar_Type.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{97237877-A2E8-484B-AA23-E4A76BC82672}|MusicS\\MusicS.vcxproj|C:\\PROGRAM FILES (X86)\\WINDOWS KITS\\10\\INCLUDE\\10.0.26100.0\\UM\\COMMCTRL.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
@@ -164,32 +164,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 38,
+          "SelectedChildIndex": 33,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "favicon.ico - Icon [16x16, 32 bit, BMP]",
               "DocumentMoniker": "C:\\Users\\hvsom\\Downloads\\favicon.ico",
               "ToolTip": "C:\\Users\\hvsom\\Downloads\\favicon.ico - Icon [16x16, 32 bit, BMP]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001525|",
-              "WhenOpened": "2026-01-28T23:22:08.224Z",
-              "EditorCaption": " - Icon [16x16, 32 bit, BMP]"
+              "WhenOpened": "2026-01-28T23:22:08.224Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "Audioclient.h",
               "DocumentMoniker": "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um\\Audioclient.h",
               "ToolTip": "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.26100.0\\um\\Audioclient.h",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABwAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-01-28T09:47:08.529Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T09:47:08.529Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "PlayListSongs.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\PlayListSongs.cpp",
               "RelativeDocumentMoniker": "MusicS\\PlayListSongs.cpp",
@@ -201,7 +199,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 13,
               "Title": "PlayListDB.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\PlayListDB.cpp",
               "RelativeDocumentMoniker": "MusicS\\PlayListDB.cpp",
@@ -213,7 +211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "SongsDB.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\SongsDB.cpp",
               "RelativeDocumentMoniker": "MusicS\\SongsDB.cpp",
@@ -225,7 +223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "SongDetail.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\SongDetail.cpp",
               "RelativeDocumentMoniker": "MusicS\\SongDetail.cpp",
@@ -237,7 +235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "PopUp_Type.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\PopUp_Type.h",
               "RelativeDocumentMoniker": "MusicS\\PopUp_Type.h",
@@ -249,7 +247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "Tab.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Tab.cpp",
               "RelativeDocumentMoniker": "MusicS\\Tab.cpp",
@@ -261,15 +259,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 1,
               "Title": "Home.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Home.cpp",
               "RelativeDocumentMoniker": "MusicS\\Home.cpp",
               "ToolTip": "D:\\Work\\MusicS\\MusicS\\Home.cpp",
               "RelativeToolTip": "MusicS\\Home.cpp",
-              "ViewState": "AgIAAGoAAAAAAAAAAAAnwH0AAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAE4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-01-18T14:13:34.581Z"
+              "WhenOpened": "2026-01-18T14:13:34.581Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -303,7 +302,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "db_schema.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\db_schema.cpp",
               "RelativeDocumentMoniker": "MusicS\\db_schema.cpp",
@@ -315,7 +314,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "PlayList.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\PlayList.cpp",
               "RelativeDocumentMoniker": "MusicS\\PlayList.cpp",
@@ -327,7 +326,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "Tab.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Tab.h",
               "RelativeDocumentMoniker": "MusicS\\Tab.h",
@@ -339,7 +338,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "Tab_Type.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Tab_Type.h",
               "RelativeDocumentMoniker": "MusicS\\Tab_Type.h",
@@ -351,7 +350,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "PopUp.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\PopUp.h",
               "RelativeDocumentMoniker": "MusicS\\PopUp.h",
@@ -363,7 +362,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "Button.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Button.h",
               "RelativeDocumentMoniker": "MusicS\\Button.h",
@@ -375,7 +374,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "Button_Type.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Button_Type.h",
               "RelativeDocumentMoniker": "MusicS\\Button_Type.h",
@@ -387,7 +386,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "Button.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Button.cpp",
               "RelativeDocumentMoniker": "MusicS\\Button.cpp",
@@ -399,19 +398,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 4,
               "Title": "DurationTrackBar_Type.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\DurationTrackBar_Type.h",
               "RelativeDocumentMoniker": "MusicS\\DurationTrackBar_Type.h",
               "ToolTip": "D:\\Work\\MusicS\\MusicS\\DurationTrackBar_Type.h",
               "RelativeToolTip": "MusicS\\DurationTrackBar_Type.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-01-15T18:29:29.553Z"
+              "WhenOpened": "2026-01-15T18:29:29.553Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 11,
               "Title": "ListSongs_Type.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\ListSongs_Type.h",
               "RelativeDocumentMoniker": "MusicS\\ListSongs_Type.h",
@@ -423,7 +423,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "DurationTrackBar.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\DurationTrackBar.h",
               "RelativeDocumentMoniker": "MusicS\\DurationTrackBar.h",
@@ -435,7 +435,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "ListSongs.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\ListSongs.h",
               "RelativeDocumentMoniker": "MusicS\\ListSongs.h",
@@ -447,7 +447,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "ListSong.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\ListSong.cpp",
               "RelativeDocumentMoniker": "MusicS\\ListSong.cpp",
@@ -459,19 +459,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 2,
               "Title": "DurationTrackBar.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\DurationTrackBar.cpp",
               "RelativeDocumentMoniker": "MusicS\\DurationTrackBar.cpp",
               "ToolTip": "D:\\Work\\MusicS\\MusicS\\DurationTrackBar.cpp",
               "RelativeToolTip": "MusicS\\DurationTrackBar.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB8AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-01-15T15:40:00.244Z"
+              "WhenOpened": "2026-01-15T15:40:00.244Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "PopUp.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\PopUp.cpp",
               "RelativeDocumentMoniker": "MusicS\\PopUp.cpp",
@@ -483,7 +484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "customUi.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\customUi.h",
               "RelativeDocumentMoniker": "MusicS\\customUi.h",
@@ -495,7 +496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "customUi.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\customUi.cpp",
               "RelativeDocumentMoniker": "MusicS\\customUi.cpp",
@@ -507,7 +508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "global.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\global.cpp",
               "RelativeDocumentMoniker": "MusicS\\global.cpp",
@@ -531,7 +532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "global.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\global.h",
               "RelativeDocumentMoniker": "MusicS\\global.h",
@@ -543,7 +544,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "Database.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Database.h",
               "RelativeDocumentMoniker": "MusicS\\Database.h",
@@ -555,19 +556,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 0,
               "Title": "Player.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Player.cpp",
               "RelativeDocumentMoniker": "MusicS\\Player.cpp",
               "ToolTip": "D:\\Work\\MusicS\\MusicS\\Player.cpp",
               "RelativeToolTip": "MusicS\\Player.cpp",
-              "ViewState": "AgIAAGIAAAAAAAAAAAAwwIcAAABHAAAAAAAAAA==",
+              "ViewState": "AgIAAN4AAAAAAAAAAAAAAPkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-19T14:30:23.242Z"
+              "WhenOpened": "2025-11-19T14:30:23.242Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "Player.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Player.h",
               "RelativeDocumentMoniker": "MusicS\\Player.h",
@@ -579,19 +581,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 3,
               "Title": "Ui.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Ui.cpp",
               "RelativeDocumentMoniker": "MusicS\\Ui.cpp",
               "ToolTip": "D:\\Work\\MusicS\\MusicS\\Ui.cpp",
               "RelativeToolTip": "MusicS\\Ui.cpp",
-              "ViewState": "AgIAAJsAAAAAAAAAAIAwwD0AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAC8AAAAAAAAAAIAwwIYAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-19T14:06:45.754Z"
+              "WhenOpened": "2025-11-19T14:06:45.754Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "Ui.h",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Ui.h",
               "RelativeDocumentMoniker": "MusicS\\Ui.h",
@@ -615,7 +618,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "Database.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Database.cpp",
               "RelativeDocumentMoniker": "MusicS\\Database.cpp",
@@ -623,20 +626,20 @@
               "RelativeToolTip": "MusicS\\Database.cpp",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAACkAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-11-16T17:51:29.238Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-16T17:51:29.238Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Main.cpp",
               "DocumentMoniker": "D:\\Work\\MusicS\\MusicS\\Main.cpp",
               "RelativeDocumentMoniker": "MusicS\\Main.cpp",
               "ToolTip": "D:\\Work\\MusicS\\MusicS\\Main.cpp",
               "RelativeToolTip": "MusicS\\Main.cpp",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAoAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAAAGcAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-26T16:01:12.498Z"
+              "WhenOpened": "2025-10-26T16:01:12.498Z",
+              "EditorCaption": ""
             }
           ]
         }
