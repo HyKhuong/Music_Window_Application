@@ -31,3 +31,15 @@ void Add_ColumnListView(HWND listSongs,int index, const wchar_t* text, int width
 	ListView_InsertColumn(listSongs, index, &lvc);
 }
 
+int GetId_ListView(HWND ListView, int row, int column)
+{
+	LVITEM lv = { 0 };
+	lv.mask = LVIF_PARAM;
+	lv.iItem = row;
+	lv.iSubItem = column;
+
+	ListView_GetItem(ListView, &lv);
+
+	int id = lv.lParam;
+	return id;
+}

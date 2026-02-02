@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "DurationTrackBar_Type.h"
 #include "stdio.h"
+#include "DurationTrackBar.h"
 
 LRESULT CALLBACK HomePageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -58,37 +59,36 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 			int row = p->iItem;
 			int col = p->iSubItem;
 
-			if (col == 0 && row != -1)
-			{
-				LVITEM item = { 0 };
-				item.mask = LVIF_PARAM;
-				item.iItem = row;
+			// -- store current listView && row to global --
+			g_listView = ListView;
+			g_currentIndex = row;
 
-				g_currentIndex = row;
-				g_listView = ListView;
-
-				ListView_GetItem(ListView, &item);
-
-				wchar_t songName[256];
-				ListView_GetItemText(ListView, row, 2, songName, 256);
-				
-				wchar_t title[256];
-				swprintf_s(title, 256, L"Now Playing: %s", songName);
-
-				SetWindowText(track.tSongPlay, title);
-
-				int id = item.lParam;
-				wchar_t path[521];
-
-				if (GetSongById(id, path, sizeof(path)))
+				if (col == 0 && row != -1)
 				{
-					Player_Play(id, path);
+					int id = GetId_ListView(ListView, row, col);
+
+					Display_CurrentSong(ListView, row);
+
+					wchar_t path[521];
+					if (GetSongById(id, path, sizeof(path)))
+					{
+						Player_Play(id, path);
+						if (!g_isPaused) {
+							ListView_SetItemText(ListView, row, 0, (LPWSTR)">");
+							BASS_ChannelPause(g_stream);
+							g_isPaused = 1;
+						}
+						else {
+							ListView_SetItemText(ListView, row, 0, (LPWSTR)"=");
+							BASS_ChannelPlay(g_stream, FALSE);
+							g_isPaused = 0;
+						}
+					}
+					else
+					{
+						MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
+					}
 				}
-				else
-				{
-					MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
-				}
-			}
 		}
 		break;
 
@@ -101,12 +101,7 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 
 			int row = ListView_SubItemHitTest(ListView, &hit);
 
-			LVITEM item = { 0 };
-			item.mask = LVIF_PARAM;
-			item.iItem = row;
-
-			ListView_GetItem(ListView, &item);
-			g_SongId = item.lParam;
+			g_SongId = GetId_ListView(ListView, row, NULL);
 
 			if (row == -1) break;
 

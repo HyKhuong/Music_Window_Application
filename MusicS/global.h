@@ -5,6 +5,8 @@
 #define WM_PLAY_NEXT_SONG (WM_APP + 1)
 extern HWND g_hWnd;
 extern HINSTANCE g_hInst;
+extern HSTREAM g_stream;
+extern int g_isPaused;
 
 extern int g_totalTime;
 extern int g_isSeeking;

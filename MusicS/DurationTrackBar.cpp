@@ -1,6 +1,8 @@
 #include "DurationTrackBar.h"
 #include "DurationTrackBar_Type.h"
 #include <CommCtrl.h>
+#include "ListSongs_Type.h"
+#include "stdio.h"
 
 TrackBar track;
 
@@ -32,10 +34,21 @@ void Create_TrackBar(HWND hParent)
 		L"STATIC",
 		L"NOW PLAYING:",
 		WS_CHILD | WS_VISIBLE,
-		20, 460, 200, 30,
+		20, 460, 500, 30,
 		hParent, 
 		(HMENU)10,
 		NULL,
 		NULL
 	);
+}
+
+void Display_CurrentSong(HWND ListView, int index)
+{
+	wchar_t songName[256];
+	ListView_GetItemText(ListView, index, COL_TITLE, songName, 256);
+
+	wchar_t title[256];
+	swprintf_s(title, 256, L"Now Playing: %s", songName);
+
+	SetWindowText(track.tSongPlay, title);
 }
