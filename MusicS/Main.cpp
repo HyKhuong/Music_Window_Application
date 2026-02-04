@@ -100,6 +100,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         KillTimer(hWnd, 1);
         Player_Next_Song();
         break;
+    case WM_PLAY_NEXT_SONG_IN_QUEUE:
+        KillTimer(hWnd, 1);
+        PlayNextSongInQueue();
     case WM_COMMAND:
         UI_HandleCommand(wParam, g_hInst);
         break;

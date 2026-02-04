@@ -21,6 +21,13 @@ int GetSongLength(const wchar_t* filePath);
 void UpdateTimer();
 void GetScrollPosition(LPARAM lParam, WPARAM WParam);
 
+
 // -- Some player UI --
 void DrawWaveForm(HDC hdc);
 void DrawSpecTrum(HDC hdc);
+
+// -- Queue Player -- 
+void AddToQueue(const wchar_t* path);
+void PlaySongInQueue();
+void PlayNextSongInQueue();
+void play(const wchar_t* path);

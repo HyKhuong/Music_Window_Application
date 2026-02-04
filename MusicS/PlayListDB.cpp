@@ -2,6 +2,8 @@
 #include "stdio.h"
 #include "sqlite3.h"
 #include "commctrl.h"
+#include "Player.h"
+#include "global.h"
 
 int CountSongsInPlayList(int id)
 {
@@ -61,13 +63,14 @@ void Database_LoadPlayList(HWND listView)
         LVITEM lvi = { 0 };
         lvi.mask = LVIF_TEXT | LVIF_PARAM;
         lvi.iItem = index;
-        lvi.pszText = idW;
+        lvi.pszText = (LPTSTR)">";
         lvi.lParam = (LPARAM)id;
 
         ListView_InsertItem(listView, &lvi);
 
-        ListView_SetItemText(listView, index, 1, titleW);
-        ListView_SetItemText(listView, index, 2, totalW);
+        ListView_SetItemText(listView, index, 1, idW);
+        ListView_SetItemText(listView, index, 2, titleW);
+        ListView_SetItemText(listView, index, 3, totalW);
         index++;
     }
 
@@ -84,6 +87,34 @@ void InserIntoPlayerList(const char* title)
     sqlite3_bind_text(stmt, 1, title, -1, SQLITE_TRANSIENT);
     sqlite3_step(stmt);
 
+    sqlite3_finalize(stmt);
+}
+
+void PutSongsToQueue(int id)
+{
+    sqlite3_stmt* stmt;
+    const char* sql = "SELECT s.path "
+        "FROM playlist_songs ps "
+        "INNER JOIN songs s "
+        "ON ps.song_id = s.id "
+        "WHERE ps.playlist_id = ?";
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) 
+    {
+        MessageBoxA(g_hWnd, "something wrong", "error", MB_OK);
+    };
+
+    sqlite3_bind_int(stmt, 1, id);
+
+    while(sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        const wchar_t* path = (const wchar_t*)sqlite3_column_text16(stmt, 0);
+
+       /* wchar_t Wpath[256];
+        MultiByteToWideChar(CP_UTF8, 0, path, -1, Wpath, 256);*/
+
+        AddToQueue(path);
+    }
     sqlite3_finalize(stmt);
 }
 

@@ -8,6 +8,7 @@
 #include "global.h"
 #include "PopUp.h"
 #include "Button.h"
+#include "Player.h"
 
 LRESULT CALLBACK PlayListPageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -27,9 +28,10 @@ void PlayList_Init(Button btn)
 	// -- Create Player List Song --
 	PlayListSongs_List = Create_ListSongs(hPages[1], 25, 70, 460, 200, 10);
 
+	Add_ColumnListView(PlayListSongs_List, COL_PLAY, L"@", 50);
 	Add_ColumnListView(PlayListSongs_List, COL_ID, L"ID", 50);
-	Add_ColumnListView(PlayListSongs_List, COL_TITLE, L"TITLE", 300);
-	Add_ColumnListView(PlayListSongs_List, 2, L"Total", 50);
+	Add_ColumnListView(PlayListSongs_List, COL_TITLE, L"TITLE", 250);
+	Add_ColumnListView(PlayListSongs_List, 3, L"Total", 50);
 
 	ListView_DeleteAllItems(PlayListSongs_List);
 
@@ -53,6 +55,18 @@ void OpenPlayList_Songs(LPARAM lParam)
 	{
 		switch (hdr->code)
 		{
+			case NM_CLICK:
+			{
+				LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
+				int row = p->iItem;
+				
+				int id = GetId_ListView(PlayListSongs_List, row, NULL);
+				PutSongsToQueue(id);
+
+				PlaySongInQueue();
+			}
+			break;
+
 			case NM_RCLICK:
 			{
 				LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;

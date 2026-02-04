@@ -3,6 +3,9 @@
 #include "bass.h"
 
 #define WM_PLAY_NEXT_SONG (WM_APP + 1)
+
+#define WM_PLAY_NEXT_SONG_IN_QUEUE (WM_APP + 2)
+
 extern HWND g_hWnd;
 extern HINSTANCE g_hInst;
 extern HSTREAM g_stream;

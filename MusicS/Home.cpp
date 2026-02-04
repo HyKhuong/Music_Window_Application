@@ -59,6 +59,14 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 			int row = p->iItem;
 			int col = p->iSubItem;
 
+			int lastIndex = g_currentIndex;
+
+			if(row != lastIndex)
+			{
+				Player_Stop();
+				ListView_SetItemText(ListView, g_currentIndex, 0, (LPWSTR)">");
+			}
+
 			// -- store current listView && row to global --
 			g_listView = ListView;
 			g_currentIndex = row;
@@ -69,10 +77,20 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 
 					Display_CurrentSong(ListView, row);
 
-					wchar_t path[521];
-					if (GetSongById(id, path, sizeof(path)))
+					if(!g_stream)
 					{
-						Player_Play(id, path);
+						wchar_t path[521];
+						if (GetSongById(id, path, sizeof(path)))
+						{
+							Player_Play(id, path);
+							ListView_SetItemText(ListView, row, 0, (LPWSTR)"=");
+						}
+						else
+						{
+							MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
+						}
+					}
+					else {
 						if (!g_isPaused) {
 							ListView_SetItemText(ListView, row, 0, (LPWSTR)">");
 							BASS_ChannelPause(g_stream);
@@ -84,10 +102,7 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 							g_isPaused = 0;
 						}
 					}
-					else
-					{
-						MessageBoxA(NULL, "Song not found", "ERROR", MB_OK);
-					}
+					
 				}
 		}
 		break;

@@ -153,11 +153,15 @@ void GetScrollPosition(LPARAM lParam ,WPARAM wParam)
 
 void Player_Next_Song()
 {
+    ListView_SetItemText(g_listView, g_currentIndex, 0, (LPWSTR)">");
+
     int row = ++g_currentIndex;
     
     int id = GetId_ListView(g_listView, row, NULL);
 
     Display_CurrentSong(g_listView, row);
+
+    ListView_SetItemText(g_listView, row, 0, (LPWSTR)"=");
 
     wchar_t path[256];
     
