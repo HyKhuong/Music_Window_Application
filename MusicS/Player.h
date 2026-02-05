@@ -31,3 +31,4 @@ void AddToQueue(const wchar_t* path);
 void PlaySongInQueue();
 void PlayNextSongInQueue();
 void play(const wchar_t* path);
+void StopSongInQueue();

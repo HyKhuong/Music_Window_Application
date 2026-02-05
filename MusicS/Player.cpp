@@ -190,6 +190,7 @@ void Player_Stop()
     if (g_stream) {
         BASS_StreamFree(g_stream);
         g_stream = 0;
+        SetWindowTextW(track.hTimeText, L"00:00 / 00:00");
     }
 }
 

@@ -59,11 +59,31 @@ void OpenPlayList_Songs(LPARAM lParam)
 			{
 				LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
 				int row = p->iItem;
+
+				g_currentIndex = row;
+				g_listView = PlayListSongs_List;
 				
 				int id = GetId_ListView(PlayListSongs_List, row, NULL);
 				PutSongsToQueue(id);
 
-				PlaySongInQueue();
+				if(!g_stream)
+				{
+					PlaySongInQueue();
+				}
+				else {
+					if(!g_isPaused)
+					{
+						ListView_SetItemText(PlayListSongs_List, row, 0, (LPTSTR)L">");
+						BASS_ChannelPause(g_stream);
+						g_isPaused = 1;
+					}
+					else {
+						ListView_SetItemText(PlayListSongs_List, row, 0, (LPTSTR)L"=");
+						BASS_ChannelPlay(g_stream, FALSE);
+						g_isPaused = 0;
+					}
+				}
+				
 			}
 			break;
 

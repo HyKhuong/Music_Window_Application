@@ -106,12 +106,12 @@ void PutSongsToQueue(int id)
 
     sqlite3_bind_int(stmt, 1, id);
 
+    currentSong = 0;
+    queueCount = 0;
+
     while(sqlite3_step(stmt) == SQLITE_ROW)
     {
         const wchar_t* path = (const wchar_t*)sqlite3_column_text16(stmt, 0);
-
-       /* wchar_t Wpath[256];
-        MultiByteToWideChar(CP_UTF8, 0, path, -1, Wpath, 256);*/
 
         AddToQueue(path);
     }

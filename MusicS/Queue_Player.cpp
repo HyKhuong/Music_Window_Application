@@ -4,11 +4,11 @@
 #include "global.h"
 #include "DurationTrackBar_Type.h"
 #include <commctrl.h>
+#include "ListSongs.h"
 #define MAX_QUEUE 100
 
 wchar_t Queue[MAX_QUEUE][MAX_PATH];
-int currentSong = 0;
-int queueCount = 0;
+
 
 static void CALLBACK SongEnd(HSYNC handle, DWORD channel, DWORD data, void* user)
 {
@@ -69,12 +69,25 @@ void AddToQueue(const wchar_t* path)
 	queueCount++;
 }
 
+void StopSongInQueue()
+{
+    if(g_stream)
+    {
+        ListView_SetItemText(g_listView, g_currentIndex, 0, (LPTSTR)L">");
+        BASS_StreamFree(g_stream);
+        g_stream = 0;
+        SetWindowTextW(track.hTimeText, L"00:00 / 00:00");
+    }
+}
+
 void PlaySongInQueue()
 {
 	if (currentSong <= queueCount)
 	{
+        ListView_SetItemText(g_listView, g_currentIndex, 0, (LPTSTR)L"=");
 		play(Queue[currentSong]);
 	}
+    
 }
 
 void PlayNextSongInQueue()
@@ -84,5 +97,10 @@ void PlayNextSongInQueue()
 	{
 		play(Queue[currentSong]);
 	}
+
+    if(currentSong == queueCount)
+    {
+        StopSongInQueue();
+    }
 }
 

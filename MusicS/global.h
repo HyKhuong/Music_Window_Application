@@ -15,6 +15,9 @@ extern int g_totalTime;
 extern int g_isSeeking;
 extern int g_currentIndex;
 
+extern int currentSong;
+extern int queueCount;
+
 extern int g_SongId;
 extern int g_PlayListId;
 

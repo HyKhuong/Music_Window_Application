@@ -23,3 +23,6 @@ HWND g_listView = NULL;
 const char* sql = "";
 
 HFONT g_WinFont = NULL;
+
+int currentSong = 0;
+int queueCount = 0;
