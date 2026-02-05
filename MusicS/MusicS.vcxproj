@@ -133,6 +133,7 @@
     <ClCompile Include="global.cpp" />
     <ClCompile Include="Home.cpp" />
     <ClCompile Include="PlayListSongs.cpp" />
+    <ClCompile Include="Queue_Player.cpp" />
     <ClCompile Include="SongsDB.cpp" />
     <ClCompile Include="ListSong.cpp" />
     <ClCompile Include="ListSongs_Type.h" />
@@ -142,6 +143,7 @@
     <ClCompile Include="PlayListDB.cpp" />
     <ClCompile Include="PopUp.cpp" />
     <ClCompile Include="SongDetail.cpp" />
+    <ClCompile Include="SoundWave.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="Tab.cpp" />
     <ClCompile Include="Ui.cpp" />

@@ -9,6 +9,7 @@
 #include "PopUp.h"
 #include "Tab.h"
 #include "resource.h"
+#include "global.h"
 
 #pragma comment(lib, "comctl32.lib")
 
@@ -86,15 +87,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         GetScrollPosition(lParam, wParam);
         break;
     case WM_TIMER:
-        UpdateTimer();
-
-        //InvalidateRect(hWnd, &g_waveRect, FALSE);
-        //InvalidateRect(hWnd, &g_barRect, FALSE);
+        {
+            if (g_isPaused) {
+                break;
+            }
+            UpdateTimer();
+            //InvalidateRect(hWnd, &g_waveRect, FALSE);
+            //InvalidateRect(hWnd, &g_barRect, FALSE);
+        }
         break;
     case WM_PLAY_NEXT_SONG:
         KillTimer(hWnd, 1);
         Player_Next_Song();
         break;
+    case WM_PLAY_NEXT_SONG_IN_QUEUE:
+        KillTimer(hWnd, 1);
+        PlayNextSongInQueue();
     case WM_COMMAND:
         UI_HandleCommand(wParam, g_hInst);
         break;

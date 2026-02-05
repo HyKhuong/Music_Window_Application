@@ -60,17 +60,6 @@ void UI_Init(HWND hWnd)
 
 	// -- Track Duration Bar --
 	Create_TrackBar(hWnd);
-	
-	// -- Add Custom List Songs --
-	/*g_ui.hCustomListSongs = CreateWindow(
-		L"Button",
-		L"Create Your List Songs",
-		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-		400, 20, 80, 30,
-		hWnd, (HMENU)5,
-		NULL,
-		NULL
-	);*/
 
 	// -- Create Tab --
 	Create_Tab(hWnd, 100);

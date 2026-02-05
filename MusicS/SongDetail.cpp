@@ -4,6 +4,7 @@
 #include "global.h"
 #include "Database.h"
 #include "Button.h"
+#include "ListSongs_Type.h"
 
 HWND SongDetail;
 HWND hComboBox;
@@ -91,10 +92,6 @@ LRESULT CALLBACK SongDetailProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 					if(HIWORD(wParam) ==  CBN_SELCHANGE)
 					{
 						g_PlayListId = GetComBoBox_ID(hComboBox);
-						wchar_t buf[64];
-						wsprintfW(buf, L"Playlist ID = %d", g_PlayListId);
-
-						MessageBoxW(hWnd, buf, L"Debug", MB_OK);
 					}
 				}	
 				break;
@@ -128,6 +125,10 @@ LRESULT CALLBACK SongDetailProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 							L"Error",
 							MB_OK | MB_ICONERROR);
 					}
+
+					ListView_DeleteAllItems(PlayListSongs_List);
+
+					Database_LoadPlayList(PlayListSongs_List);
 				}
 				break;
 			}

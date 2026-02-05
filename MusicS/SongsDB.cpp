@@ -35,7 +35,7 @@ void LoadSongs_Data(HWND listView, sqlite3_stmt* stmt)
         LVITEM lvi = { 0 };
         lvi.mask = LVIF_TEXT | LVIF_PARAM;
         lvi.iItem = index;
-        lvi.pszText = (LPTSTR)L">";
+        lvi.pszText = (LPTSTR)">";
         lvi.lParam = (LPARAM)id;
 
         ListView_InsertItem(listView, &lvi);

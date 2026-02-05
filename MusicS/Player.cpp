@@ -6,16 +6,12 @@
 #include "Database.h"
 #include <CommCtrl.h>
 #include "Ui.h"
-
+#include "ListSongs.h"
 #include "ListSongs_Type.h"
-
 #include "DurationTrackBar.h"
 #include "DurationTrackBar_Type.h"
 
 #pragma comment(lib, "bass.lib")
-
-static HSTREAM g_stream = 0;
-static int isPaused = 0;
 int totalSong = SongCount();
 
 void CALLBACK OnSongEnd(HSYNC handle, DWORD channel, DWORD data, void* user)
@@ -78,7 +74,7 @@ void Player_Play(int id, const wchar_t* filePath)
         return;
     }
 
-    isPaused = 0; 
+    g_isPaused = 0; 
 
     // ---- SET DURATION + TRACKBAR ----
     double totalTime = BASS_ChannelBytes2Seconds(
@@ -155,92 +151,17 @@ void GetScrollPosition(LPARAM lParam ,WPARAM wParam)
     }
 }
 
-void DrawWaveForm(HDC hdc) 
-{
-    if (!g_stream) return;
-
-    float wave[WAVE_SAMPLES];
-
-    BASS_ChannelGetData(g_stream, wave, WAVE_SAMPLES | BASS_DATA_FLOAT);
-
-    HPEN hPen = CreatePen(PS_SOLID, 2, RGB(0, 200, 255));
-    HPEN oldPen = (HPEN)SelectObject(hdc, hPen);
-
-    int midY = WAVE_Y + WAVE_HEIGHT / 2;
-
-    MoveToEx(hdc, WAVE_X, midY, NULL);
-
-    for(int i = 0; i < WAVE_SAMPLES; i++)
-    {
-        int x = WAVE_X + (i * WAVE_WIDTH) / WAVE_SAMPLES;
-        int y = midY - (int)(wave[i] * (WAVE_HEIGHT / 2));
-
-        LineTo(hdc, x, y);
-    }
-
-    SelectObject(hdc, oldPen);
-    DeleteObject(hPen); 
-}
-
-void DrawSpecTrum(HDC hdc)
-{
-    if (!g_stream) return;
-
-    float FFT[1024];
-
-    BASS_ChannelGetData(g_stream, FFT, BASS_DATA_FFT2048);
-
-    int barWidth = SPEC_WIDTH / SPEC_BARS;
-
-    HBRUSH hBrush = CreateSolidBrush(RGB(0, 200, 255));
-    HBRUSH oldBrush = (HBRUSH)SelectObject(hdc, hBrush);
-
-    for(int i = 0; i < SPEC_BARS; i++)
-    {
-        // FFT index mapping (log-style)
-        int fftIndex = i * 1024 / SPEC_BARS;
-
-        float magnitude = FFT[fftIndex];
-
-        // Boost visibility
-        int barHeight = (int)(magnitude * SPEC_HEIGHT * 4);
-
-        if (barHeight > SPEC_HEIGHT)
-            barHeight = SPEC_HEIGHT;
-
-        int x = SPEC_X + i * barWidth;
-        int y = SPEC_Y + (SPEC_HEIGHT - barHeight);
-
-        Rectangle(
-            hdc,
-            x,
-            y,
-            x + barWidth - 2,
-            SPEC_Y + SPEC_HEIGHT
-        );
-
-        SelectObject(hdc, oldBrush);
-        DeleteObject(hBrush);
-    }
-}
-
 void Player_Next_Song()
 {
-    //int id = ++g_currentIndex;
-    LVITEM item = { 0 };
-    item.mask = LVIF_PARAM;
-    item.iItem = ++g_currentIndex;
+    ListView_SetItemText(g_listView, g_currentIndex, 0, (LPWSTR)">");
 
-    ListView_GetItem(g_listView, &item);
-    int id = item.lParam;
+    int row = ++g_currentIndex;
+    
+    int id = GetId_ListView(g_listView, row, NULL);
 
-    wchar_t songName[256];
-    ListView_GetItemText(g_listView, item.iItem , 2, songName, 256);
+    Display_CurrentSong(g_listView, row);
 
-    wchar_t title[256];
-    swprintf_s(title, 256, L"Now Playing: %s", songName);
-
-    SetWindowText(track.tSongPlay, title);
+    ListView_SetItemText(g_listView, row, 0, (LPWSTR)"=");
 
     wchar_t path[256];
     
@@ -254,13 +175,13 @@ void Player_Pause()
 {
     if (!g_stream) return;
 
-    if (!isPaused) {
+    if (!g_isPaused) {
         BASS_ChannelPause(g_stream);
-        isPaused = 1;
+        g_isPaused = 1;
     }
     else {
         BASS_ChannelPlay(g_stream, FALSE); 
-        isPaused = 0;
+        g_isPaused = 0;
     }
 }
 
@@ -271,3 +192,4 @@ void Player_Stop()
         g_stream = 0;
     }
 }
+

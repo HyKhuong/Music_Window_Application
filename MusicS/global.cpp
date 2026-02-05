@@ -8,10 +8,12 @@ HWND hTrack = NULL;
 HWND g_hWnd = NULL;
 HINSTANCE g_hInst = NULL;
 
+HSTREAM g_stream = 0;
+
 int g_totalTime = 0;
 
 int g_currentIndex = -1;
-int isPaused = 0;
+int g_isPaused = 0;
 int g_isSeeking = 0;
 
 int g_SongId = -1;
