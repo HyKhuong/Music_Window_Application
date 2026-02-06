@@ -60,6 +60,11 @@ void OpenPlayList_Songs(LPARAM lParam)
 				LPNMITEMACTIVATE p = (LPNMITEMACTIVATE)lParam;
 				int row = p->iItem;
 
+				if (g_currentIndex != row)
+				{
+					StopSongInQueue();
+				}
+
 				g_currentIndex = row;
 				g_listView = PlayListSongs_List;
 				
