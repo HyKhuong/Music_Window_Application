@@ -118,17 +118,18 @@ void PickSongToDB(HWND hWnd)
 	char* name = strrchr(pathC, '\\');
 	name = name ? name + 1 : pathC;
 
-	while (*name >= '0' && *name <= '9') 
+	while (*name >= '0' && *name <= '9')
 	{
 		name++;
 		if (*name == '-')
 		{
 			name++;
-		}		
+		}
+		else if (*name == '.')
+		{
+			name++;
+		}
 	}
-		
-	if (*name == '.')
-		name++;
 
 	strncpy_s(title, sizeof(title), name, _TRUNCATE);
 	char* dot = strrchr(title, '.');
