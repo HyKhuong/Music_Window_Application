@@ -47,7 +47,7 @@ void Add_ChildTab(const wchar_t* text, int id)
 // -- Show Tab Logic --
 void ShowTabPage(int index)
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		ShowWindow(hPages[i], i == index ? SW_SHOW : SW_HIDE);
 	}
