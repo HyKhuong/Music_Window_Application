@@ -21,6 +21,7 @@ void RegisterSongDetail(HINSTANCE hInst);
 HWND Create_SongDetailPage(HWND hParent);
 void ComboBox(HWND hParent);
 int  GetComBoBox_ID(HWND ComboBox);
+void TextBox(HWND hParent);
 
 // -- Play List Songs --
 void RegisterPlayListSongs(HINSTANCE hInst);

@@ -45,7 +45,7 @@ void Database_LoadPlayList(HWND listView)
         int total = CountSongsInPlayList(id);
         // ---- Convert ID to wchar ----
         char idBuffer[32];
-        sprintf_s(idBuffer, "%d", id);
+        sprintf_s(idBuffer, " %d", id);
 
         char totalBuffer[32];
         sprintf_s(totalBuffer, "%d", total);

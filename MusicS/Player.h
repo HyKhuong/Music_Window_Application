@@ -17,7 +17,7 @@ void Player_Play(int id, const wchar_t* filePath);
 void Player_Next_Song();
 void Player_Pause();
 void Player_Stop();
-int GetSongLength(const wchar_t* filePath);
+int GetSongLength(char* filePath);
 void UpdateTimer();
 void GetScrollPosition(LPARAM lParam, WPARAM WParam);
 

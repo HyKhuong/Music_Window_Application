@@ -23,7 +23,7 @@ extern int g_PlayListId;
 
 extern HWND g_listView;
 
-extern const char* sql;
+extern const char* g_sql;
 
 // -- Wave Form config --
 #define WAVE_SAMPLES 512

@@ -50,7 +50,7 @@ void PlayListSongsDetail_Init(HWND hParent)
 	Add_ColumnListView(PlayListSongsDetail_List, COL_TITLE, L"TITLE", 300);
 	Add_ColumnListView(PlayListSongsDetail_List, COL_DURATION, L"DURATION", 100);
 
-	sql = "SELECT s.id, s.title, s.duration "
+	const char* sql = "SELECT s.id, s.title, s.duration "
 		"FROM playlist_songs ps "
 		"INNER JOIN songs s " 
 		"ON ps.song_id = s.id " 

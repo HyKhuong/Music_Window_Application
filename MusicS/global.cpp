@@ -20,7 +20,7 @@ int g_SongId = -1;
 int g_PlayListId = -1;
 
 HWND g_listView = NULL;
-const char* sql = "";
+const char* g_sql = "SELECT id, title, duration FROM songs";
 
 HFONT g_WinFont = NULL;
 

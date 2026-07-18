@@ -96,9 +96,6 @@
     <ClCompile Include="db_schema.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
-    <ClCompile Include="PlayList.cpp">
-      <Filter>Source Files\Ui\Tabs</Filter>
-    </ClCompile>
     <ClCompile Include="Home.cpp">
       <Filter>Source Files\Ui\Tabs</Filter>
     </ClCompile>
@@ -122,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="Queue_Player.cpp">
       <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayList.cpp">
+      <Filter>Source Files\Ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -26,7 +26,7 @@ void Player_Init()
     }
 }
 
-int GetSongLength(const wchar_t* filePath) 
+int GetSongLength(char* filePath) 
 {
     g_stream = BASS_StreamCreateFile(FALSE, filePath, 0, 0, BASS_STREAM_DECODE | BASS_SAMPLE_FLOAT);
 
@@ -164,8 +164,9 @@ void Player_Next_Song()
     ListView_SetItemText(g_listView, row, 0, (LPWSTR)"=");
 
     wchar_t path[256];
+    wchar_t tile[10];
     
-    if(GetSongById(id, path, sizeof(path))) 
+    if(GetSongById(id, path, tile))
     {
         Player_Play(id, path);
     }

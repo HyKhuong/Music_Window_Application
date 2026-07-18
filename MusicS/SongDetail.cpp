@@ -8,6 +8,11 @@
 
 HWND SongDetail;
 HWND hComboBox;
+
+//Text Box
+HWND Title;
+HWND Path;
+
 LRESULT CALLBACK SongDetailProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 void RegisterSongDetail(HINSTANCE hInst)
@@ -45,7 +50,43 @@ HWND Create_SongDetailPage(HWND hParent)
 	return SongDetail;
 }
 
-void ComboBox(HWND hParent) {
+void TextBox(HWND hParent) 
+{
+	Title = CreateWindowEx(
+		WS_EX_CLIENTEDGE,
+		L"EDIT",
+		L"",
+		WS_CHILD | WS_VISIBLE | WS_BORDER,
+		20, 80, 200, 30,
+		hParent,
+		(HMENU)122,
+		NULL,
+		NULL
+	);
+
+	Path = CreateWindowEx(
+		WS_EX_CLIENTEDGE,
+		L"EDIT",
+		L"",
+		WS_CHILD | WS_VISIBLE | WS_BORDER,
+		20, 130, 200, 30,
+		hParent,
+		(HMENU)123,
+		NULL,                 
+		NULL
+	);
+
+	wchar_t path[256];
+	wchar_t tile[256];
+	if(GetSongById(g_SongId, path, tile))
+	{
+		SetWindowText(Title, tile);
+		SetWindowText(Path, path);
+	}
+}
+
+void ComboBox(HWND hParent) 
+{
 	hComboBox = CreateWindow(
 		WC_COMBOBOXW,
 		L"",
@@ -80,7 +121,13 @@ LRESULT CALLBACK SongDetailProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 				g_PlayListId = GetComBoBox_ID(hComboBox);
 			}
 			
-			Create_Button(hWnd, 2, L"Add", 230, 20, 60, 30);
+			//Add songs to playList
+			Create_Button(hWnd, 2, L"Add", 240, 20, 60, 30);
+			//CRUD songs
+			Create_Button(hWnd, 3, L"Edit", 240, 80, 60, 30);
+
+			TextBox(hWnd);
+			Create_Button(hWnd, 4, L"Delete", 240, 140, 60, 30);
 		}
 		
 		case WM_COMMAND:
@@ -129,6 +176,19 @@ LRESULT CALLBACK SongDetailProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 					ListView_DeleteAllItems(PlayListSongs_List);
 
 					Database_LoadPlayList(PlayListSongs_List);
+				}
+				break;
+				case 3:
+				{
+
+				}
+				break;
+				case 4:
+				{
+					DeleteSongs(g_SongId);
+					MessageBox(hWnd, L"Delete Completed", L"Some Info", MB_OK);
+					ListView_DeleteAllItems(HomeSongs_List);
+					LoadList_Songs(HomeSongs_List, g_sql);
 				}
 				break;
 			}

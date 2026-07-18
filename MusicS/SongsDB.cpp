@@ -79,7 +79,7 @@ void LoadPlayList_Songs(HWND listView, const char* sql)
 }
 
 
-int GetSongById(int id, wchar_t* outPath, int maxLen)
+int GetSongById(int id, wchar_t* outPath, wchar_t* outTitle)
 {
     sqlite3_stmt* stmt;
     const char* sql = "SELECT * FROM songs WHERE id = ?";
@@ -96,7 +96,13 @@ int GetSongById(int id, wchar_t* outPath, int maxLen)
     {
         const unsigned char* path = sqlite3_column_text(stmt, 2);
 
-        MultiByteToWideChar(CP_UTF8, 0, (const char*)path, -1, outPath, maxLen);
+        MultiByteToWideChar(CP_UTF8, 0, (const char*)path, -1, outPath, wcslen(outPath) + 1); 
+
+        if (outTitle != L"") {
+            const unsigned char* title = sqlite3_column_text(stmt, 1);
+
+            MultiByteToWideChar(CP_UTF8, 0, (const char*)title, -1, outTitle, wcslen(outTitle) + 1);
+        }
 
         success = 1;
     }
@@ -125,9 +131,11 @@ int SongCount()
     return count;
 }
 
-void InserSongDurationDB(int id, const wchar_t* path)
+void InserSongDurationDB(int id,const wchar_t* path)
 {
-    int duration = GetSongLength(path);
+    char buffer[256] = "";
+    WideCharToMultiByte(CP_UTF8, 0, path, -1, buffer, sizeof(buffer), NULL, NULL);
+    int duration = GetSongLength(buffer);
 
     sqlite3_stmt* stmt;
     const char* sql = "UPDATE songs SET duration = ? WHERE id = ?";
@@ -179,6 +187,39 @@ void InsertSongIntoDB(const char* title, const char* path, int duration)
     int rc = sqlite3_step(stmt);
     if (rc != SQLITE_DONE) {
         printf("Insert failed: %s\n", sqlite3_errmsg(db));
+    }
+    sqlite3_finalize(stmt);
+}
+
+void UpdateSongs(int SongId, const char* title, const char* path, int duration)
+{
+    /*sqlite3_stmt* stmt;
+
+    const char* sql = "SELECT * FROM songs ";
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) return;
+
+    int rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+    {
+        return;
+    }
+    sqlite3_finalize(stmt);*/
+}
+
+void DeleteSongs(int id)
+{
+    sqlite3_stmt* stmt;
+    const char* sql = "DELETE FROM songs WHERE id = ?";
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) return;
+
+    sqlite3_bind_int(stmt, 1, id);
+
+    int rc = sqlite3_step(stmt);
+    if(rc != SQLITE_DONE)
+    {
+        return;
     }
     sqlite3_finalize(stmt);
 }

@@ -19,6 +19,10 @@ void UI_Init(HWND hWnd);
 void UI_HandleCommand(WPARAM wParam, HINSTANCE hInst);
 BOOL PickAFile(HWND hWnd, wchar_t* outPath, DWORD outSize);
 void PickSongToDB(HWND hWnd);
+void FindFileData(wchar_t* filePath);
+void PickFolder();
+
+char* removeString(char* songName);
 
 void UI_FONT();
 void SetUIFont(HWND hCtrl);
