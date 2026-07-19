@@ -191,20 +191,24 @@ void InsertSongIntoDB(const char* title, const char* path, int duration)
     sqlite3_finalize(stmt);
 }
 
-void UpdateSongs(int SongId, const char* title, const char* path, int duration)
+void UpdateSongs(int SongId, const char* title, const char* path)
 {
-    /*sqlite3_stmt* stmt;
+    sqlite3_stmt* stmt;
 
-    const char* sql = "SELECT * FROM songs ";
+    const char* sql = "UPDATE songs SET  title = ?, path = ? WHERE id = ?";
 
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) return;
+
+    sqlite3_bind_text(stmt, 1, title, -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, path, -1, SQLITE_TRANSIENT);
+    sqlite3_bind_int(stmt, 0, SongId);
 
     int rc = sqlite3_step(stmt);
     if (rc != SQLITE_DONE)
     {
         return;
     }
-    sqlite3_finalize(stmt);*/
+    sqlite3_finalize(stmt);
 }
 
 void DeleteSongs(int id)

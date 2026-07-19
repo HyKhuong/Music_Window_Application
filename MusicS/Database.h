@@ -18,7 +18,7 @@ void InserSongDurationDB(int id, const wchar_t* path);
 int CheckSongDurationStatus(int id);
 int SongCount();
 void InsertSongIntoDB(const char* title, const char* path, int duration);
-void UpdateSongs(int SongId, const char* title, const char* path, int duration);
+void UpdateSongs(int SongId, const char* title, const char* path);
 void DeleteSongs(int id);
 
 // -- PlayList Table --

@@ -101,7 +101,6 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 							g_isPaused = 0;
 						}
 					}
-					
 				}
 		}
 		break;

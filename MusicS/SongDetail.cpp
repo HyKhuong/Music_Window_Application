@@ -56,7 +56,8 @@ void TextBox(HWND hParent)
 		WS_EX_CLIENTEDGE,
 		L"EDIT",
 		L"",
-		WS_CHILD | WS_VISIBLE | WS_BORDER,
+		WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | ES_LEFT |
+		ES_MULTILINE | ES_AUTOVSCROLL,
 		20, 80, 200, 30,
 		hParent,
 		(HMENU)122,
@@ -68,7 +69,8 @@ void TextBox(HWND hParent)
 		WS_EX_CLIENTEDGE,
 		L"EDIT",
 		L"",
-		WS_CHILD | WS_VISIBLE | WS_BORDER,
+		WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | ES_LEFT |
+		ES_MULTILINE | ES_AUTOVSCROLL,
 		20, 130, 200, 30,
 		hParent,
 		(HMENU)123,
@@ -180,7 +182,19 @@ LRESULT CALLBACK SongDetailProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 				break;
 				case 3:
 				{
+					wchar_t path[256];
+					wchar_t title[256];
 
+					GetWindowText(hWnd, path, wcslen(path) + 1);
+					GetWindowText(hWnd, title, wcslen(title) + 1);
+
+					char* TitleC = nullptr;
+					char* PathC = nullptr;
+
+					WideCharToMultiByte(CP_UTF8, 0, title, -1, TitleC, sizeof(Title), NULL, NULL);
+					WideCharToMultiByte(CP_UTF8, 0, path, -1, PathC, sizeof(Path), NULL, NULL);
+
+					UpdateSongs(g_SongId, TitleC, PathC);
 				}
 				break;
 				case 4:
