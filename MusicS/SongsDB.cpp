@@ -195,13 +195,13 @@ void UpdateSongs(int SongId, const char* title, const char* path)
 {
     sqlite3_stmt* stmt;
 
-    const char* sql = "UPDATE songs SET  title = ?, path = ? WHERE id = ?";
+    const char* sql = "UPDATE songs SET title = ?, path = ? WHERE id = ?";
 
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) return;
 
     sqlite3_bind_text(stmt, 1, title, -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt, 2, path, -1, SQLITE_TRANSIENT);
-    sqlite3_bind_int(stmt, 0, SongId);
+    sqlite3_bind_int(stmt, 3, SongId);
 
     int rc = sqlite3_step(stmt);
     if (rc != SQLITE_DONE)

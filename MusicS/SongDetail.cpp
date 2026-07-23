@@ -185,16 +185,19 @@ LRESULT CALLBACK SongDetailProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 					wchar_t path[256];
 					wchar_t title[256];
 
-					GetWindowText(hWnd, path, wcslen(path) + 1);
-					GetWindowText(hWnd, title, wcslen(title) + 1);
+					int Path_Text = GetWindowText(Path, path, wcslen(path) + 1);
+					int Title_Text = GetWindowText(Title, title, wcslen(title) + 1);
 
-					char* TitleC = nullptr;
-					char* PathC = nullptr;
+					if (Path_Text && Title_Text >= 0)
+					{
+						char TitleC[256];
+						char PathC[256];
 
-					WideCharToMultiByte(CP_UTF8, 0, title, -1, TitleC, sizeof(Title), NULL, NULL);
-					WideCharToMultiByte(CP_UTF8, 0, path, -1, PathC, sizeof(Path), NULL, NULL);
+						WideCharToMultiByte(CP_UTF8, 0, title, -1, TitleC, sizeof(TitleC), NULL, NULL);
+						WideCharToMultiByte(CP_UTF8, 0, path, -1, PathC, sizeof(PathC), NULL, NULL);
 
-					UpdateSongs(g_SongId, TitleC, PathC);
+						UpdateSongs(g_SongId, TitleC, PathC);
+					}
 				}
 				break;
 				case 4:
