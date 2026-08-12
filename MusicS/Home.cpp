@@ -38,9 +38,7 @@ void HomePage_Init()
 	ListView_DeleteAllItems(HomeSongs_List);
 
 	// -- Load All Songs From DB To List View --
-	sql = "SELECT id, title, duration FROM songs";
-
-	LoadList_Songs(HomeSongs_List, sql);
+	LoadList_Songs(HomeSongs_List, g_sql);
 }
 
 // -- Click Songs --
@@ -79,11 +77,19 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 
 					if(!g_stream)
 					{
-						wchar_t path[521];
-						if (GetSongById(id, path, sizeof(path)))
+						wchar_t* path = (wchar_t*)malloc(560 * sizeof(wchar_t));
+						wchar_t* title = (wchar_t*)malloc(256 * sizeof(wchar_t));
+
+						if (GetSongById(id, path, title))
 						{
-							Player_Play(id, path);
-							ListView_SetItemText(ListView, row, 0, (LPWSTR)"=");
+							if(path && title != NULL) 
+							{
+								Player_Play(id, path);
+								ListView_SetItemText(ListView, row, 0, (LPWSTR)"=");
+							}				
+
+							free(path);
+							free(title);
 						}
 						else
 						{
@@ -102,7 +108,6 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 							g_isPaused = 0;
 						}
 					}
-					
 				}
 		}
 		break;
@@ -126,7 +131,9 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 				LVIS_SELECTED | LVIS_FOCUSED,
 				LVIS_SELECTED | LVIS_FOCUSED
 			);
-			Create_MenuPopUp(p, ListView, 1, L"Open Songs Detail");
+
+			g_currentPage = 0;
+			Create_MenuPopUp(p, ListView);
 		}
 		break;
 		}

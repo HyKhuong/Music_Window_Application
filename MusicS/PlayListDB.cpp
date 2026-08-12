@@ -28,6 +28,20 @@ int CountSongsInPlayList(int id)
     return count;
 }
 
+void Delete_PlayList(int id)
+{
+    sqlite3_stmt* stmt;
+    const char* sql = "DELETE FROM PlayList WHERE id = ?";
+
+    if(sqlite3_prepare_v2(db, sql, -1, &stmt, 0) != SQLITE_OK) return ;
+
+    sqlite3_bind_int(stmt, 1, id);
+
+    sqlite3_step(stmt);
+
+    sqlite3_finalize(stmt);
+}
+
 void Database_LoadPlayList(HWND listView)
 {
     sqlite3_stmt* stmt;
@@ -45,7 +59,7 @@ void Database_LoadPlayList(HWND listView)
         int total = CountSongsInPlayList(id);
         // ---- Convert ID to wchar ----
         char idBuffer[32];
-        sprintf_s(idBuffer, "%d", id);
+        sprintf_s(idBuffer, " %d", id);
 
         char totalBuffer[32];
         sprintf_s(totalBuffer, "%d", total);

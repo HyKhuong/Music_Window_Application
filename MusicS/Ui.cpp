@@ -18,6 +18,11 @@
 #include <commctrl.h>
 #include "global.h"
 
+#include <tchar.h>
+#include <shlobj_core.h>
+#include <wchar.h>
+#include <string.h>
+
 UIContext g_ui = { 0 };
 Button btn;
 
@@ -54,9 +59,11 @@ void UI_Init(HWND hWnd)
 	btn.btnStop = Create_Button(hWnd, 3, L"Stop", 200, 20, 80, 30);
 	SetUIFont(btn.btnStop);
 
-	btn.filePicker = Create_Button(hWnd, 4, L"Add Song", 300, 20, 80, 30);
+	btn.filePicker = Create_Button(hWnd, 4, L"Add File", 350, 20, 80, 30);
 	SetUIFont(btn.filePicker);
 
+	btn.btnAddFolder = Create_Button(hWnd, 5, L"Add Folder", 440, 20, 80, 30);
+	SetUIFont(btn.btnAddFolder);
 
 	// -- Track Duration Bar --
 	Create_TrackBar(hWnd);
@@ -104,6 +111,112 @@ BOOL PickAFile(HWND hWnd, wchar_t* outPath, DWORD outSize)
 	return FALSE;
 }
 
+char* removeString(char* songName)
+{
+	while (*songName >= '0' && *songName <= '9')
+	{
+		songName++;
+		if (*songName == '-')
+		{
+			songName++;
+		}
+		else if (*songName == '.')
+		{
+			songName++;
+		}
+	}
+
+	return songName;
+}
+
+char* GetPathFromFile(char* path, char* fileName)
+{
+	char* p;
+	p = strstr(path, "*");
+
+	//char* arr = (char*)malloc(sizeof(path) + sizeof(fileName));
+
+	strcpy_s(p, strlen(path) + strlen(fileName) + 1, fileName);
+	return path;
+}
+
+void FindData(wchar_t* filePath)
+{
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	DWORD  retval = 0;
+	TCHAR  fullPath[256] = TEXT("");
+	TCHAR* lppPart = NULL;
+
+	hFind = FindFirstFile(filePath, &FindFileData);
+
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		printf("FindFirstFile failed (%d)\n", GetLastError());
+		return;
+	}
+	
+	do
+	{
+		if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+		{
+			_tprintf(TEXT("  %s   <DIR>\n"), FindFileData.cFileName);
+		}
+		else
+		{
+			char pathC[MAX_PATH];
+			char title[MAX_PATH];
+
+			WideCharToMultiByte(CP_UTF8, 0, filePath, -1, pathC, sizeof(pathC), NULL, NULL);
+
+			WideCharToMultiByte(CP_UTF8, 0, FindFileData.cFileName, -1, title, sizeof(title), NULL, NULL);
+
+			char* pathA = GetPathFromFile(pathC, title);
+
+			int duration = GetSongLength(pathA);
+
+			InsertSongIntoDB(title, pathA, duration);
+		}
+	} while (FindNextFile(hFind, &FindFileData) != 0);
+
+	ListView_DeleteAllItems(HomeSongs_List);
+	LoadList_Songs(HomeSongs_List, g_sql);
+}
+
+void PickFolder()
+{
+	IFileDialog* pfd;
+	if (SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd))))
+	{
+		DWORD dwOptions;
+		if (SUCCEEDED(pfd->GetOptions(&dwOptions)))
+		{
+			pfd->SetOptions(dwOptions | FOS_PICKFOLDERS);
+		}
+		if (SUCCEEDED(pfd->Show(NULL)))
+		{
+			IShellItem* psi;
+			if (SUCCEEDED(pfd->GetResult(&psi)))
+			{
+				PWSTR pszFolderPath = (PWSTR)"";
+				if (SUCCEEDED(psi->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, &pszFolderPath)))
+				{
+					PWSTR quot = (PWSTR)"\\";
+					PWSTR all = (PWSTR)"*";
+
+					wcscat_s(pszFolderPath, wcslen(pszFolderPath) + wcslen(quot) + 1, quot);
+					wcscat_s(pszFolderPath, wcslen(pszFolderPath) + wcslen(all) + 1, all);
+
+					FindData(pszFolderPath);
+				}
+				psi->Release();
+			}
+		}
+		pfd->Release();
+	}
+}
+
 void PickSongToDB(HWND hWnd) 
 {
 	wchar_t path[MAX_PATH];
@@ -118,30 +231,20 @@ void PickSongToDB(HWND hWnd)
 	char* name = strrchr(pathC, '\\');
 	name = name ? name + 1 : pathC;
 
-	while (*name >= '0' && *name <= '9')
-	{
-		name++;
-		if (*name == '-')
-		{
-			name++;
-		}
-		else if (*name == '.')
-		{
-			name++;
-		}
-	}
+	char* songName = removeString(name);
 
-	strncpy_s(title, sizeof(title), name, _TRUNCATE);
+	strncpy_s(title, sizeof(title), songName, _TRUNCATE);
 	char* dot = strrchr(title, '.');
 	if (dot) *dot = '\0';
 
-	MultiByteToWideChar(CP_UTF8, 0, pathC, -1, path, 256);
-	int duration = GetSongLength(path);
+	int duration = GetSongLength(pathC);
 
 	InsertSongIntoDB(title, pathC, duration);
 
 	ListView_DeleteAllItems(HomeSongs_List);
-	LoadList_Songs(HomeSongs_List, sql);
+	LoadList_Songs(HomeSongs_List, g_sql);
+
+	UpdateTimer();
 }
 
 // -- Handle system --
@@ -152,7 +255,8 @@ void UI_HandleCommand(WPARAM wParam, HINSTANCE hInst)
 	case 1:
 	{
 		wchar_t path[256];
-		if (GetSongById(1, path, sizeof(path)))
+		wchar_t tile[10];
+		if (GetSongById(1, path, tile))
 		{
 			Player_Play(1, path);
 		}
@@ -170,7 +274,8 @@ void UI_HandleCommand(WPARAM wParam, HINSTANCE hInst)
 	case 4:
 		PickSongToDB(g_ui.hWnd);
 		break;
+
 	case 5:
-		ShowPopUp(g_hWnd, hInst);
+		PickFolder();
 	}
 }

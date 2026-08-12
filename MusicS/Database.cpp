@@ -10,7 +10,8 @@ void Database_Init()
 {
     int rc = sqlite3_open("D:\\Work\\MusicS\\MusicS\\MusicS.db", &db);
 
-    if (rc != SQLITE_OK) {
+    if (rc != SQLITE_OK) 
+    {
         MessageBox(NULL, TEXT("Cannot open database"), TEXT("Error"), MB_OK);
         sqlite3_close(db);
         db = NULL;

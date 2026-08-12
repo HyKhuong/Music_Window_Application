@@ -6,6 +6,10 @@
 #include "ListSongs_Type.h"
 #include "Tab_Type.h"
 #include "Tab.h"
+#include "global.h"
+
+#define Open_Col 1
+#define Delete_Col 2
 
 LRESULT CALLBACK PopupProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 // -- Create A New Window --
@@ -90,10 +94,11 @@ void ShowPopUp(HWND parent, HINSTANCE hInst)
 }
 
 // -- Pop Menu --
-void Create_MenuPopUp(LPNMITEMACTIVATE p, HWND ListView , int id, const wchar_t* text)
+void Create_MenuPopUp(LPNMITEMACTIVATE p, HWND ListView)
 {
 	HMENU menu = CreatePopupMenu();
-	AppendMenuW(menu, MF_STRING, id, text);
+	AppendMenuW(menu, MF_STRING, Open_Col, L"Open");
+	AppendMenuW(menu, MF_STRING, Delete_Col, L"Delete");
 
 	POINT pt = p->ptAction;
 	ClientToScreen(ListView, &pt);
@@ -115,11 +120,35 @@ void MenuPopUp_HandleCommand(WPARAM wParam, HWND hWnd)
 	switch (LOWORD(wParam)) 
 	{
 		case 1:
-			Create_SongDetailPage(hWnd);
-			break;
-		case 2:
-			Create_PlayListSongs(hWnd);
-			break;
+		{
+			if(g_currentPage == 0)
+			{
+				Create_SongDetailPage(hWnd);
+			}
+			else 
+			{
+				Create_PlayListSongs(hWnd);
+			}
+			
+		}
+		break;
+		case 2: 
+		{
+			if(g_currentPage == 0)
+			{
+				DeleteSongs(g_SongId);
+				ListView_DeleteAllItems(HomeSongs_List);
+				LoadList_Songs(HomeSongs_List, g_sql);
+			}
+			else
+			{
+				Delete_PlayList(g_PlayListId);
+				ListView_DeleteAllItems(PlayListSongs_List);
+			}
+			MessageBox(hWnd, L"Delete Successfully", L"Note", MB_OK);
+
+		}
+		break;
 	}
 }
 
