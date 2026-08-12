@@ -26,3 +26,5 @@ HFONT g_WinFont = NULL;
 
 int currentSong = 0;
 int queueCount = 0;
+
+int g_currentPage = -1;

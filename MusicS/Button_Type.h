@@ -7,6 +7,7 @@ typedef struct {
 	HWND btnPause;
 	HWND btnStop;
 	HWND filePicker;
+	HWND btnAddFolder;
 	HWND AddText;
 } Button;
 

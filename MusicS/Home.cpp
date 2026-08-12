@@ -77,12 +77,19 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 
 					if(!g_stream)
 					{
-						wchar_t path[521];
-						wchar_t tile[10];
-						if (GetSongById(id, path, tile))
+						wchar_t* path = (wchar_t*)malloc(560 * sizeof(wchar_t));
+						wchar_t* title = (wchar_t*)malloc(256 * sizeof(wchar_t));
+
+						if (GetSongById(id, path, title))
 						{
-							Player_Play(id, path);
-							ListView_SetItemText(ListView, row, 0, (LPWSTR)"=");
+							if(path && title != NULL) 
+							{
+								Player_Play(id, path);
+								ListView_SetItemText(ListView, row, 0, (LPWSTR)"=");
+							}				
+
+							free(path);
+							free(title);
 						}
 						else
 						{
@@ -124,7 +131,9 @@ void ClickSongs(HWND ListView, LPARAM lParam, int id)
 				LVIS_SELECTED | LVIS_FOCUSED,
 				LVIS_SELECTED | LVIS_FOCUSED
 			);
-			Create_MenuPopUp(p, ListView, 1, L"Open Songs Detail");
+
+			g_currentPage = 0;
+			Create_MenuPopUp(p, ListView);
 		}
 		break;
 		}

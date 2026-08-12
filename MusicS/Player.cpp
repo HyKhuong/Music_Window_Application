@@ -28,12 +28,12 @@ void Player_Init()
 
 int GetSongLength(char* filePath) 
 {
-    g_stream = BASS_StreamCreateFile(FALSE, filePath, 0, 0, BASS_STREAM_DECODE | BASS_SAMPLE_FLOAT);
+    int stream = BASS_StreamCreateFile(FALSE, filePath, 0, 0, BASS_STREAM_DECODE | BASS_SAMPLE_FLOAT);
 
-    QWORD lengthBytes = BASS_ChannelGetLength(g_stream, BASS_POS_BYTE);
-    double length = BASS_ChannelBytes2Seconds(g_stream, lengthBytes);
+    QWORD lengthBytes = BASS_ChannelGetLength(stream, BASS_POS_BYTE);
+    double length = BASS_ChannelBytes2Seconds(stream, lengthBytes);
 
-    BASS_StreamFree(g_stream);
+    BASS_StreamFree(stream);
 
     return (int)(length + 0.5);
 }
@@ -55,6 +55,7 @@ void Player_Play(int id, const wchar_t* filePath)
 
     // Load the file
     g_stream = BASS_StreamCreateFile(FALSE, filePath, 0, 0, 0);
+
     if (!g_stream) {
         printf("Can't load file: %d\n", BASS_ErrorGetCode());
         return;
@@ -85,7 +86,6 @@ void Player_Play(int id, const wchar_t* filePath)
     g_totalTime = (int)totalTime;
 
     SendMessage(track.hTrack, TBM_SETRANGE, TRUE, MAKELPARAM(0, g_totalTime));
-
     SendMessage(track.hTrack, TBM_SETPOS, TRUE, 0);
 
     wchar_t buf[32];
@@ -96,26 +96,24 @@ void Player_Play(int id, const wchar_t* filePath)
     SetWindowTextW(track.hTimeText, buf);
 
     // ---- START TIMER ----
-    SetTimer(g_hWnd, 1, 500, NULL);
+    SetTimer(g_hWnd, 1, 1000, NULL);
 }
 
 void UpdateTimer()
 {
     if (!g_stream || g_isSeeking) return;
 
-    double cur = BASS_ChannelBytes2Seconds(
+    int curSec = BASS_ChannelBytes2Seconds(
         g_stream,
         BASS_ChannelGetPosition(g_stream, BASS_POS_BYTE)
     );
-
-    int curSec = (int)cur;
 
     SendMessage(track.hTrack, TBM_SETPOS, TRUE, curSec);
 
     wchar_t buf[32];
     swprintf_s(buf, 32, L"%02d:%02d / %02d:%02d",
-        curSec / 60, curSec % 60,
-        g_totalTime / 60, g_totalTime % 60);
+         curSec / 60, curSec % 60,
+         g_totalTime / 60, g_totalTime % 60);
 
     SetWindowTextW(track.hTimeText, buf);
 }
@@ -156,19 +154,30 @@ void Player_Next_Song()
     ListView_SetItemText(g_listView, g_currentIndex, 0, (LPWSTR)">");
 
     int row = ++g_currentIndex;
-    
-    int id = GetId_ListView(g_listView, row, NULL);
 
-    Display_CurrentSong(g_listView, row);
-
-    ListView_SetItemText(g_listView, row, 0, (LPWSTR)"=");
-
-    wchar_t path[256];
-    wchar_t tile[10];
-    
-    if(GetSongById(id, path, tile))
+    if(row < SongCount())
     {
-        Player_Play(id, path);
+        int id = GetId_ListView(g_listView, row, NULL);
+
+        Display_CurrentSong(g_listView, row);
+
+        ListView_SetItemText(g_listView, row, 0, (LPWSTR)"=");
+
+        wchar_t* path = (wchar_t*)malloc(565 * sizeof(wchar_t));
+        wchar_t* title = (wchar_t*)malloc(256 * sizeof(wchar_t));
+
+        if (GetSongById(id, path, title))
+        {
+            Player_Play(id, path);
+        }
+
+        free(path);
+        free(title);
+    }
+    else 
+    {
+        MessageBox(g_hWnd, L"There is no more songs", L"Warning", MB_OK);
+        Player_Stop();
     }
 }
 

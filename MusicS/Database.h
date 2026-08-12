@@ -26,6 +26,7 @@ void InserIntoPlayerList(const char* title);
 void Database_LoadPlayList(HWND listView);
 void LoadPlayList_Combobox(HWND hComboBox);
 void PutSongsToQueue(int id);
+void Delete_PlayList(int id);
 
 // -- Use for two --
 void LoadSongs_Data(HWND listView, sqlite3_stmt* stmt);

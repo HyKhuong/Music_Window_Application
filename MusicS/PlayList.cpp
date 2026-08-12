@@ -109,7 +109,9 @@ void OpenPlayList_Songs(LPARAM lParam)
 				ListView_GetItem(PlayListSongs_List, &item);
 				g_PlayListId = item.lParam;
 
-				Create_MenuPopUp(p, PlayListSongs_List, 2, L"Open PlayList Detail");
+				//-- PlayList Page --
+				g_currentPage = 1;
+				Create_MenuPopUp(p, PlayListSongs_List);
 			}
 			break;
 		}

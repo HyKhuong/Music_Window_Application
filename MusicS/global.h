@@ -23,6 +23,8 @@ extern int g_PlayListId;
 
 extern HWND g_listView;
 
+extern int g_currentPage;
+
 extern const char* g_sql;
 
 // -- Wave Form config --

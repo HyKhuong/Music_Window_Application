@@ -59,9 +59,11 @@ void UI_Init(HWND hWnd)
 	btn.btnStop = Create_Button(hWnd, 3, L"Stop", 200, 20, 80, 30);
 	SetUIFont(btn.btnStop);
 
-	btn.filePicker = Create_Button(hWnd, 4, L"Add Song", 300, 20, 80, 30);
+	btn.filePicker = Create_Button(hWnd, 4, L"Add File", 350, 20, 80, 30);
 	SetUIFont(btn.filePicker);
 
+	btn.btnAddFolder = Create_Button(hWnd, 5, L"Add Folder", 440, 20, 80, 30);
+	SetUIFont(btn.btnAddFolder);
 
 	// -- Track Duration Bar --
 	Create_TrackBar(hWnd);
@@ -241,6 +243,8 @@ void PickSongToDB(HWND hWnd)
 
 	ListView_DeleteAllItems(HomeSongs_List);
 	LoadList_Songs(HomeSongs_List, g_sql);
+
+	UpdateTimer();
 }
 
 // -- Handle system --
@@ -264,15 +268,14 @@ void UI_HandleCommand(WPARAM wParam, HINSTANCE hInst)
 		break;
 
 	case 3:
-		//FindData(g_ui.hWnd);
-		PickFolder();
-		//Player_Stop();
+		Player_Stop();
 		break;
 
 	case 4:
 		PickSongToDB(g_ui.hWnd);
 		break;
+
 	case 5:
-		ShowPopUp(g_hWnd, hInst);
+		PickFolder();
 	}
 }
