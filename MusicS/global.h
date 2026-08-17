@@ -6,6 +6,8 @@
 
 #define WM_PLAY_NEXT_SONG_IN_QUEUE (WM_APP + 2)
 
+#define WM_PLAY_RANDOM (WM_APP + 3)
+
 extern HWND g_hWnd;
 extern HINSTANCE g_hInst;
 extern HSTREAM g_stream;

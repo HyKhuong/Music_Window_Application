@@ -20,6 +20,9 @@ void Player_Stop();
 int GetSongLength(char* filePath);
 void UpdateTimer();
 void GetScrollPosition(LPARAM lParam, WPARAM WParam);
+void Play_Random();
+void setRandom();
+void SongDuration_Display();
 
 
 // -- Some player UI --

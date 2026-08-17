@@ -13,10 +13,18 @@
 
 #pragma comment(lib, "bass.lib")
 int totalSong = SongCount();
+int randomSet = 0;
 
 void CALLBACK OnSongEnd(HSYNC handle, DWORD channel, DWORD data, void* user)
 {
-    PostMessage(g_hWnd, WM_PLAY_NEXT_SONG, 0, 0);
+    if(!randomSet)
+    {
+        PostMessage(g_hWnd, WM_PLAY_NEXT_SONG, 0, 0);
+    }
+    else 
+    {
+        PostMessage(g_hWnd, WM_PLAY_RANDOM, 0, 0);
+    }
 }
 
 void Player_Init()
@@ -38,45 +46,8 @@ int GetSongLength(char* filePath)
     return (int)(length + 0.5);
 }
 
-void Player_Play(int id, const wchar_t* filePath)
+void SongDuration_Display()
 {
-    if (!filePath) return;
-
-    if(!CheckSongDurationStatus(id)) 
-    {
-        InserSongDurationDB(id, filePath);
-    }
-
-    // Free previous stream if any
-    if (g_stream) {
-        BASS_StreamFree(g_stream);
-        g_stream = 0;
-    }
-
-    // Load the file
-    g_stream = BASS_StreamCreateFile(FALSE, filePath, 0, 0, 0);
-
-    if (!g_stream) {
-        printf("Can't load file: %d\n", BASS_ErrorGetCode());
-        return;
-    }
-
-    BASS_ChannelSetSync(
-        g_stream,
-        BASS_SYNC_END,
-        0,
-        OnSongEnd,
-        NULL
-    );
-
-    // Start playing
-    if (!BASS_ChannelPlay(g_stream, FALSE)) {
-        printf("Can't play file: %d\n", BASS_ErrorGetCode());
-        return;
-    }
-
-    g_isPaused = 0; 
-
     // ---- SET DURATION + TRACKBAR ----
     double totalTime = BASS_ChannelBytes2Seconds(
         g_stream,
@@ -97,6 +68,74 @@ void Player_Play(int id, const wchar_t* filePath)
 
     // ---- START TIMER ----
     SetTimer(g_hWnd, 1, 1000, NULL);
+}
+
+void Player_Play(int id, const wchar_t* filePath)
+{
+    if (!filePath) return;
+
+    if(!CheckSongDurationStatus(id)) 
+    {
+        InserSongDurationDB(id, filePath);
+    }
+
+    // Free previous stream if any
+    if (g_stream) {
+        BASS_StreamFree(g_stream);
+        g_stream = 0;
+    }
+
+    // Load the file
+    g_stream = BASS_StreamCreateFile(FALSE, filePath, 0, 0, 0);
+
+    BASS_ChannelSetSync(
+        g_stream,
+        BASS_SYNC_END,
+        0,
+        OnSongEnd,
+        NULL
+    );
+
+    // Start playing
+    if (!BASS_ChannelPlay(g_stream, FALSE)) {
+        printf("Can't play file: %d\n", BASS_ErrorGetCode());
+        return;
+    }
+
+    g_isPaused = 0; 
+
+    SongDuration_Display();
+}
+
+void setRandom()
+{
+    if(!randomSet)
+    {
+        randomSet = 1;
+    }
+    else
+    {
+        randomSet = 0;
+    }
+}
+
+void Play_Random()
+{
+    int r = (rand() % 100) + 50;
+
+    if(randomSet)
+    {
+        wchar_t* filePath = (wchar_t*)malloc(256 * sizeof(wchar_t));
+        wchar_t* title = (wchar_t*)malloc(256 * sizeof(wchar_t));
+
+        if (GetSongById(r, filePath, title))
+        {
+            Player_Play(r, filePath);
+        }
+
+        free(filePath);
+        free(title);
+    }
 }
 
 void UpdateTimer()

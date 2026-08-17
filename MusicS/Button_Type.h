@@ -9,6 +9,7 @@ typedef struct {
 	HWND filePicker;
 	HWND btnAddFolder;
 	HWND AddText;
+	HWND btnShuffle;
 } Button;
 
 extern HWND hTextBox;

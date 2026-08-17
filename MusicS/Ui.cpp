@@ -50,19 +50,21 @@ void SetUIFont(HWND hCtrl)
 void UI_Init(HWND hWnd)
 {	
 	// -- Button --
-	btn.btnPlay = Create_Button(hWnd, 1, L"Play", 20, 20, 80, 30);
+	btn.btnPlay = Create_Button(hWnd, 1, L"Play", 20, 20, 60, 30);
 	SetUIFont(btn.btnPlay);
 
-	btn.btnPause = Create_Button(hWnd, 2, L"Pause", 110, 20, 80, 30);
+	btn.btnPause = Create_Button(hWnd, 2, L"Pause", 85, 20, 60, 30);
 	SetUIFont(btn.btnPause);
 
-	btn.btnStop = Create_Button(hWnd, 3, L"Stop", 200, 20, 80, 30);
+	btn.btnStop = Create_Button(hWnd, 3, L"Stop", 150, 20, 60, 30);
+
+	btn.btnShuffle = Create_Button(hWnd, 4, L"Shuffle", 215, 20, 60, 30);
 	SetUIFont(btn.btnStop);
 
-	btn.filePicker = Create_Button(hWnd, 4, L"Add File", 350, 20, 80, 30);
+	btn.filePicker = Create_Button(hWnd, 5, L"Add File", 365, 20, 70, 30);
 	SetUIFont(btn.filePicker);
 
-	btn.btnAddFolder = Create_Button(hWnd, 5, L"Add Folder", 440, 20, 80, 30);
+	btn.btnAddFolder = Create_Button(hWnd, 6, L"Add Folder", 440, 20, 78, 30);
 	SetUIFont(btn.btnAddFolder);
 
 	// -- Track Duration Bar --
@@ -272,10 +274,14 @@ void UI_HandleCommand(WPARAM wParam, HINSTANCE hInst)
 		break;
 
 	case 4:
-		PickSongToDB(g_ui.hWnd);
+		setRandom();
 		break;
 
 	case 5:
+		PickSongToDB(g_ui.hWnd);
+		break;
+
+	case 6:
 		PickFolder();
 	}
 }
